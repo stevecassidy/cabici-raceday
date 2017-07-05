@@ -3,3 +3,41 @@ h1 {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 250%;
 }
+
+.main-container {
+    padding: 1rem 0.5rem;
+}
+
+.rider-form {
+    float: left;
+}
+
+.tabset {
+    width: calc(100% - 18rem);
+    min-width: 32rem;
+    max-width: 48rem;
+    float: right;
+}
+
+.form-control {
+    width: 16rem;
+}
+
+.grade-table {
+    width: 100%;
+    max-width: 48rem;
+    margin: 0.5rem 1rem;
+    border-collapse: collapse;
+}
+
+.grade-table thead {
+    border-bottom: solid 2px #dddddd;
+}
+
+.grade-table tr {
+    border-top: solid 1px #dddddd;
+}
+
+.number-col {
+    font-weight: bold;
+}
