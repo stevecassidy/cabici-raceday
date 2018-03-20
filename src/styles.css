@@ -4,6 +4,12 @@ h1 {
   font-size: 250%;
 }
 
+.loading {
+    text-align: center;
+    width: 100%;
+    padding: 4rem 0;
+}
+
 .main-container {
     padding: 1rem 0.5rem;
 }
