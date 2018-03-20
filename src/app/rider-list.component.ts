@@ -50,11 +50,28 @@ export class RiderListComponent {
 
     formatter = (x: Rider) => (x.fullName());
 
+    constructor() {
+        let localEntries = JSON.parse(window.localStorage.getItem('entries'));
+        if (localEntries !== null) {
+            for (let i = 0; i < localEntries.length; i++) {
+                let localRider = localEntries[i].rider;
+                let rider = new Rider(localRider.id, localRider.username, localRider.firstName, localRider.lastName, localRider.club);
+                // there has to be a better way
+                // but there isn't as far as I can tell
+
+                let grade = localEntries[i].grade;
+                let number = localEntries[i].number;
+                this.entries.push(new Entry(rider, grade, number));
+            }
+        }
+    }
+
     get diagnostic() { return JSON.stringify(this.model) }
 
     addRider() {
         this.entries.push(this.model);
         this.model = new Entry(null, null, null);
+        window.localStorage.setItem('entries', JSON.stringify(this.entries));
     }
 
     getEntries(grade: string) {
