@@ -53,12 +53,10 @@ export class RiderListComponent {
     constructor() {
         let localEntries = JSON.parse(window.localStorage.getItem('entries'));
         if (localEntries !== null) {
+            // load entries from local storage
             for (let i = 0; i < localEntries.length; i++) {
                 let localRider = localEntries[i].rider;
                 let rider = new Rider(localRider.id, localRider.username, localRider.firstName, localRider.lastName, localRider.club);
-                // there has to be a better way
-                // but there isn't as far as I can tell
-
                 let grade = localEntries[i].grade;
                 let number = localEntries[i].number;
                 this.entries.push(new Entry(rider, grade, number));
