@@ -24,24 +24,27 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@angular/animations": "^4.2.4",
-    "@angular/common": "^4.2.4",
-    "@angular/compiler": "^4.2.4",
-    "@angular/compiler-cli": "^4.2.4",
-    "@angular/core": "^4.2.4",
-    "@angular/forms": "^4.2.4",
-    "@angular/http": "^4.2.4",
-    "@angular/platform-browser": "^4.2.4",
-    "@angular/platform-browser-dynamic": "^4.2.4",
-    "@angular/platform-server": "^4.2.4",
-    "@angular/router": "^4.2.4",
-    "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.26",
-    "angular-in-memory-web-api": "~0.2.4",
-    "bootstrap": "^4.0.0-alpha.6",
+    "@angular/animations": "^5.0.0",
+    "@angular/cdk": "^5.2.4",
+    "@angular/common": "^5.0.0",
+    "@angular/compiler": "^5.0.0",
+    "@angular/compiler-cli": "^5.0.0",
+    "@angular/core": "^5.0.0",
+    "@angular/forms": "^5.0.0",
+    "@angular/http": "^5.0.0",
+    "@angular/material": "^5.2.4",
+    "@angular/platform-browser": "^5.0.0",
+    "@angular/platform-browser-dynamic": "^5.0.0",
+    "@angular/platform-server": "^5.0.0",
+    "@angular/router": "^5.0.0",
+    "@ng-bootstrap/ng-bootstrap": "^1.0.2",
+    "bootstrap": "^4.0.0",
     "core-js": "^2.4.1",
-    "rxjs": "5.0.1",
+    "rxjs": "^5.5.0",
     "systemjs": "0.19.40",
-    "zone.js": "^0.7.4"
+    "zone.js": "^0.8.4",
+    "jquery": "1.9.1",
+    "popper.js": "1.12.9"
   },
   "devDependencies": {
     "@types/jasmine": "2.5.36",
@@ -59,7 +62,7 @@
     "protractor": "~4.0.14",
     "rimraf": "^2.5.4",
     "tslint": "^3.15.1",
-    "typescript": "^2.3.4"
+    "typescript": ">=2.4.2 <2.7"
   },
   "repository": {}
 }
