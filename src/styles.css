@@ -1,7 +1,52 @@
-h1 {
-  color: #369;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 250%;
+* {
+    font-family: "Roboto", Helvetica, Ariel, sans-serif;
+    -webkit-transition: all 0.125s ease;
+    transition: all 0.125s ease;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    line-height: 1.5;
+}
+
+h2 {
+    margin: 0;
+}
+
+@media (min-width: 576px) {
+    .container {
+        max-width: 540px;
+    }
+}
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+}
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+}
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}
+.container {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.subheader {
+    padding: 1rem 1.5rem;
+    font-weight: 300;
+    font-size: 16pt;
+    background-color: #5c6bc0;
+    color: #fff;
 }
 
 .loading {
@@ -10,40 +55,38 @@ h1 {
     padding: 4rem 0;
 }
 
-.main-container {
-    padding: 1rem 0.5rem;
-}
-
-.rider-form {
-    float: left;
-}
-
-.tabset {
-    width: calc(100% - 18rem);
-    min-width: 32rem;
-    max-width: 48rem;
-    float: right;
-}
-
-.form-control {
-    width: 16rem;
-}
-
-.grade-table {
+.filter-field {
     width: 100%;
-    max-width: 48rem;
-    margin: 0.5rem 1rem;
-    border-collapse: collapse;
 }
 
-.grade-table thead {
-    border-bottom: solid 2px #dddddd;
+.filter-table mat-row {
+    cursor: pointer;
 }
 
-.grade-table tr {
-    border-top: solid 1px #dddddd;
+.filter-table mat-row:hover {
+    background-color: #eee;
 }
 
-.number-col {
-    font-weight: bold;
+.filter-table mat-row:active {
+    background-color: #ddd;
+}
+
+.mat-tab-label {
+    min-width: 100px !important;
+}
+
+.rider-table {
+    min-height: 90vh;
+}
+
+.mat-tab-group {
+    padding-bottom: 4rem;
+}
+
+.mat-button-toggle-label {
+    margin-bottom: 0;
+}
+
+.mat-button-toggle-checked {
+    background-color: #8C9EFF;
 }
