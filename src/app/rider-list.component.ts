@@ -41,28 +41,10 @@ export class RiderListComponent {
         return this.entries.filter(entry => entry.grade === grade);
     }
 
-    searchFilter(rider: Rider, term: string): boolean {
-        /**
-         * Matches if all words in a search term match
-         * either the first or last name of the rider
-         */
-        let words = term.toLowerCase().split(' ');
-        let match = true;
-        words.forEach(word => {
-            if (rider.firstName.toLowerCase().indexOf(word) !== 0 &&
-                rider.lastName.toLowerCase().indexOf(word) !== 0 &&
-                rider.licenseNo.toLowerCase().indexOf(word) !== 0 &&
-                rider.getClub().name.toLowerCase().indexOf(word) < 0) {
-                match = false;
-            }
-        });
-        return match;
-    }
-
     constructor(public dialog: MatDialog) {
+        // load entries from local storage
         let localEntries = JSON.parse(window.localStorage.getItem('entries'));
         if (localEntries !== null) {
-            // load entries from local storage
             for (let i = 0; i < localEntries.length; i++) {
                 if (localEntries[i].rider !== null) {
                     let localRider = localEntries[i].rider;
@@ -81,17 +63,48 @@ export class RiderListComponent {
                 }
             }
         }
+        // give data to grade tables
         for (let i = 0; i < this.grades.length; i++) {
             this.gradeTables[i] = {
                 grade: this.grades[i],
                 table: new MatTableDataSource<Entry>(this.getEntries(this.grades[i]))
             };
         }
+        
+        // set filter function
+        this.filterTable.filterPredicate = function (rider: Rider, term: string): boolean {
+            /**
+             * Matching for rider's first or last name, license no., or club.
+             * Matches to the beginning of a word only
+             */
+            // array of all words in the term
+            let words = term.toLowerCase().split(' ');
+            // array of all words that match the rider
+            let names = rider.firstName.toLowerCase().split(' ')
+                        .concat(rider.lastName.toLowerCase().split(' '))
+                        .concat(rider.getClub().name.toLowerCase().split(' '))
+                        .concat(rider.licenseNo.toLowerCase().split(' '));
 
-        this.filterTable.filterPredicate = this.searchFilter;
+            // every term word must match at least one rider word
+            let match = true;
+            words.forEach(word => {
+                // check word against all rider words
+                let wordMatch = false;
+                names.forEach(name => {
+                    if (name.indexOf(word) === 0) {
+                        wordMatch = true;
+                    }
+                });
+                // continue if it matches at least one
+                if (!wordMatch) {
+                    match = false;
+                }
+            });
+            return match;
+        };
     }
 
-    get diagnostic() { return JSON.stringify(this) }
+    get diagnostic() { return JSON.stringify(this); }
 
     addRider(rider: Rider, grade: string, number: string): void {
         let entry = new Entry(rider, grade, number);
@@ -104,16 +117,15 @@ export class RiderListComponent {
 
     openDialog(rider: Rider): void {
         let dialogRef = this.dialog.open(AddRiderDialog, {
-            width: '50vw',
+            // width: '50vw',
             data: { rider: rider, grades: this.grades },
         });
 
         dialogRef.afterClosed().subscribe(result => {
             if (result !== null) {
-                console.log(result);
                 this.addRider(result.rider, result.grade, result.number);
             }
-        })
+        });
     }
 
     applyFilter(term: string): void {
@@ -139,14 +151,6 @@ export class AddRiderDialog {
         @Inject(MAT_DIALOG_DATA) public data: any) {
             this.rider = data.rider;
             this.grades = data.grades;
-    }
-
-    onAdd(): void {
-        this.dialogRef.close({
-            rider: this.rider,
-            grade: this.grade,
-            number: this.number,
-        });
     }
 
     onCancel(): void {
