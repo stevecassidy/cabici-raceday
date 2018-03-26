@@ -5,16 +5,20 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
     MatTableModule,
     MatPaginatorModule,
-    MatTabsModule, 
+    MatTabsModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
+    MatDialogModule,
+    MatToolbarModule,
+    MatRippleModule
   } from '@angular/material';
 
 
 import { AppComponent }  from './app.component';
-import { RiderListComponent } from './rider-list.component';
+import { RiderListComponent, AddRiderDialog } from './rider-list.component';
 
 @NgModule({
   imports:      [ 
@@ -25,13 +29,23 @@ import { RiderListComponent } from './rider-list.component';
     MatPaginatorModule,
     MatTabsModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
+    MatDialogModule,
+    MatToolbarModule,
+    MatRippleModule,
+  ],
+  entryComponents: [
+    AppComponent,
+    RiderListComponent,
+    AddRiderDialog,
   ],
   declarations: [
     AppComponent,
     RiderListComponent,
+    AddRiderDialog,
   ],
   bootstrap: [ AppComponent ]
 })

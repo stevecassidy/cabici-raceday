@@ -9,6 +9,8 @@ export class Rider {
         public firstName: string,
         public lastName: string,
         public club: number,
+        public licenseNo: string,
+        public defaultGrade: string,
     ) { }
 
     public fullName() {

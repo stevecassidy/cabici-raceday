@@ -6,7 +6,15 @@ export class Riders {
     static riders() {
         var riders = [];
         for (var i=0; i < this.list.length; i++) {
-            var rider = new Rider(i, this.list[i].user.username, this.list[i].user.first_name, this.list[i].user.last_name, this.list[i].club.id)
+            var rider = new Rider(
+                i,
+                this.list[i].user.username,
+                this.list[i].user.first_name,
+                this.list[i].user.last_name,
+                this.list[i].club.id,
+                this.list[i].licenceno,
+                "A"
+            );
             riders.push(rider);
         }
         return riders;

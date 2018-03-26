@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Add {{ rider.fullName() }}</h1>
+<mat-form-field>
+    <input matInput [(ngModel)]="number" placeholder="Number">
+</mat-form-field>
+
+<h4 class="mat-caption">Grade</h4>
+<mat-button-toggle-group [(ngModel)]="grade" #group="matButtonToggleGroup" value="A">
+    <mat-button-toggle *ngFor="let grade of grades" value="{{ grade }}" >{{ grade }}</mat-button-toggle>
+</mat-button-toggle-group>
+
+<div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-button [mat-dialog-close]="{ rider: rider, grade: grade, number: number }">Add Rider</button>
+</div>
