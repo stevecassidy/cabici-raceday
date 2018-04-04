@@ -18,7 +18,7 @@ import {
 
 
 import { AppComponent }  from './app.component';
-import { RiderListComponent, AddRiderDialog } from './rider-list.component';
+import { RiderListComponent, AddRiderDialog } from './rider-list/rider-list.component';
 
 
 @NgModule({

@@ -7,22 +7,17 @@ import {
         MAT_DIALOG_DATA
     } from '@angular/material';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-
-import { Grades } from './grades';
-import { Rider } from './rider';
-import { Club } from './club';
-import { Entry } from './entry';
-import { ClubList } from './club-list';
-import { Riders } from './riders';
+import { Grades } from '../grades';
+import { Rider } from '../rider';
+import { Club } from '../club';
+import { Entry } from '../entry';
+import { ClubList } from '../club-list';
+import { Riders } from '../riders';
 
 @Component({
-    selector: 'rider-list',
-    templateUrl: './rider-list.component.html',
-  // styleUrls: ['./rider-list.component.css']
+  selector: 'rider-list',
+  templateUrl: './rider-list.component.html',
+  styleUrls: ['./rider-list.component.css']
 })
 export class RiderListComponent {
     grades = Grades.grades;
