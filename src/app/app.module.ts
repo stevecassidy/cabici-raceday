@@ -1,5 +1,5 @@
-import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
@@ -20,8 +20,14 @@ import {
 import { AppComponent }  from './app.component';
 import { RiderListComponent, AddRiderDialog } from './rider-list.component';
 
+
 @NgModule({
-  imports:      [ 
+  entryComponents: [
+    AppComponent,
+    RiderListComponent,
+    AddRiderDialog,
+  ],
+  imports: [ 
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -37,16 +43,12 @@ import { RiderListComponent, AddRiderDialog } from './rider-list.component';
     MatToolbarModule,
     MatRippleModule,
   ],
-  entryComponents: [
-    AppComponent,
-    RiderListComponent,
-    AddRiderDialog,
-  ],
   declarations: [
     AppComponent,
     RiderListComponent,
     AddRiderDialog,
   ],
+  providers: [],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

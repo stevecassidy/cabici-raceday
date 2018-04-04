@@ -21,7 +21,8 @@ import { Riders } from './riders';
 
 @Component({
     selector: 'rider-list',
-    templateUrl: './rider-list.component.html'
+    templateUrl: './rider-list.component.html',
+  // styleUrls: ['./rider-list.component.css']
 })
 export class RiderListComponent {
     grades = Grades.grades;
