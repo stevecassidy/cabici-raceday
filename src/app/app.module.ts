@@ -27,7 +27,7 @@ import { RiderListComponent, AddRiderDialog } from './rider-list/rider-list.comp
     RiderListComponent,
     AddRiderDialog,
   ],
-  imports: [ 
+  imports: [
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,

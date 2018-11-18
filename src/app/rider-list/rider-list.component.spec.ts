@@ -1,6 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RiderListComponent } from './rider-list.component';
+import {
+  MatPaginatorModule,
+  MatDialogModule,
+  MatToolbarModule,
+  MatFormFieldModule,
+  MatTableModule,
+  MatInputModule,
+  MatTabsModule
+} from '@angular/material';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('RiderListComponent', () => {
   let component: RiderListComponent;
@@ -8,7 +18,17 @@ describe('RiderListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RiderListComponent ]
+      declarations: [ RiderListComponent ],
+      imports: [
+        MatPaginatorModule,
+        MatDialogModule,
+        MatToolbarModule,
+        MatFormFieldModule,
+        MatTableModule,
+        MatInputModule,
+        MatTabsModule,
+        NoopAnimationsModule
+      ]
     })
     .compileComponents();
   }));

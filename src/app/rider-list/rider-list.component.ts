@@ -5,7 +5,7 @@ import {
         MatDialog,
         MatDialogRef,
         MAT_DIALOG_DATA
-    } from '@angular/material';
+    } from '@angular/material'
 
 import { Grades } from '../grades';
 import { Rider } from '../rider';
@@ -66,7 +66,6 @@ export class RiderListComponent {
                 table: new MatTableDataSource<Entry>(this.getEntries(this.grades[i]))
             };
         }
-        
         // set filter function
         this.filterTable.filterPredicate = function (rider: Rider, term: string): boolean {
             /**
