@@ -14,7 +14,7 @@
         </ng-container>
         <ng-container matColumnDef="club">
             <mat-header-cell *matHeaderCellDef>Club</mat-header-cell>
-            <mat-cell *matCellDef="let rider">{{ rider.getClub().name }}</mat-cell>
+            <mat-cell *matCellDef="let rider">{{ rider.club }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="number">
             <mat-header-cell *matHeaderCellDef>License No.</mat-header-cell>
@@ -49,7 +49,7 @@
                     </ng-container>
                     <ng-container matColumnDef="club">
                         <mat-header-cell *matHeaderCellDef>Club</mat-header-cell>
-                        <mat-cell *matCellDef="let entry">{{ entry.rider.getClub().name }}</mat-cell>
+                        <mat-cell *matCellDef="let entry">{{ entry.rider.club }}</mat-cell>
                     </ng-container>
         
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

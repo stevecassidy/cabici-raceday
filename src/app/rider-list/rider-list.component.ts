@@ -12,7 +12,7 @@ import { Rider } from '../rider';
 import { Club } from '../club';
 import { Entry } from '../entry';
 import { ClubList } from '../club-list';
-import { Riders } from '../riders';
+import { RidersService } from '../riders.service';
 
 @Component({
   selector: 'rider-list',
@@ -22,13 +22,14 @@ import { Riders } from '../riders';
 export class RiderListComponent {
     grades = Grades.grades;
     clubs = ClubList.clubs();
-    riders = Riders.riders();
+    riders = [];
     entries = Array<Entry>();
     gradeTables = Array<{ grade: string, table: MatTableDataSource<Entry> }>(this.grades.length);
-    filterTable = new MatTableDataSource<Rider>(this.riders);
+    filterTable = null;
     displayedColumns = ['number', 'rider', 'club'];
     filterDisplayedColumns = ['rider', 'club', 'number'];
     @ViewChild(MatPaginator) paginator: MatPaginator;
+
     ngAfterViewInit() {
         this.filterTable.paginator = this.paginator;
     }
@@ -37,28 +38,14 @@ export class RiderListComponent {
         return this.entries.filter(entry => entry.grade === grade);
     }
 
-    constructor(public dialog: MatDialog) {
-        // load entries from local storage
-        let localEntries = JSON.parse(window.localStorage.getItem('entries'));
-        if (localEntries !== null) {
-            for (let i = 0; i < localEntries.length; i++) {
-                if (localEntries[i].rider !== null) {
-                    let localRider = localEntries[i].rider;
-                    let rider = new Rider(
-                        localRider.id,
-                        localRider.username,
-                        localRider.firstName,
-                        localRider.lastName,
-                        localRider.club,
-                        localRider.licenseNo,
-                        localRider.defaultGrade
-                    );
-                    let grade = localEntries[i].grade;
-                    let number = localEntries[i].number;
-                    this.entries.push(new Entry(rider, grade, number));
-                }
-            }
-        }
+    constructor(private ridersService: RidersService, public dialog: MatDialog) {
+
+        // invoke the riders service to get the list of riders
+        this.riders = ridersService.getRiders();
+        this.filterTable = new MatTableDataSource<Rider>(this.riders);
+
+        this.loadFromLocalStorage();
+
         // give data to grade tables
         for (let i = 0; i < this.grades.length; i++) {
             this.gradeTables[i] = {
@@ -75,9 +62,9 @@ export class RiderListComponent {
             // array of all words in the term
             let words = term.toLowerCase().split(' ');
             // array of all words that match the rider
-            let names = rider.firstName.toLowerCase().split(' ')
-                        .concat(rider.lastName.toLowerCase().split(' '))
-                        .concat(rider.getClub().name.toLowerCase().split(' '))
+            let names = rider.first_name.toLowerCase().split(' ')
+                        .concat(rider.last_name.toLowerCase().split(' '))
+                        .concat(rider.club.toLowerCase().split(' '))
                         .concat(rider.licenseNo.toLowerCase().split(' '));
 
             // every term word must match at least one rider word
@@ -100,6 +87,36 @@ export class RiderListComponent {
     }
 
     get diagnostic() { return JSON.stringify(this); }
+
+    loadFromLocalStorage(): void {
+      // load entries from local storage
+      let localEntries = JSON.parse(window.localStorage.getItem('entries'));
+      if (localEntries !== null) {
+        for (let i = 0; i < localEntries.length; i++) {
+          if (localEntries[i].rider !== null) {
+            let lr = localEntries[i].rider;
+            let rider = new Rider(
+              lr.id,
+              lr.first_name,
+              lr.last_name,
+              lr.club,
+              lr.clubslug,
+              lr.licenseNo,
+              lr.classification,
+              lr.member_category,
+              lr.member_date,
+              lr.grades,
+              lr.gender,
+              lr.emergencyphone,
+              lr.emergencyname
+            );
+            let grade = localEntries[i].grade;
+            let number = localEntries[i].number;
+            this.entries.push(new Entry(rider, grade, number));
+          }
+        }
+      }
+    }
 
     addRider(rider: Rider, grade: string, number: string): void {
         let entry = new Entry(rider, grade, number);

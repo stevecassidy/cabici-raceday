@@ -1,30 +1,30 @@
-import { Club } from './club';
-import { ClubList } from './club-list';
 
+/* Rider class mirrors the structure of the JSON data returned
+   from the cabici.net API
+ */
 export class Rider {
 
     constructor(
         public id: number,
-        public username: string,
-        public firstName: string,
-        public lastName: string,
-        public club: number,
+        public first_name: string,
+        public last_name: string,
+        public club: string,
+        public clubslug: string,
         public licenseNo: string,
-        public defaultGrade: string,
+        public classification: string,
+        public member_category: string,
+        public member_date: string,  /* really a date */
+        public grades: object,
+        public gender: string,
+        public emergencyphone: string,
+        public emergencyname: string
     ) { }
 
     public fullName() {
-        return this.firstName + ' ' + this.lastName;
+        return this.first_name + ' ' + this.last_name;
     }
 
     public getClub() {
-        var clubs = ClubList.clubs();
-        for (var i=0; i < clubs.length; i++) {
-            if (clubs[i].id === this.club) {
-                return clubs[i];
-            }
-        }
-        // if no clubs match
-        return null;
+       return this.club;
     }
 }
