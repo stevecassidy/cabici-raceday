@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Rider } from './rider';
 import { RIDERS } from './mock-riders';
-import {Entry} from './entry';
-
+import {Observable, of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +14,8 @@ export class RidersService {
     this.loadRiders();
   }
 
-  getRiders(): Rider [] {
-    return this.riders;
+  getRiders(): Observable<Rider[]> {
+    return of(this.riders);
   }
 
   loadRiders(): void {
