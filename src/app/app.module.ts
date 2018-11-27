@@ -2,9 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { HttpClientModule }    from '@angular/common/http';
 
 import {
     MatTableModule,
+    MatListModule,
     MatPaginatorModule,
     MatTabsModule,
     MatButtonModule,
@@ -19,20 +21,22 @@ import {
 
 
 import { AppComponent } from './app.component';
-import { RiderListComponent, AddRiderDialog } from './rider-list/rider-list.component';
+import { RiderListComponent } from './rider-list/rider-list.component';
+import { AddRiderDialogComponent } from './add-rider-dialog/add-rider-dialog.component';
 
 
 @NgModule({
   entryComponents: [
     AppComponent,
     RiderListComponent,
-    AddRiderDialog,
+    AddRiderDialogComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
     MatTableModule,
+    MatListModule,
     MatPaginatorModule,
     MatTabsModule,
     MatButtonModule,
@@ -43,11 +47,12 @@ import { RiderListComponent, AddRiderDialog } from './rider-list/rider-list.comp
     MatDialogModule,
     MatToolbarModule,
     MatRippleModule,
+    HttpClientModule
   ],
   declarations: [
     AppComponent,
     RiderListComponent,
-    AddRiderDialog,
+    AddRiderDialogComponent,
   ],
   providers: [],
   bootstrap: [ AppComponent ]

@@ -4,8 +4,8 @@
 </mat-form-field>
 
 <h4 class="mat-caption">Grade</h4>
-<mat-button-toggle-group [(ngModel)]="grade" #group="matButtonToggleGroup" value="A">
-    <mat-button-toggle *ngFor="let grade of grades" value="{{ grade }}" >{{ grade }}</mat-button-toggle>
+<mat-button-toggle-group [(ngModel)]="grade" #group="matButtonToggleGroup" value="{{grade}}">
+    <mat-button-toggle *ngFor="let thegrade of grades" value="{{ thegrade }}" >{{ thegrade }}</mat-button-toggle>
 </mat-button-toggle-group>
 
 <div mat-dialog-actions>

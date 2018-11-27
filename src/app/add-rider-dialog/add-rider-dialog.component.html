@@ -1,0 +1,48 @@
+<h1 mat-dialog-title>Add Rider</h1>
+<mat-list role="list">
+  <mat-list-item role="listitem">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input disabled matInput [value]="rider.fullName()">
+    </mat-form-field>
+  </mat-list-item>
+  <mat-list-item role="listitem">
+    <mat-form-field>
+      <mat-label>Club</mat-label>
+      <input disabled matInput [value]="rider.club">
+    </mat-form-field>
+  </mat-list-item>
+  <mat-list-item role="listitem">
+    <mat-form-field>
+      <mat-label>Classification</mat-label>
+      <input disabled matInput [value]="rider.classification">
+    </mat-form-field>
+  </mat-list-item>
+  <mat-list-item role="listitem">
+    <mat-form-field>
+      <mat-label>Licence</mat-label>
+      <input disabled matInput [value]="rider.licenseNo">
+    </mat-form-field>
+  </mat-list-item>
+  <mat-list-item role="listitem">
+    <mat-form-field>
+      <input matInput [(ngModel)]="number" placeholder="Number">
+    </mat-form-field>
+  </mat-list-item>
+</mat-list>
+
+
+
+
+
+<h4 class="mat-caption">Grade</h4>
+
+<mat-button-toggle-group #group="matButtonToggleGroup"  [value]="grade" (change)="this.grade=$event.source.value">
+  <mat-button-toggle *ngFor="let thegrade of grades" value="{{ thegrade }}" >{{ thegrade }}</mat-button-toggle>
+</mat-button-toggle-group>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button [mat-dialog-close]="{ rider: rider, grade: grade, number: number }">Add Rider</button>
+</div>
+

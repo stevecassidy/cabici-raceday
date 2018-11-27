@@ -12,6 +12,7 @@ import { Rider } from '../rider';
 import { Entry } from '../entry';
 import { RidersService } from '../riders.service';
 import {EntryService} from '../entry.service';
+import {AddRiderDialogComponent} from '../add-rider-dialog/add-rider-dialog.component';
 
 @Component({
   selector: 'rider-list',
@@ -119,9 +120,12 @@ export class RiderListComponent implements OnInit, AfterViewInit {
     }
 
     openDialog(rider: Rider): void {
-        let dialogRef = this.dialog.open(AddRiderDialog, {
+        let dialogRef = this.dialog.open(AddRiderDialogComponent, {
             // width: '50vw',
-            data: { rider: rider, grades: this.grades },
+            data: {
+              rider: rider,
+              grades: this.grades,
+            }
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -139,27 +143,3 @@ export class RiderListComponent implements OnInit, AfterViewInit {
 
 }
 
-@Component({
-    selector: 'add-rider-dialog',
-    templateUrl: './add-rider-dialog.html',
-})
-export class AddRiderDialog {
-    rider: Rider;
-    grade: string;
-    number: string;
-    grades: string[];
-
-    constructor(
-        public dialogRef: MatDialogRef<AddRiderDialog>,
-        @Inject(MAT_DIALOG_DATA) public data: any) {
-            this.rider = data.rider;
-            this.grades = data.grades;
-    }
-
-    onCancel(): void {
-        console.log(this.data);
-        this.dialogRef.close(null);
-        // result is undefined by default. I just prefer null.
-    }
-
-}
