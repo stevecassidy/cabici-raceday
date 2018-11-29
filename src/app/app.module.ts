@@ -7,6 +7,7 @@ import { HttpClientModule }    from '@angular/common/http';
 import {
     MatTableModule,
     MatListModule,
+    MatGridListModule,
     MatPaginatorModule,
     MatTabsModule,
     MatButtonModule,
@@ -37,6 +38,7 @@ import { AddRiderDialogComponent } from './add-rider-dialog/add-rider-dialog.com
     BrowserAnimationsModule,
     MatTableModule,
     MatListModule,
+    MatGridListModule,
     MatPaginatorModule,
     MatTabsModule,
     MatButtonModule,

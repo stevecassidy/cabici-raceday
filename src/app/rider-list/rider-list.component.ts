@@ -121,8 +121,8 @@ export class RiderListComponent implements OnInit, AfterViewInit {
 
     openDialog(rider: Rider): void {
         let dialogRef = this.dialog.open(AddRiderDialogComponent, {
-            // width: '50vw',
-            data: {
+          width: '600px',
+          data: {
               rider: rider,
               grades: this.grades,
             }
