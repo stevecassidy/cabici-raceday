@@ -1,0 +1,29 @@
+<h2 class="subheader mat-elevation-z2">Riders Entered</h2>
+<button (click)="resetEntries()">Reset</button>
+<div class="rider-table container">
+  <mat-tab-group dynamicHeight>
+    <mat-tab *ngFor="let gradeTable of gradeTables">
+      <ng-template mat-tab-label>
+        {{ gradeTable.grade }}
+      </ng-template>
+
+      <mat-table #table [dataSource]="gradeTable.table">
+        <ng-container matColumnDef="number">
+          <mat-header-cell *matHeaderCellDef>Number</mat-header-cell>
+          <mat-cell *matCellDef="let entry">{{ entry.number }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="rider">
+          <mat-header-cell *matHeaderCellDef>Rider</mat-header-cell>
+          <mat-cell *matCellDef="let entry">{{ entry.rider.fullName() }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="club">
+          <mat-header-cell *matHeaderCellDef>Club</mat-header-cell>
+          <mat-cell *matCellDef="let entry">{{ entry.rider.club }}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </mat-tab>
+  </mat-tab-group>
+</div>

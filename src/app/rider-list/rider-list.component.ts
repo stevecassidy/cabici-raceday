@@ -1,10 +1,8 @@
-import {Component, ViewChild, Inject, OnInit, AfterViewInit} from '@angular/core';
+import {Component, ViewChild, OnInit, AfterViewInit} from '@angular/core';
 import {
         MatPaginator,
         MatTableDataSource,
-        MatDialog,
-        MatDialogRef,
-        MAT_DIALOG_DATA
+        MatDialog
     } from '@angular/material'
 
 import { Grades } from '../grades';
@@ -15,7 +13,7 @@ import {EntryService} from '../entry.service';
 import {AddRiderDialogComponent} from '../add-rider-dialog/add-rider-dialog.component';
 
 @Component({
-  selector: 'rider-list',
+  selector: 'app-rider-list',
   templateUrl: './rider-list.component.html',
   styleUrls: ['./rider-list.component.css']
 })
@@ -23,23 +21,13 @@ import {AddRiderDialogComponent} from '../add-rider-dialog/add-rider-dialog.comp
 export class RiderListComponent implements OnInit, AfterViewInit {
     grades = Grades.grades;
     riders = [];
-    entries = Array<Entry>();
-    gradeTables = Array<{ grade: string, table: MatTableDataSource<Entry> }>(this.grades.length);
     filterTable = null;
-    displayedColumns = ['number', 'rider', 'club'];
     filterDisplayedColumns = ['rider', 'club', 'number'];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(private ridersService: RidersService,
                 private entryService: EntryService,
                 public dialog: MatDialog) {
-      // give data to grade tables
-      for (let i = 0; i < this.grades.length; i++) {
-        this.gradeTables[i] = {
-          grade: this.grades[i],
-          table: new MatTableDataSource<Entry>(this.filterEntries(this.grades[i]))
-        };
-      }
     }
 
     ngAfterViewInit() {
@@ -49,32 +37,17 @@ export class RiderListComponent implements OnInit, AfterViewInit {
     ngOnInit() {
 
       this.getRiders();
-      this.getEntries();
 
       // depends on this.riders so needs to deal with the observable...
       this.filterTable = new MatTableDataSource<Rider>(this.riders);
       // set filter function
       this.filterTable.filterPredicate = this.filterPredicate;
-
-      // initialise entries...should be a component
-      this.gradeTables.forEach(gradeTable => {
-        gradeTable.table = new MatTableDataSource<Entry>(this.filterEntries(gradeTable.grade));
-      });
-    }
-
-    getEntries(): void {
-      this.entryService.getEntries()
-        .subscribe(entries => this.entries = entries);
     }
 
     /* subscribe to the riders service */
     getRiders(): void {
       this.ridersService.getRiders()
         .subscribe(riders => this.riders = riders);
-    }
-
-    filterEntries(grade: string): Entry[] {
-      return this.entries.filter(entry => entry.grade === grade);
     }
 
     filterPredicate(rider: Rider, term: string): boolean {
@@ -108,15 +81,9 @@ export class RiderListComponent implements OnInit, AfterViewInit {
       return match;
     };
 
-    get diagnostic() { return JSON.stringify(this); }
-
     addRider(rider: Rider, grade: string, number: string): void {
         let entry = new Entry(rider, grade, number);
         this.entryService.storeEntry(entry);
-        // update the display...should be another component
-        this.gradeTables.forEach(gradeTable => {
-            gradeTable.table = new MatTableDataSource<Entry>(this.filterEntries(gradeTable.grade));
-        });
     }
 
     openDialog(rider: Rider): void {

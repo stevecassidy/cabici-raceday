@@ -3,27 +3,40 @@
 import { Injectable } from '@angular/core';
 import {Entry} from './entry';
 import {Rider} from './rider';
-import {Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 
+// @ts-ignore
 @Injectable({
   providedIn: 'root'
 })
 export class EntryService {
-
-  entries = [];
+  // https://coryrylan.com/blog/angular-observable-data-services
+  private _entries: BehaviorSubject<Entry[]>;
+  private dataStore: {
+    entries: Entry[]
+  };
 
   constructor() {
+    this._entries = <BehaviorSubject<Entry[]>>new BehaviorSubject([]);
+    this.dataStore = {
+      entries: []
+    };
     this.loadFromLocalStorage();
   }
 
   getEntries(): Observable<Entry[]> {
-    return of(this.entries);
+    return this._entries.asObservable();
   }
 
   storeEntry(entry: Entry) {
-    this.entries.push(entry);
-    window.localStorage.setItem('entries', JSON.stringify(this.entries));
-    console.log(this.entries);
+    this.dataStore.entries.unshift(entry);
+    this._entries.next(Object.assign({}, this.dataStore).entries);
+    window.localStorage.setItem('entries', JSON.stringify(this.dataStore.entries));
+  }
+
+  resetEntries() {
+    this.dataStore.entries = [];
+    window.localStorage.setItem('entries', '[]')
   }
 
   loadFromLocalStorage(): void {
@@ -50,7 +63,9 @@ export class EntryService {
           );
           let grade = localEntries[i].grade;
           let number = localEntries[i].number;
-          this.entries.push(new Entry(rider, grade, number));
+          this.dataStore.entries.push(new Entry(rider, grade, number));
+
+          this._entries.next(Object.assign({}, this.dataStore).entries);
         }
       }
     }
