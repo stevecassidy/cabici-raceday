@@ -1,0 +1,14 @@
+#rider-entry-block {
+  display: flex;
+  flex-direction: row;
+}
+
+#rider-list-block {
+  width: 50%;
+  display: inline-block;
+}
+
+#entry-list-block {
+  width: 50%;
+  display: inline-block;
+}
