@@ -15,7 +15,7 @@ export class EntryListComponent implements OnInit {
   grades = Grades.grades;
   displayedColumns = ['number', 'rider', 'club'];
   gradeTables = Array<{ grade: string, table: MatTableDataSource<Entry> }>(this.grades.length);
-  entries = Array<Entry>();
+  entries: Entry[];
 
   constructor(
     private entryService: EntryService,
