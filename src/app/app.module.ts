@@ -23,16 +23,18 @@ import {
   } from '@angular/material';
 
 
-import { AppComponent } from './app.component';
+import { AppComponent } from './app/app.component';
 import { RiderListComponent } from './rider-list/rider-list.component';
 import { AddRiderDialogComponent } from './add-rider-dialog/add-rider-dialog.component';
 import { EntryListComponent } from './entry-list/entry-list.component';
 import { HeaderComponent } from './header/header.component';
 import { RaceChooserComponent } from './race-chooser/race-chooser.component';
+import { RaceEntryComponent } from './race-entry/race-entry.component';
 
 const ROUTES: Route[] = [
-  {path: '', component: RaceChooserComponent},
-  {path: 'riders', component: RiderListComponent}
+  {path: '', component: RaceEntryComponent},
+  {path: 'races', component: RaceChooserComponent},
+  {path: 'entries', component: RaceEntryComponent}
 ];
 
 
@@ -70,6 +72,7 @@ const ROUTES: Route[] = [
     EntryListComponent,
     HeaderComponent,
     RaceChooserComponent,
+    RaceEntryComponent,
   ],
   providers: [],
   bootstrap: [ AppComponent ]
