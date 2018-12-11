@@ -18,11 +18,11 @@ import {AddRiderDialogComponent} from '../add-rider-dialog/add-rider-dialog.comp
   styleUrls: ['./rider-list.component.css']
 })
 
-export class RiderListComponent implements OnInit, AfterViewInit {
-    grades = Grades.grades;
-    riders = [];
-    filterTable = null;
-    filterDisplayedColumns = ['rider', 'club', 'number'];
+export class RiderListComponent implements OnInit {
+    private grades = Grades.grades;
+    private riders: Rider[];
+    private filterTable: MatTableDataSource<Rider>;
+    private filterDisplayedColumns = ['rider', 'club', 'number'];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(private ridersService: RidersService,
@@ -30,24 +30,24 @@ export class RiderListComponent implements OnInit, AfterViewInit {
                 public dialog: MatDialog) {
     }
 
-    ngAfterViewInit() {
-        this.filterTable.paginator = this.paginator;
+    ngOnInit() {
+      this.getRiders();
     }
 
-    ngOnInit() {
-
-      this.getRiders();
-
-      // depends on this.riders so needs to deal with the observable...
+    updateRiderTable(): void {
       this.filterTable = new MatTableDataSource<Rider>(this.riders);
       // set filter function
       this.filterTable.filterPredicate = this.filterPredicate;
+      this.filterTable.paginator = this.paginator;
     }
 
     /* subscribe to the riders service */
     getRiders(): void {
       this.ridersService.getRiders()
-        .subscribe(riders => this.riders = riders);
+        .subscribe(riders => {
+          this.riders = riders;
+          this.updateRiderTable();
+        });
     }
 
     filterPredicate(rider: Rider, term: string): boolean {
@@ -57,11 +57,15 @@ export class RiderListComponent implements OnInit, AfterViewInit {
        */
         // array of all words in the term
       let words = term.toLowerCase().split(' ');
+      let clubname : string[] = [''];
+      if (rider.club) {
+        clubname = rider.club.toLowerCase().split('');
+      }
       // array of all words that match the rider
       let names = rider.first_name.toLowerCase().split(' ')
         .concat(rider.last_name.toLowerCase().split(' '))
-        .concat(rider.club.toLowerCase().split(' '))
-        .concat(rider.licenseNo.toLowerCase().split(' '));
+        .concat(clubname)
+        .concat(rider.licenceno.toLowerCase().split(' '));
 
       // every term word must match at least one rider word
       let match = true;
@@ -84,6 +88,7 @@ export class RiderListComponent implements OnInit, AfterViewInit {
     addRider(rider: Rider, grade: string, number: string): void {
         let entry = new Entry(rider, grade, number);
         this.entryService.storeEntry(entry);
+        this.filterTable.filter = '';
     }
 
     openDialog(rider: Rider): void {

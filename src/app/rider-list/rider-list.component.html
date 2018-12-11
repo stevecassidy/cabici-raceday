@@ -1,14 +1,12 @@
-
-<h2 class="mat-elevation-z2 subheader">Add Riders</h2>
 <div class="filter-table container">
     <mat-form-field class="filter-field">
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter Riders">
+        <input matInput (keyup)="applyFilter($event.target.value)" [value]='filterTable.filter' placeholder="Filter Riders">
     </mat-form-field>
 
     <mat-table #table class="filter-table" [dataSource]="filterTable">
         <ng-container matColumnDef="rider">
             <mat-header-cell *matHeaderCellDef>Rider</mat-header-cell>
-            <mat-cell *matCellDef="let rider">{{ rider.fullName() }}</mat-cell>
+            <mat-cell *matCellDef="let rider">{{ rider.first_name}}  {{rider.last_name}}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="club">
             <mat-header-cell *matHeaderCellDef>Club</mat-header-cell>
@@ -16,16 +14,18 @@
         </ng-container>
         <ng-container matColumnDef="number">
             <mat-header-cell *matHeaderCellDef>License No.</mat-header-cell>
-            <mat-cell *matCellDef="let rider">{{ rider.licenseNo }}</mat-cell>
+            <mat-cell *matCellDef="let rider">{{ rider.licenceno }}</mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="filterDisplayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: filterDisplayedColumns;" (click)="openDialog(row)"></mat-row>
 
     </mat-table>
+
     <mat-paginator #paginator
         [pageSize]="5"
         [pageSizeOptions]="[5, 10, 20]"
         [showFirstLastButtons]="true">
     </mat-paginator>
+
 </div>

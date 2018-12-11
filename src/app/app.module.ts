@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import {Route, RouterModule, ROUTES} from '@angular/router';
+import {Route, RouterModule} from '@angular/router';
 
 import {
     MatTableModule,

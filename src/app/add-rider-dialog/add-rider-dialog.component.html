@@ -3,7 +3,7 @@
   <mat-grid-tile role="listitem">
     <mat-form-field>
       <mat-label>Name</mat-label>
-      <input disabled matInput [value]="rider.fullName()">
+      <input disabled matInput [value]="rider.first_name + ' ' + rider.last_name">
     </mat-form-field>
   </mat-grid-tile>
   <mat-grid-tile role="listitem">

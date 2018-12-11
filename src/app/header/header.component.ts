@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import {Race} from '../race';
+import {RacesService} from '../races.service';
+import {RidersService} from '../riders.service';
 
 @Component({
   selector: 'app-header',
@@ -8,7 +11,9 @@ import {Router} from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private racesService: RacesService,
+              private ridersService: RidersService,
+              private router: Router) { }
 
   ngOnInit() {
   }
@@ -16,4 +21,18 @@ export class HeaderComponent implements OnInit {
   selectRace(): void {
     this.router.navigate(['/races']);
   }
+
+  currentRace(): any {
+    // return the display name of the selected race if available
+    if (this.racesService.selected) {
+      return this.racesService.selected.title;
+    } else {
+      return "Select Race";
+    }
+  }
+
+  addRider(): void {
+
+  }
+
 }

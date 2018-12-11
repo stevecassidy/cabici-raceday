@@ -37,6 +37,7 @@ export class EntryService {
   resetEntries() {
     this.dataStore.entries = [];
     window.localStorage.setItem('entries', '[]')
+    this._entries.next(Object.assign({}, this.dataStore).entries);
   }
 
   loadFromLocalStorage(): void {
@@ -45,22 +46,7 @@ export class EntryService {
     if (localEntries !== null) {
       for (let i = 0; i < localEntries.length; i++) {
         if (localEntries[i].rider !== null) {
-          let lr = localEntries[i].rider;
-          let rider = new Rider(
-            lr.id,
-            lr.first_name,
-            lr.last_name,
-            lr.club,
-            lr.clubslug,
-            lr.licenseNo,
-            lr.classification,
-            lr.member_category,
-            lr.member_date,
-            lr.grades,
-            lr.gender,
-            lr.emergencyphone,
-            lr.emergencyname
-          );
+          let rider = <Rider>localEntries[i].rider;
           let grade = localEntries[i].grade;
           let number = localEntries[i].number;
           this.dataStore.entries.push(new Entry(rider, grade, number));

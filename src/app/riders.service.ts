@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Rider } from './rider';
-import {Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from './auth.service';
 
 
 @Injectable({
@@ -10,74 +11,64 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export class RidersService {
 
-  private riders = [];
+  private _riders: BehaviorSubject<Rider[]>;
+  private dataStore: {
+    riders: Rider[]
+  };
   private apiUrl = 'https://cabici.net/api/riders/';
 
-  constructor(private http: HttpClient) {
-    this.riders = <Rider[]>[];
+  constructor(private http: HttpClient,
+              private authService: AuthService) {
+    this._riders = <BehaviorSubject<Rider[]>>new BehaviorSubject([]);
+    this.dataStore = {
+      riders: []
+    }
     this.loadFromLocalStorage();
   }
 
   getRiders(): Observable<Rider[]> {
-    return of(this.riders);
+    return this._riders.asObservable();
   }
 
   loadRiders() {
+    this.dataStore.riders = [];
     this._loadRiders(this.apiUrl);
   }
 
   _loadRiders(url: string): void {
 
+    const token = this.authService.currentUser().token;
+
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Token 963f34e7eaf9ec22b5df4f2a7362fe798d16ccc6'
+        'Authorization': 'Token ' + token
       })
     };
 
     let response = this.http.get(url, httpOptions);
 
     response.subscribe(httpResp => {
-      const riders = <Rider[]> httpResp['results'];
-      this.riders = riders;
-      //if (httpResp['next']) {
-        //this.loadRiders(httpResp['next']);
-      // }
-      window.localStorage.setItem('riders', JSON.stringify(this.riders));
-      console.log('Riders loaded:', this.riders);
+      let riders = <Rider[]> httpResp['results'];
+      this.dataStore.riders = this.dataStore.riders.concat(riders);
+      window.localStorage.setItem('riders', JSON.stringify(this.dataStore.riders));
+      this._riders.next(Object.assign({}, this.dataStore).riders);
+      if (httpResp['next']) {
+        this._loadRiders(httpResp['next']);
+      }
     });
   }
 
   loadFromLocalStorage(): void {
+
     // load riders from local storage
     const local = JSON.parse(window.localStorage.getItem('riders'));
     if (local !== null) {
-      for (let i = 0; i < local.length; i++) {
-        if (local[i] !== null) {
-          let lr = local[i];
-          let rider = new Rider(
-            lr.id,
-            lr.first_name,
-            lr.last_name,
-            lr.club,
-            lr.clubslug,
-            lr.licenceno,
-            lr.classification,
-            lr.member_category,
-            lr.member_date,
-            lr.grades,
-            lr.gender,
-            lr.emergencyphone,
-            lr.emergencyname
-          );
-          this.riders.push(rider);
-        }
-      }
+      this.dataStore.riders = <Rider[]> local;
     } else {
       // force load from cabici API
       this.loadRiders();
     }
+    this._riders.next(Object.assign({}, this.dataStore).riders);
   }
-
-
 }
 

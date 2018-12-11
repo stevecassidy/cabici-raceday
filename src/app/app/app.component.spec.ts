@@ -1,6 +1,5 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import {RiderListComponent} from './rider-list/rider-list.component';
 import {Component} from '@angular/core';
 
 @Component({selector: 'rider-list', template: ""})

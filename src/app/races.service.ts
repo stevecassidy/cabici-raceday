@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RACES } from './mock-races';
+import { RACES } from './mock/mock-races';
 import {Observable, of} from 'rxjs';
 import {Race} from './race';
 
@@ -23,7 +23,6 @@ export class RacesService {
 
   set selected(value: Race) {
     this._selected = value;
-    console.log("SELECTED", value);
   }
 
   getRaces(): Observable<Race[]> {

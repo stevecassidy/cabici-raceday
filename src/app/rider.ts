@@ -10,7 +10,7 @@ export class Rider {
         public last_name: string,
         public club: string,
         public clubslug: string,
-        public licenseNo: string,
+        public licenceno: string,
         public classification: string,
         public member_category: string,
         public member_date: string,  /* really a date */
@@ -20,11 +20,4 @@ export class Rider {
         public emergencyname: string
     ) { }
 
-    public fullName() {
-        return this.first_name + ' ' + this.last_name;
-    }
-
-    public getClub() {
-       return this.club;
-    }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {RacesService} from '../races.service';
 import {Race} from '../race';
 import {MatTableDataSource} from '@angular/material';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-race-chooser',
@@ -15,7 +16,8 @@ export class RaceChooserComponent implements OnInit {
   private raceTable: MatTableDataSource<Race>;
 
   constructor(
-    private racesService: RacesService
+    private racesService: RacesService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -36,5 +38,6 @@ export class RaceChooserComponent implements OnInit {
 
   setSelected(race: Race): void {
     this.racesService.selected = race;
+    this.router.navigate(['/']);
   }
 }

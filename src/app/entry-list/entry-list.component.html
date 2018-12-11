@@ -1,4 +1,3 @@
-<h2 class="subheader mat-elevation-z2">Riders Entered</h2>
 <button (click)="resetEntries()">Reset</button>
 <div class="rider-table container">
   <mat-tab-group dynamicHeight>
@@ -14,7 +13,7 @@
         </ng-container>
         <ng-container matColumnDef="rider">
           <mat-header-cell *matHeaderCellDef>Rider</mat-header-cell>
-          <mat-cell *matCellDef="let entry">{{ entry.rider.fullName() }}</mat-cell>
+          <mat-cell *matCellDef="let entry">{{ entry.rider.first_name }} {{entry.rider.last_name}}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="club">
           <mat-header-cell *matHeaderCellDef>Club</mat-header-cell>
