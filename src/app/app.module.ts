@@ -31,11 +31,12 @@ import { EntryListComponent } from './entry-list/entry-list.component';
 import { HeaderComponent } from './header/header.component';
 import { RaceChooserComponent } from './race-chooser/race-chooser.component';
 import { RaceEntryComponent } from './race-entry/race-entry.component';
+import {RaceChosenGuard} from './race-chosen.guard';
 
 const ROUTES: Route[] = [
-  {path: '', component: RaceEntryComponent},
+  {path: '', component: RaceEntryComponent, canActivate: [RaceChosenGuard]},
   {path: 'races', component: RaceChooserComponent},
-  {path: 'entries', component: RaceEntryComponent}
+  {path: 'entries', component: RaceEntryComponent, canActivate: [RaceChosenGuard]}
 ];
 
 
@@ -76,7 +77,9 @@ const ROUTES: Route[] = [
     RaceChooserComponent,
     RaceEntryComponent,
   ],
-  providers: [],
+  providers: [
+    RaceChosenGuard
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

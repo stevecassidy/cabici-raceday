@@ -76,7 +76,6 @@ export class RidersService {
     if (local !== null) {
       this.dataStore.riders = <Rider[]>local.riders;
       this.dataStore.newriders = <Rider[]>local.newriders;
-      console.log("NR", this.dataStore.newriders);
     } else {
       // force load from cabici API
       this.loadRiders();
