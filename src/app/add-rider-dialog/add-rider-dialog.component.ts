@@ -1,6 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Rider} from '../rider';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {RacesService} from '../races.service';
+import {Race} from '../race';
+import {Club} from '../club';
+import {ClubList} from '../club-list';
 
 @Component({
   selector: 'app-add-rider-dialog',
@@ -9,12 +13,17 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 })
 
 export class AddRiderDialogComponent implements OnInit {
-  rider: Rider;
-  grade: string;
-  number: string;
-  grades: string[];
+  private rider: Rider;
+  private race: Race;
+  private grade: string;
+  private number: string;
+  private grades: string[];
+  private disabled: boolean;
+  private clubs: string[];
+  private clubslug: string;
 
-  constructor(public dialogRef: MatDialogRef<AddRiderDialogComponent>,
+  constructor(public racesService: RacesService,
+              public dialogRef: MatDialogRef<AddRiderDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
 
   }
@@ -25,9 +34,27 @@ export class AddRiderDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+
+
+    this.clubs = ClubList.clubSlugs();
+
+    this.disabled = this.data.editable;
+    this.race = this.racesService.selected;
     this.rider = this.data.rider;
-    this.grades = this.data.grades;
-    this.grade = this.rider.grades['WaratahMastersCC'];
+    this.grades = 'A|B|C|D|E|F'.split('|');
+    let raceclub = 'WaratahMastersCC';  // default to find grade
+
+    if (this.race) {
+      this.grades = this.race.grades.split('|');
+      raceclub = this.race.club.slug;
+    }
+
+    if (!this.data.editable) {
+      this.grade = this.rider.grades[raceclub];
+      this.clubslug = this.rider.clubslug;
+    } else {
+      this.grade = '';
+    }
   }
 
 

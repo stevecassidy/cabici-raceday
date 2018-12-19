@@ -19,7 +19,8 @@ import {
     MatDialogModule,
     MatToolbarModule,
     MatRippleModule,
-    MatIconModule
+    MatIconModule,
+    MatRadioModule
   } from '@angular/material';
 
 
@@ -63,6 +64,7 @@ const ROUTES: Route[] = [
     MatRippleModule,
     MatIconModule,
     HttpClientModule,
+    MatRadioModule,
     RouterModule.forRoot(ROUTES)
   ],
   declarations: [

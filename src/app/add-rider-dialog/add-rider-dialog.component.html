@@ -2,14 +2,27 @@
 <mat-grid-list cols="2" rowHeight="4em">
   <mat-grid-tile role="listitem">
     <mat-form-field>
-      <mat-label>Name</mat-label>
-      <input disabled matInput [value]="rider.first_name + ' ' + rider.last_name">
+      <mat-label>First Name</mat-label>
+      <input matInput [(ngModel)]="rider.first_name">
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile role="listitem">
+    <mat-form-field>
+      <mat-label>Last Name</mat-label>
+      <input  matInput [(ngModel)]="rider.last_name">
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile role="listitem">
+    <mat-form-field>
+      <input matInput [(ngModel)]="number" placeholder="Number">
     </mat-form-field>
   </mat-grid-tile>
   <mat-grid-tile role="listitem">
     <mat-form-field>
       <mat-label>Club</mat-label>
-      <input disabled matInput [value]="rider.club">
+      <mat-select [(ngModel)]="rider.clubslug">
+        <mat-option *ngFor="let aclub of clubs" [value]="aclub">{{aclub}}</mat-option>
+      </mat-select>
     </mat-form-field>
   </mat-grid-tile>
   <mat-grid-tile role="listitem">
@@ -21,13 +34,21 @@
   <mat-grid-tile role="listitem">
     <mat-form-field>
       <mat-label>Licence</mat-label>
-      <input disabled matInput [value]="rider.licenseNo">
+      <input matInput [(ngModel)]="rider.licenceno">
     </mat-form-field>
   </mat-grid-tile>
   <mat-grid-tile role="listitem">
     <mat-form-field>
-      <input matInput [(ngModel)]="number" placeholder="Number">
+      <mat-label>Membership Date</mat-label>
+      <input matInput [(ngModel)]="rider.member_date">
     </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile role="listitem">
+      <mat-radio-group class="rider-category-buttons" [(ngModel)]="rider.member_category">
+        <mat-radio-button class="rider-category-radio-button" value="race">Race</mat-radio-button>
+        <mat-radio-button class="rider-category-radio-button" value="ride">Ride</mat-radio-button>
+        <mat-radio-button class="rider-category-radio-button" value="day">Day</mat-radio-button>
+      </mat-radio-group>
   </mat-grid-tile>
   <mat-grid-tile>
     <mat-button-toggle-group #group="matButtonToggleGroup"  [value]="grade" (change)="this.grade=$event.source.value">
@@ -38,6 +59,6 @@
 
 <div mat-dialog-actions>
   <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-button [mat-dialog-close]="{ rider: rider, grade: grade, number: number }">Add Rider</button>
+  <button mat-button [mat-dialog-close]="{ rider: rider, grade: grade, number: number}">Add Rider</button>
 </div>
 

@@ -55,7 +55,8 @@ export const RACES = [
     'licencereq': {
       'key': 'em.mw',
       'display': 'Elite or Masters Men & Women'
-    }
+    },
+    'grades': 'A|B|C|D|E|F'
   },
   {
     'id': 2615,
@@ -71,7 +72,7 @@ export const RACES = [
       'shortname': 'SMSP North',
       'location': '-33.80272298036143,150.8697468789734'
     },
-    'title': 'Graded Scratch Race',
+    'title': 'Age Based Race',
     'date': '2018-12-16',
     'signontime': '05:45:00',
     'starttime': '7:00am all grades',
@@ -113,7 +114,8 @@ export const RACES = [
     'licencereq': {
       'key': 'em.mw',
       'display': 'Elite or Masters Men & Women'
-    }
+    },
+    'grades': 'M3|M4|M5|M6|M7|M8+'
   },
   {
     'id': 2616,
@@ -171,7 +173,8 @@ export const RACES = [
     'licencereq': {
       'key': 'em.mw',
       'display': 'Elite or Masters Men & Women'
-    }
+    },
+    'grades': 'A|B|C|D|E|F'
   },
   {
     'id': 2617,
@@ -229,7 +232,8 @@ export const RACES = [
     'licencereq': {
       'key': 'em.mw',
       'display': 'Elite or Masters Men & Women'
-    }
+    },
+    'grades': 'A|A1|B|C|D|E|F'
   },
   {
     'id': 2912,
@@ -287,7 +291,8 @@ export const RACES = [
     'licencereq': {
       'key': 'em.mw',
       'display': 'Elite or Masters Men & Women'
-    }
+    },
+    'grades': 'A|B|C|D|E|F'
   },
   {
     'id': 2913,
@@ -345,7 +350,8 @@ export const RACES = [
     'licencereq': {
       'key': 'em.mw',
       'display': 'Elite or Masters Men & Women'
-    }
+    },
+    'grades': 'A|B|C|D|E|F'
   },
   {
     'id': 2914,
@@ -403,7 +409,8 @@ export const RACES = [
     'licencereq': {
       'key': 'em.mw',
       'display': 'Elite or Masters Men & Women'
-    }
+    },
+    'grades': 'A|B|C|D|E|F'
   },
   {
     'id': 2915,
@@ -461,7 +468,8 @@ export const RACES = [
     'licencereq': {
       'key': 'em.mw',
       'display': 'Elite or Masters Men & Women'
-    }
+    },
+    'grades': 'A|B|C|D|E|F'
   },
   {
     'id': 2916,
@@ -519,7 +527,8 @@ export const RACES = [
     'licencereq': {
       'key': 'em.mw',
       'display': 'Elite or Masters Men & Women'
-    }
+    },
+    'grades': 'A|B|C|D|E|F'
   },
   {
     'id': 2917,
@@ -577,7 +586,8 @@ export const RACES = [
     'licencereq': {
       'key': 'em.mw',
       'display': 'Elite or Masters Men & Women'
-    }
+    },
+    'grades': 'A|B|C|D|E|F'
   },
   {
     'id': 2945,
@@ -635,7 +645,8 @@ export const RACES = [
     'licencereq': {
       'key': 'em.mw',
       'display': 'Elite or Masters Men & Women'
-    }
+    },
+    'grades': 'A|B|C|D|E|F'
   },
   {
     'id': 2946,
@@ -693,7 +704,8 @@ export const RACES = [
     'licencereq': {
       'key': 'em.mw',
       'display': 'Elite or Masters Men & Women'
-    }
+    },
+    'grades': 'A|B|C|D|E|F'
   },
   {
     'id': 2918,
@@ -751,6 +763,7 @@ export const RACES = [
     'licencereq': {
       'key': 'em.mw',
       'display': 'Elite or Masters Men & Women'
-    }
+    },
+    'grades': 'A|B|C|D|E|F'
   }
 ];

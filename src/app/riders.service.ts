@@ -13,7 +13,8 @@ export class RidersService {
 
   private _riders: BehaviorSubject<Rider[]>;
   private dataStore: {
-    riders: Rider[]
+    riders: Rider[],
+    newriders: Rider[]
   };
   private apiUrl = 'https://cabici.net/api/riders/';
 
@@ -21,13 +22,23 @@ export class RidersService {
               private authService: AuthService) {
     this._riders = <BehaviorSubject<Rider[]>>new BehaviorSubject([]);
     this.dataStore = {
-      riders: []
-    }
+      riders: [],
+      newriders: []
+    };
     this.loadFromLocalStorage();
   }
 
   getRiders(): Observable<Rider[]> {
     return this._riders.asObservable();
+  }
+
+  newRider(rider: Rider): void {
+    if (!this.dataStore.newriders) {
+      this.dataStore.newriders = [];
+    }
+    this.dataStore.newriders.unshift(rider);
+    console.log(this.dataStore.newriders);
+    this.updateLocalStorage();
   }
 
   loadRiders() {
@@ -48,9 +59,9 @@ export class RidersService {
     let response = this.http.get(url, httpOptions);
 
     response.subscribe(httpResp => {
-      let riders = <Rider[]> httpResp['results'];
+      let riders = <Rider[]>httpResp['results'];
       this.dataStore.riders = this.dataStore.riders.concat(riders);
-      window.localStorage.setItem('riders', JSON.stringify(this.dataStore.riders));
+      this.updateLocalStorage();
       this._riders.next(Object.assign({}, this.dataStore).riders);
       if (httpResp['next']) {
         this._loadRiders(httpResp['next']);
@@ -63,12 +74,18 @@ export class RidersService {
     // load riders from local storage
     const local = JSON.parse(window.localStorage.getItem('riders'));
     if (local !== null) {
-      this.dataStore.riders = <Rider[]> local;
+      this.dataStore.riders = <Rider[]>local.riders;
+      this.dataStore.newriders = <Rider[]>local.newriders;
+      console.log("NR", this.dataStore.newriders);
     } else {
       // force load from cabici API
       this.loadRiders();
     }
     this._riders.next(Object.assign({}, this.dataStore).riders);
+  }
+
+  updateLocalStorage(): void {
+    window.localStorage.setItem('riders', JSON.stringify(this.dataStore));
   }
 }
 
