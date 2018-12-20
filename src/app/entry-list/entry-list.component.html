@@ -1,6 +1,6 @@
 <button (click)="resetEntries()">Reset</button>
 <div class="rider-table container">
-  <mat-tab-group dynamicHeight>
+  <mat-tab-group dynamicHeight [selectedIndex]="selectedTab">
     <mat-tab *ngFor="let gradeTable of gradeTables">
       <ng-template mat-tab-label>
         {{ gradeTable.grade }}

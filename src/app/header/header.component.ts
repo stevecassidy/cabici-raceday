@@ -9,6 +9,7 @@ import {MatDialog} from '@angular/material';
 import {Entry} from '../entry';
 import {EntryService} from '../entry.service';
 import {ClubList} from '../club-list';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-header',
@@ -20,6 +21,7 @@ export class HeaderComponent implements OnInit {
   constructor(private racesService: RacesService,
               private ridersService: RidersService,
               private entryService: EntryService,
+              private authService: AuthService,
               public dialog: MatDialog,
               private router: Router) { }
 
@@ -28,6 +30,15 @@ export class HeaderComponent implements OnInit {
 
   selectRace(): void {
     this.router.navigate(['/races']);
+  }
+
+  currentUser(): string {
+    let user = this.authService.currentUser();
+    if (user) {
+      return "Logged in as " + user.first_name + " " + user.last_name;
+    } else {
+      return "Not Logged In";
+    }
   }
 
   currentRace(): any {

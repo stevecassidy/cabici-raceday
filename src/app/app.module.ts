@@ -6,22 +6,22 @@ import { HttpClientModule } from '@angular/common/http';
 import {Route, RouterModule} from '@angular/router';
 
 import {
-    MatTableModule,
-    MatListModule,
-    MatGridListModule,
-    MatPaginatorModule,
-    MatTabsModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-    MatDialogModule,
-    MatToolbarModule,
-    MatRippleModule,
-    MatIconModule,
-    MatRadioModule
-  } from '@angular/material';
+  MatTableModule,
+  MatListModule,
+  MatGridListModule,
+  MatPaginatorModule,
+  MatTabsModule,
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatFormFieldModule,
+  MatSelectModule,
+  MatInputModule,
+  MatDialogModule,
+  MatToolbarModule,
+  MatRippleModule,
+  MatIconModule,
+  MatRadioModule, MatCardModule
+} from '@angular/material';
 
 
 import { AppComponent } from './app/app.component';
@@ -31,12 +31,15 @@ import { EntryListComponent } from './entry-list/entry-list.component';
 import { HeaderComponent } from './header/header.component';
 import { RaceChooserComponent } from './race-chooser/race-chooser.component';
 import { RaceEntryComponent } from './race-entry/race-entry.component';
-import {RaceChosenGuard} from './race-chosen.guard';
+import { RaceChosenGuard } from './race-chosen.guard';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './auth.guard';
 
 const ROUTES: Route[] = [
-  {path: '', component: RaceEntryComponent, canActivate: [RaceChosenGuard]},
-  {path: 'races', component: RaceChooserComponent},
-  {path: 'entries', component: RaceEntryComponent, canActivate: [RaceChosenGuard]}
+  {path: '', component: RaceEntryComponent, canActivate: [AuthGuard, RaceChosenGuard]},
+  {path: 'races', component: RaceChooserComponent, canActivate: [AuthGuard]},
+  {path: 'entries', component: RaceEntryComponent, canActivate: [AuthGuard, RaceChosenGuard]},
+  {path: 'login', component: LoginComponent},
 ];
 
 
@@ -60,8 +63,9 @@ const ROUTES: Route[] = [
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
+    MatCardModule,
     MatDialogModule,
-    MatToolbarModule,
+    MatToolbarModule
     MatRippleModule,
     MatIconModule,
     HttpClientModule,
@@ -76,9 +80,11 @@ const ROUTES: Route[] = [
     HeaderComponent,
     RaceChooserComponent,
     RaceEntryComponent,
+    LoginComponent,
   ],
   providers: [
-    RaceChosenGuard
+    RaceChosenGuard,
+    AuthGuard
   ],
   bootstrap: [ AppComponent ]
 })

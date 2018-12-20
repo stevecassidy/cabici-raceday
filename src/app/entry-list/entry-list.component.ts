@@ -3,6 +3,7 @@ import { EntryService } from '../entry.service';
 import { MatTableDataSource } from '@angular/material';
 import { Entry } from '../entry';
 import { Grades } from '../grades';
+import {RacesService} from '../races.service';
 
 
 @Component({
@@ -12,18 +13,24 @@ import { Grades } from '../grades';
 })
 export class EntryListComponent implements OnInit {
 
-  grades = Grades.grades;
-  displayedColumns = ['number', 'rider', 'club'];
-  gradeTables = Array<{ grade: string, table: MatTableDataSource<Entry> }>(this.grades.length);
+  grades: string[];
+  displayedColumns: string[] = ['number', 'rider', 'club'];
+  gradeTables: Array<{ grade: string, table: MatTableDataSource<Entry> }>;
   entries: Entry[];
+  selectedTab: number;
 
   constructor(
     private entryService: EntryService,
+    private racesService: RacesService
   ) {
 
   }
 
   ngOnInit() {
+
+    this.grades = this.racesService.selected.grades.split('|');
+    this.gradeTables = Array<{ grade: string, table: MatTableDataSource<Entry> }>(this.grades.length);
+
     this.getEntries();
 
     // give data to grade tables
@@ -57,5 +64,9 @@ export class EntryListComponent implements OnInit {
   resetEntries() {
     this.entryService.resetEntries();
     this.updateEntries();
+  }
+
+  setTab(index: number): void {
+    this.selectedTab = index;
   }
 }
