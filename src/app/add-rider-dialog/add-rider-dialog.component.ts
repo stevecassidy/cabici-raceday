@@ -13,14 +13,14 @@ import {ClubList} from '../club-list';
 })
 
 export class AddRiderDialogComponent implements OnInit {
-  private rider: Rider;
-  private race: Race;
-  private grade: string;
-  private number: string;
-  private grades: string[];
-  private disabled: boolean;
-  private clubs: string[];
-  private clubslug: string;
+  public rider: Rider;
+  public race: Race;
+  public grade: string;
+  public number: string;
+  public grades: string[];
+  public disabled: boolean;
+  public clubs: string[];
+  public clubslug: string;
 
   constructor(public racesService: RacesService,
               public dialogRef: MatDialogRef<AddRiderDialogComponent>,

@@ -28,8 +28,37 @@ export class EntryService {
     return this._entries.asObservable();
   }
 
-  storeEntry(entry: Entry) {
+  getEntry(grade: string, number: string): Entry {
+    for(let i=0; i<this.dataStore.entries.length; i++) {
+      const e = this.dataStore.entries[i];
+      if (e.grade === grade && e.number === number) {
+        return e;
+      }
+    }
+    return null;
+  }
+
+  getPlacedEntry(grade: string, place: number): Entry {
+    for(let i=0; i<this.dataStore.entries.length; i++) {
+      const e = this.dataStore.entries[i];
+      if (e.grade === grade && e.place === place) {
+        return e;
+      }
+    }
+    return null;
+  }
+
+  gradeEntries(grade: string): Entry[] {
+   // return this._entries.filter(entry => entry.grade === grade);
+    return [];
+  }
+
+  storeEntry(entry: Entry): void {
     this.dataStore.entries.unshift(entry);
+    this.saveEntries();
+  }
+
+  saveEntries(): void {
     this._entries.next(Object.assign({}, this.dataStore).entries);
     window.localStorage.setItem('entries', JSON.stringify(this.dataStore.entries));
   }
@@ -49,7 +78,8 @@ export class EntryService {
           let rider = <Rider>localEntries[i].rider;
           let grade = localEntries[i].grade;
           let number = localEntries[i].number;
-          this.dataStore.entries.push(new Entry(rider, grade, number));
+          let place = localEntries[i].place;
+          this.dataStore.entries.push(new Entry(rider, grade, number, place));
 
           this._entries.next(Object.assign({}, this.dataStore).entries);
         }

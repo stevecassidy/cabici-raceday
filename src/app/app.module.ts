@@ -24,8 +24,8 @@ import {
 } from '@angular/material';
 
 
-import { AppComponent } from './app/app.component';
 import { RiderListComponent } from './rider-list/rider-list.component';
+import { AppComponent } from './app/app.component';
 import { AddRiderDialogComponent } from './add-rider-dialog/add-rider-dialog.component';
 import { EntryListComponent } from './entry-list/entry-list.component';
 import { HeaderComponent } from './header/header.component';
@@ -34,12 +34,14 @@ import { RaceEntryComponent } from './race-entry/race-entry.component';
 import { RaceChosenGuard } from './race-chosen.guard';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
+import { ResultsComponent } from './results/results.component';
 
 const ROUTES: Route[] = [
   {path: '', component: RaceEntryComponent, canActivate: [AuthGuard, RaceChosenGuard]},
   {path: 'races', component: RaceChooserComponent, canActivate: [AuthGuard]},
   {path: 'entries', component: RaceEntryComponent, canActivate: [AuthGuard, RaceChosenGuard]},
   {path: 'login', component: LoginComponent},
+  {path: 'results', component: ResultsComponent, canActivate: [RaceChosenGuard]}
 ];
 
 
@@ -65,7 +67,7 @@ const ROUTES: Route[] = [
     MatInputModule,
     MatCardModule,
     MatDialogModule,
-    MatToolbarModule
+    MatToolbarModule,
     MatRippleModule,
     MatIconModule,
     HttpClientModule,
@@ -81,6 +83,7 @@ const ROUTES: Route[] = [
     RaceChooserComponent,
     RaceEntryComponent,
     LoginComponent,
+    ResultsComponent,
   ],
   providers: [
     RaceChosenGuard,

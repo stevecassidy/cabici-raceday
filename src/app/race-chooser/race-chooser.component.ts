@@ -11,9 +11,9 @@ import {Router} from '@angular/router';
 })
 export class RaceChooserComponent implements OnInit {
 
-  private races: Race[];
-  private displayedColumns: string[] = ['date', 'location', 'title'];
-  private raceTable: MatTableDataSource<Race>;
+  public races: Race[];
+  public displayedColumns: string[] = ['date', 'location', 'title'];
+  public raceTable: MatTableDataSource<Race>;
 
   constructor(
     private racesService: RacesService,

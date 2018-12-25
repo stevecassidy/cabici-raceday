@@ -11,6 +11,7 @@ import { Entry } from '../entry';
 import { RidersService } from '../riders.service';
 import {EntryService} from '../entry.service';
 import {AddRiderDialogComponent} from '../add-rider-dialog/add-rider-dialog.component';
+import {ClubList} from '../club-list';
 
 @Component({
   selector: 'app-rider-list',
@@ -21,8 +22,8 @@ import {AddRiderDialogComponent} from '../add-rider-dialog/add-rider-dialog.comp
 export class RiderListComponent implements OnInit {
     private grades = Grades.grades;
     private riders: Rider[];
-    private filterTable: MatTableDataSource<Rider>;
-    private filterDisplayedColumns = ['rider', 'club', 'number'];
+    public filterTable: MatTableDataSource<Rider>;
+    public filterDisplayedColumns = ['rider', 'club', 'number'];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(private ridersService: RidersService,
@@ -92,7 +93,7 @@ export class RiderListComponent implements OnInit {
     }
 
     addRider(rider: Rider, grade: string, number: string): void {
-        let entry = new Entry(rider, grade, number);
+        let entry = new Entry(rider, grade, number, 0);
         this.entryService.storeEntry(entry);
         this.filterTable.filter = '';
     }
@@ -113,6 +114,27 @@ export class RiderListComponent implements OnInit {
         });
     }
 
+  newRiderDialog(): void {
+
+    let dialogRef = this.dialog.open(AddRiderDialogComponent, {
+      width: '800px',
+      data: {
+        rider: new Rider(),
+        editable: true,
+        grades: [],
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== null) {
+        // TODO: fill out some rider details, eg. club
+        result.rider.club = ClubList.clubFromSlug(result.rider.clubslug).name;
+        this.ridersService.newRider(result.rider);
+        let entry: Entry = new Entry(result.rider, result.grade, result.number);
+        this.entryService.storeEntry(entry);
+      }
+    });
+  }
 
 }
 

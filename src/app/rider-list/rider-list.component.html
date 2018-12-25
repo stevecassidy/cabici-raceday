@@ -2,6 +2,7 @@
     <mat-form-field class="filter-field">
         <input matInput (keyup)="applyFilter($event.target.value)" [value]='filterTable.filter' placeholder="Filter Riders">
     </mat-form-field>
+    <button mat-button id="add-rider-button" (click)="newRiderDialog()">Add Rider</button>
 
     <mat-table #table class="filter-table" [dataSource]="filterTable">
         <ng-container matColumnDef="rider">

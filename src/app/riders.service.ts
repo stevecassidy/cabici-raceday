@@ -16,7 +16,7 @@ export class RidersService {
     riders: Rider[],
     newriders: Rider[]
   };
-  private apiUrl = 'https://cabici.net/api/riders/';
+  private apiUrl = 'https://test.cabici.net/api/riders/';
 
   constructor(private http: HttpClient,
               private authService: AuthService) {
@@ -47,6 +47,11 @@ export class RidersService {
   }
 
   _loadRiders(url: string): void {
+
+    // can't load if not logged in
+    if (!this.authService.currentUser()) {
+      return;
+    }
 
     const token = this.authService.currentUser().token;
 
