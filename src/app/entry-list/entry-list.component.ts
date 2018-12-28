@@ -13,7 +13,7 @@ import {RacesService} from '../races.service';
 })
 export class EntryListComponent implements OnInit {
 
-  grades: string[];
+  grading: string[];
   displayedColumns: string[] = ['number', 'rider', 'club'];
   gradeTables: Array<{ grade: string, table: MatTableDataSource<Entry> }>;
   entries: Entry[];
@@ -28,16 +28,16 @@ export class EntryListComponent implements OnInit {
 
   ngOnInit() {
 
-    this.grades = this.racesService.selected.grades.split('|');
-    this.gradeTables = Array<{ grade: string, table: MatTableDataSource<Entry> }>(this.grades.length);
+    this.grading = this.racesService.selected.grading.split(',');
+    this.gradeTables = Array<{ grade: string, table: MatTableDataSource<Entry> }>(this.grading.length);
 
     this.getEntries();
 
     // give data to grade tables
-    for (let i = 0; i < this.grades.length; i++) {
+    for (let i = 0; i < this.grading.length; i++) {
       this.gradeTables[i] = {
-        grade: this.grades[i],
-        table: new MatTableDataSource<Entry>(this.filterEntries(this.grades[i]))
+        grade: this.grading[i],
+        table: new MatTableDataSource<Entry>(this.filterEntries(this.grading[i]))
       };
     }
   }

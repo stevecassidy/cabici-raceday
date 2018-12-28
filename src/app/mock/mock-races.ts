@@ -56,7 +56,7 @@ export const RACES = [
       'key': 'em.mw',
       'display': 'Elite or Masters Men & Women'
     },
-    'grades': 'A|B|C|D|E|F'
+    'grading': 'A|B|C|D|E|F'
   },
   {
     'id': 2615,
@@ -115,7 +115,7 @@ export const RACES = [
       'key': 'em.mw',
       'display': 'Elite or Masters Men & Women'
     },
-    'grades': 'M3|M4|M5|M6|M7|M8+'
+    'grading': 'M3|M4|M5|M6|M7|M8+'
   },
   {
     'id': 2616,

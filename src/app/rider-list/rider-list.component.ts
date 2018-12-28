@@ -1,11 +1,10 @@
-import {Component, ViewChild, OnInit, AfterViewInit} from '@angular/core';
+import {Component, ViewChild, OnInit, SimpleChanges, OnChanges} from '@angular/core';
 import {
         MatPaginator,
         MatTableDataSource,
         MatDialog
     } from '@angular/material'
 
-import { Grades } from '../grades';
 import { Rider } from '../rider';
 import { Entry } from '../entry';
 import { RidersService } from '../riders.service';
@@ -19,8 +18,8 @@ import {ClubList} from '../club-list';
   styleUrls: ['./rider-list.component.css']
 })
 
-export class RiderListComponent implements OnInit {
-    private grades = Grades.grades;
+export class RiderListComponent implements OnInit, OnChanges {
+    private grading: string[];
     private riders: Rider[];
     public filterTable: MatTableDataSource<Rider>;
     public filterDisplayedColumns = ['rider', 'club', 'number'];
@@ -33,6 +32,10 @@ export class RiderListComponent implements OnInit {
 
     ngOnInit() {
       this.getRiders();
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+      console.log(changes);
     }
 
     updateRiderTable(): void {
@@ -103,7 +106,7 @@ export class RiderListComponent implements OnInit {
           width: '700px',
           data: {
               rider: rider,
-              grades: this.grades,
+              grades: this.grading,
             }
         });
 
@@ -129,7 +132,7 @@ export class RiderListComponent implements OnInit {
       if (result !== null) {
         // TODO: fill out some rider details, eg. club
         result.rider.club = ClubList.clubFromSlug(result.rider.clubslug).name;
-        this.ridersService.newRider(result.rider);
+        this.entryService.newRider(result.rider);
         let entry: Entry = new Entry(result.rider, result.grade, result.number, 0);
         this.entryService.storeEntry(entry);
       }

@@ -19,7 +19,7 @@ export class ResultsComponent implements OnInit {
               private racesService: RacesService) { }
 
   ngOnInit() {
-    this.grades = this.racesService.selected.grades.split('|');
+    this.grades = this.racesService.selected.grading.split(',');
     this.resultTables = Array<{ grade: string, table: MatTableDataSource<Result> }>(this.grades.length);
     this.displayedColumns = ['place', 'number', 'rider'];
 

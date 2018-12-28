@@ -17,7 +17,7 @@ export class AddRiderDialogComponent implements OnInit {
   public race: Race;
   public grade: string;
   public number: string;
-  public grades: string[];
+  public grading: string[];
   public disabled: boolean;
   public clubs: string[];
   public clubslug: string;
@@ -41,11 +41,11 @@ export class AddRiderDialogComponent implements OnInit {
     this.disabled = this.data.editable;
     this.race = this.racesService.selected;
     this.rider = this.data.rider;
-    this.grades = 'A|B|C|D|E|F'.split('|');
+    this.grading = 'A,B,C,D,E,F'.split(',');
     let raceclub = 'WaratahMastersCC';  // default to find grade
 
     if (this.race) {
-      this.grades = this.race.grades.split('|');
+      this.grading = this.race.grading.split(',');
       raceclub = this.race.club.slug;
     }
 

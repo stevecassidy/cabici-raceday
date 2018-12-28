@@ -18,6 +18,6 @@ export class Race {
     public discipline: { key: string, display: string },
     public category: { key: string, display: string },
     public licencereq: { key: string, display: string },
-    public grades: string
+    public grading: string
   ) { }
 }

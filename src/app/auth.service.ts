@@ -17,7 +17,7 @@ export class AuthService {
   constructor(private http: HttpClient) {
     this.apiUrl = environment.apiURL + "/api/token-auth/";
     this.loggedin = false;
-    this._status = <BehaviorSubject<User>new BehaviorSubject(null);
+    this._status = <BehaviorSubject<User>>new BehaviorSubject(null);
     this.loadFromLocalStorage();
    }
 

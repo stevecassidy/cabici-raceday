@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {Race} from '../race';
 import {RacesService} from '../races.service';
 import {RidersService} from '../riders.service';
-import {Rider} from '../rider';
-import {AddRiderDialogComponent} from '../add-rider-dialog/add-rider-dialog.component';
 import {MatDialog} from '@angular/material';
-import {Entry} from '../entry';
 import {EntryService} from '../entry.service';
-import {ClubList} from '../club-list';
 import {AuthService} from '../auth.service';
 
 @Component({
@@ -50,9 +45,9 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-
-  navigateResults(): void {
-    this.router.navigate(['results']);
+  apiLoad(): void {
+    this.racesService.loadRaces();
+    this.ridersService.loadRiders();
   }
 
 }

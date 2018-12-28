@@ -52,7 +52,7 @@
   </mat-grid-tile>
   <mat-grid-tile>
     <mat-button-toggle-group #group="matButtonToggleGroup"  [value]="grade" (change)="this.grade=$event.source.value">
-      <mat-button-toggle *ngFor="let thegrade of grades" value="{{ thegrade }}" >{{ thegrade }}</mat-button-toggle>
+      <mat-button-toggle *ngFor="let thegrade of grading" value="{{ thegrade }}" >{{ thegrade }}</mat-button-toggle>
     </mat-button-toggle-group>
   </mat-grid-tile>
 </mat-grid-list>

@@ -13,8 +13,7 @@ export class RidersService {
 
   private _riders: BehaviorSubject<Rider[]>;
   private dataStore: {
-    riders: Rider[],
-    newriders: Rider[]
+    riders: Rider[]
   };
   private readonly apiUrl: string;
 
@@ -25,7 +24,6 @@ export class RidersService {
     this._riders = <BehaviorSubject<Rider[]>>new BehaviorSubject([]);
     this.dataStore = {
       riders: [],
-      newriders: []
     };
     this.loadFromLocalStorage();
   }
@@ -34,16 +32,7 @@ export class RidersService {
     return this._riders.asObservable();
   }
 
-  newRider(rider: Rider): void {
-    if (!this.dataStore.newriders) {
-      this.dataStore.newriders = [];
-    }
-    this.dataStore.newriders.unshift(rider);
-    console.log(this.dataStore.newriders);
-    this.updateLocalStorage();
-  }
-
-  loadRiders() {
+  loadRiders(): void {
     this.dataStore.riders = [];
     this._loadRiders(this.apiUrl);
   }
@@ -82,7 +71,6 @@ export class RidersService {
     const local = JSON.parse(window.localStorage.getItem('riders'));
     if (local !== null) {
       this.dataStore.riders = <Rider[]>local.riders;
-      this.dataStore.newriders = <Rider[]>local.newriders;
     } else {
       // force load from cabici API
       this.loadRiders();
