@@ -5,6 +5,8 @@ export class Entry {
         public rider: Rider,
         public grade: string,
         public number: string,
-        public place: number,
+        public place: number = 0,
+        public dnf: boolean = false,
+        public grade_change: boolean = false
     ) { }
 }

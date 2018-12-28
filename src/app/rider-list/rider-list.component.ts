@@ -130,7 +130,7 @@ export class RiderListComponent implements OnInit {
         // TODO: fill out some rider details, eg. club
         result.rider.club = ClubList.clubFromSlug(result.rider.clubslug).name;
         this.ridersService.newRider(result.rider);
-        let entry: Entry = new Entry(result.rider, result.grade, result.number);
+        let entry: Entry = new Entry(result.rider, result.grade, result.number, 0);
         this.entryService.storeEntry(entry);
       }
     });

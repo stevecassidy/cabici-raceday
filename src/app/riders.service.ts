@@ -3,7 +3,7 @@ import { Rider } from './rider';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
-
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +16,12 @@ export class RidersService {
     riders: Rider[],
     newriders: Rider[]
   };
-  private apiUrl = 'https://test.cabici.net/api/riders/';
+  private readonly apiUrl: string;
 
   constructor(private http: HttpClient,
               private authService: AuthService) {
+
+    this.apiUrl = environment.apiURL + "/api/riders/";
     this._riders = <BehaviorSubject<Rider[]>>new BehaviorSubject([]);
     this.dataStore = {
       riders: [],

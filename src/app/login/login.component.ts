@@ -18,11 +18,12 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-
   login(): void {
-    if (this.authService.login(this.email, this.password)) {
-      this.router.navigate(['']);
-    }
+    this.authService.login(this.email, this.password)
+      .subscribe(user => {
+        this.router.navigate(['entries']);
+      }
+    );
   }
 
   cancel(): boolean {
