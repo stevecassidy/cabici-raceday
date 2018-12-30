@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Rider } from './rider';
+import { Rider } from '../classes/rider';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

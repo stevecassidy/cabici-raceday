@@ -24,17 +24,17 @@ import {
 } from '@angular/material';
 
 
-import { RiderListComponent } from './rider-list/rider-list.component';
-import { AppComponent } from './app/app.component';
-import { AddRiderDialogComponent } from './add-rider-dialog/add-rider-dialog.component';
-import { EntryListComponent } from './entry-list/entry-list.component';
-import { HeaderComponent } from './header/header.component';
-import { RaceChooserComponent } from './race-chooser/race-chooser.component';
-import { RaceEntryComponent } from './race-entry/race-entry.component';
-import { RaceChosenGuard } from './race-chosen.guard';
-import { LoginComponent } from './login/login.component';
-import { AuthGuard } from './auth.guard';
-import { ResultsComponent } from './results/results.component';
+import { RiderListComponent } from './components/rider-list/rider-list.component';
+import { AppComponent } from './components/app/app.component';
+import { AddRiderDialogComponent } from './components/add-rider-dialog/add-rider-dialog.component';
+import { EntryListComponent } from './components/entry-list/entry-list.component';
+import { HeaderComponent } from './components/header/header.component';
+import { RaceChooserComponent } from './components/race-chooser/race-chooser.component';
+import { RaceEntryComponent } from './components/race-entry/race-entry.component';
+import { RaceChosenGuard } from './guards/race-chosen.guard';
+import { LoginComponent } from './components/login/login.component';
+import { AuthGuard } from './guards/auth.guard';
+import { ResultsComponent } from './components/results/results.component';
 
 const ROUTES: Route[] = [
   {path: '', component: RaceEntryComponent, canActivate: [AuthGuard, RaceChosenGuard]},

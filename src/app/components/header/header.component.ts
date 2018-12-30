@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {RacesService} from '../races.service';
-import {RidersService} from '../riders.service';
+import {RacesService} from '../../services/races.service';
+import {RidersService} from '../../services/riders.service';
 import {MatDialog} from '@angular/material';
-import {EntryService} from '../entry.service';
-import {AuthService} from '../auth.service';
+import {EntryService} from '../../services/entry.service';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',

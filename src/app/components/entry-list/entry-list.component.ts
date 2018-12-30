@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { EntryService } from '../entry.service';
+import { EntryService } from '../../services/entry.service';
 import { MatTableDataSource } from '@angular/material';
-import { Entry } from '../entry';
-import { Grades } from '../grades';
-import {RacesService} from '../races.service';
+import { Entry } from '../../classes/entry';
+import { Grades } from '../../grades';
+import {RacesService} from '../../services/races.service';
 
 
 @Component({

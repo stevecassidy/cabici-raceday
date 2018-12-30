@@ -1,4 +1,4 @@
-import { Club } from './club';
+import { Club } from './classes/club';
 
 export class ClubList {
     static list: Club[] = [

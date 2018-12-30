@@ -5,12 +5,12 @@ import {
         MatDialog
     } from '@angular/material'
 
-import { Rider } from '../rider';
-import { Entry } from '../entry';
-import { RidersService } from '../riders.service';
-import {EntryService} from '../entry.service';
+import { Rider } from '../../classes/rider';
+import { Entry } from '../../classes/entry';
+import { RidersService } from '../../services/riders.service';
+import {EntryService} from '../../services/entry.service';
 import {AddRiderDialogComponent} from '../add-rider-dialog/add-rider-dialog.component';
-import {ClubList} from '../club-list';
+import {ClubList} from '../../club-list';
 
 @Component({
   selector: 'app-rider-list',
@@ -18,7 +18,7 @@ import {ClubList} from '../club-list';
   styleUrls: ['./rider-list.component.css']
 })
 
-export class RiderListComponent implements OnInit, OnChanges {
+export class RiderListComponent implements OnInit {
     private grading: string[];
     private riders: Rider[];
     public filterTable: MatTableDataSource<Rider>;
@@ -32,10 +32,6 @@ export class RiderListComponent implements OnInit, OnChanges {
 
     ngOnInit() {
       this.getRiders();
-    }
-
-    ngOnChanges(changes: SimpleChanges): void {
-      console.log(changes);
     }
 
     updateRiderTable(): void {

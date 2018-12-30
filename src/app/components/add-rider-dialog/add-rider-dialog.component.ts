@@ -1,10 +1,9 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {Rider} from '../rider';
+import {Component, Inject, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Rider} from '../../classes/rider';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {RacesService} from '../races.service';
-import {Race} from '../race';
-import {Club} from '../club';
-import {ClubList} from '../club-list';
+import {RacesService} from '../../services/races.service';
+import {Race} from '../../classes/race';
+import {ClubList} from '../../club-list';
 
 @Component({
   selector: 'app-add-rider-dialog',
@@ -12,7 +11,7 @@ import {ClubList} from '../club-list';
   styleUrls: ['./add-rider-dialog.component.css']
 })
 
-export class AddRiderDialogComponent implements OnInit {
+export class AddRiderDialogComponent implements OnInit, OnChanges {
   public rider: Rider;
   public race: Race;
   public grade: string;
@@ -35,7 +34,6 @@ export class AddRiderDialogComponent implements OnInit {
 
   ngOnInit() {
 
-
     this.clubs = ClubList.clubSlugs();
 
     this.disabled = this.data.editable;
@@ -55,6 +53,10 @@ export class AddRiderDialogComponent implements OnInit {
     } else {
       this.grade = '';
     }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
   }
 
 

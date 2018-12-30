@@ -1,13 +1,13 @@
 //  Service to store entries in a race.
 
 import {Injectable} from '@angular/core';
-import {Entry} from './entry';
-import {Rider} from './rider';
+import {Entry} from '../classes/entry';
+import {Rider} from '../classes/rider';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {RacesService} from './races.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthService} from './auth.service';
-import {environment} from '../environments/environment';
+import {environment} from '../../environments/environment';
 
 // @ts-ignore
 @Injectable({
@@ -70,6 +70,10 @@ export class EntryService {
     if (!this.dataStore.newriders) {
       this.dataStore.newriders = [];
     }
+    // generate an ID for the new rider
+    rider.id = "ID" + Math.floor(Math.random()*10000000)
+
+    console.log("New Rider: ", rider);
     this.dataStore.newriders.unshift(rider);
     this.updateLocalStorage();
   }
@@ -81,6 +85,7 @@ export class EntryService {
 
   resetEntries() {
     this.dataStore.entries = [];
+    this.dataStore.newriders = [];
     this.updateLocalStorage();
     this._entries.next(Object.assign({}, this.dataStore).entries);
   }
@@ -89,9 +94,11 @@ export class EntryService {
     // load entries from local storage
     let local = JSON.parse(window.localStorage.getItem('entries'));
 
-    this.dataStore.entries = <Entry[]>local.entries;
-    this.dataStore.newriders = <Rider[]>local.newriders;
-    this._entries.next(Object.assign({}, this.dataStore).entries);
+    if (local) {
+      this.dataStore.entries = <Entry[]>local.entries;
+      this.dataStore.newriders = <Rider[]>local.newriders;
+      this._entries.next(Object.assign({}, this.dataStore).entries);
+    }
   }
 
   updateLocalStorage(): void {
@@ -119,14 +126,24 @@ export class EntryService {
         };
       payload.entries.unshift(e);
     }
-    // TODO: copy over new and modified riders
+
     const newriders = this.dataStore.newriders;
 
     for(let i=0; i<newriders.length; i++) {
-
+      const rider: Rider = newriders[i];
+      const r = {
+        id: rider.id,
+        first_name: rider.first_name,
+        last_name: rider.last_name,
+        email: '',
+        clubslug: rider.clubslug,
+        licenceno: rider.licenceno,
+        member_date: rider.member_date
+      };
+      payload.riders.unshift(r);
     }
 
-
+    console.log(payload);
     return payload;
   }
 

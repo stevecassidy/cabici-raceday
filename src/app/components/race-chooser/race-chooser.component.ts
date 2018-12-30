@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {RacesService} from '../races.service';
-import {Race} from '../race';
+import {RacesService} from '../../services/races.service';
+import {Race} from '../../classes/race';
 import {MatTableDataSource} from '@angular/material';
 import {Router} from '@angular/router';
 

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {EntryService} from '../entry.service';
-import {RacesService} from '../races.service';
+import {EntryService} from '../../services/entry.service';
+import {RacesService} from '../../services/races.service';
 import {MatTableDataSource} from '@angular/material';
-import {Result} from '../result';
+import {Result} from '../../classes/result';
 
 @Component({
   selector: 'app-results',

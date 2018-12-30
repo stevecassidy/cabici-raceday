@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from '../auth.service';
+import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
+import {RacesService} from '../../services/races.service';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,7 @@ export class LoginComponent implements OnInit {
   public password: string;
 
   constructor(private authService: AuthService,
+              private racesService: RacesService,
               private router: Router) { }
 
   ngOnInit() {
@@ -21,6 +23,7 @@ export class LoginComponent implements OnInit {
   login(): void {
     this.authService.login(this.email, this.password)
       .subscribe(user => {
+        this.racesService.loadFromLocalStorage();
         this.router.navigate(['entries']);
       }
     );

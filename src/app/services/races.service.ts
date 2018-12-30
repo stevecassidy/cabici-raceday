@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, of} from 'rxjs';
-import {Race} from './race';
+import {Race} from '../classes/race';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthService} from './auth.service';
-import {environment} from '../environments/environment';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ import {environment} from '../environments/environment';
 
 export class RacesService {
 
-  private apiUrl: string;
+  private readonly apiUrl: string;
   private races: Race[];
   private _races: BehaviorSubject<Race[]>;
   private _selected: Race;
