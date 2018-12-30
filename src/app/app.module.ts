@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {Route, RouterModule} from '@angular/router';
 
 import {
@@ -35,6 +35,8 @@ import { RaceChosenGuard } from './guards/race-chosen.guard';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { ResultsComponent } from './components/results/results.component';
+import { ApiHttpClient, apiHttpClientCreator} from './api-http-client';
+import {AuthService} from './services/auth.service';
 
 const ROUTES: Route[] = [
   {path: '', component: RaceEntryComponent, canActivate: [AuthGuard, RaceChosenGuard]},
@@ -87,7 +89,12 @@ const ROUTES: Route[] = [
   ],
   providers: [
     RaceChosenGuard,
-    AuthGuard
+    AuthGuard,
+    {
+      provide: ApiHttpClient,
+      useFactory: apiHttpClientCreator,
+      deps: [HttpClient, AuthService]
+    },
   ],
   bootstrap: [ AppComponent ]
 })

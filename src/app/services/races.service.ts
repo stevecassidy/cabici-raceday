@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {Race} from '../classes/race';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthService} from './auth.service';
-import {environment} from '../../environments/environment';
+import {ApiHttpClient} from '../api-http-client';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +10,15 @@ import {environment} from '../../environments/environment';
 
 export class RacesService {
 
-  private readonly apiUrl: string;
+  private readonly endpoint: string;
   private races: Race[];
   private _races: BehaviorSubject<Race[]>;
   private _selected: Race;
 
   constructor(public authService: AuthService,
-              public http: HttpClient) {
+              public http: ApiHttpClient) {
 
-    this.apiUrl = environment.apiURL + '/api/races/?select=future&club=';
+    this.endpoint = '/api/races/?select=future&club=';
 
     this._races = <BehaviorSubject<Race[]>>new BehaviorSubject([]);
     this.loadFromLocalStorage();
@@ -43,15 +42,9 @@ export class RacesService {
     }
     const user = this.authService.currentUser();
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': 'Token ' + user.token
-      })
-    };
+    let url = this.endpoint + user.club;
 
-    let url = this.apiUrl + user.club;
-
-    let response = this.http.get(url, httpOptions);
+    let response = this.http.get(url);
 
     response.subscribe(httpResp => {
       this.races = <Race[]>httpResp;

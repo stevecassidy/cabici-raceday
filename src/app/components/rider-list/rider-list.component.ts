@@ -10,7 +10,7 @@ import { Entry } from '../../classes/entry';
 import { RidersService } from '../../services/riders.service';
 import {EntryService} from '../../services/entry.service';
 import {AddRiderDialogComponent} from '../add-rider-dialog/add-rider-dialog.component';
-import {ClubList} from '../../club-list';
+import {ClubService} from '../../services/club.service';
 
 @Component({
   selector: 'app-rider-list',
@@ -27,6 +27,7 @@ export class RiderListComponent implements OnInit {
 
     constructor(private ridersService: RidersService,
                 private entryService: EntryService,
+                private clubService: ClubService,
                 public dialog: MatDialog) {
     }
 
@@ -127,7 +128,7 @@ export class RiderListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result !== null) {
         // TODO: fill out some rider details, eg. club
-        result.rider.club = ClubList.clubFromSlug(result.rider.clubslug).name;
+        result.rider.club = this.clubService.clubFromSlug(result.rider.clubslug).name;
         this.entryService.newRider(result.rider);
         let entry: Entry = new Entry(result.rider, result.grade, result.number, 0);
         this.entryService.storeEntry(entry);

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Rider } from '../classes/rider';
 import {BehaviorSubject, Observable, of} from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { environment } from '../../environments/environment';
+import {ApiHttpClient} from '../api-http-client';
 
 @Injectable({
   providedIn: 'root'
@@ -12,15 +12,15 @@ import { environment } from '../../environments/environment';
 export class RidersService {
 
   private _riders: BehaviorSubject<Rider[]>;
-  private dataStore: {
+  private readonly dataStore: {
     riders: Rider[]
   };
-  private readonly apiUrl: string;
+  private readonly endpoint: string;
 
-  constructor(private http: HttpClient,
+  constructor(private http: ApiHttpClient,
               private authService: AuthService) {
 
-    this.apiUrl = environment.apiURL + "/api/riders/";
+    this.endpoint = '/api/riders/';
     this._riders = <BehaviorSubject<Rider[]>>new BehaviorSubject([]);
     this.dataStore = {
       riders: [],
@@ -34,7 +34,7 @@ export class RidersService {
 
   loadRiders(): void {
     this.dataStore.riders = [];
-    this._loadRiders(this.apiUrl);
+    this._loadRiders(this.endpoint);
   }
 
   _loadRiders(url: string): void {
@@ -44,23 +44,16 @@ export class RidersService {
       return;
     }
 
-    const token = this.authService.currentUser().token;
-
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': 'Token ' + token
-      })
-    };
-
-    let response = this.http.get(url, httpOptions);
+    const response = this.http.get(url);
 
     response.subscribe(httpResp => {
-      let riders = <Rider[]>httpResp['results'];
+      const riders = <Rider[]>httpResp['results'];
       this.dataStore.riders = this.dataStore.riders.concat(riders);
       this.updateLocalStorage();
       this._riders.next(Object.assign({}, this.dataStore).riders);
       if (httpResp['next']) {
-        this._loadRiders(httpResp['next']);
+        const u = new URL(httpResp['next']);
+        this._loadRiders(u.pathname + u.search);
       }
     });
   }
