@@ -3,7 +3,7 @@
   <mat-tab-group dynamicHeight [selectedIndex]="selectedTab">
     <mat-tab *ngFor="let gradeTable of gradeTables">
       <ng-template mat-tab-label>
-        {{ gradeTable.grade }}
+        {{ gradeTable.grade }}/{{ gradeTable.table.data.length }}
       </ng-template>
 
       <mat-table #table  class="filter-table" [dataSource]="gradeTable.table">
