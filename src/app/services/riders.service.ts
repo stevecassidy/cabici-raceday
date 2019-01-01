@@ -32,6 +32,11 @@ export class RidersService {
     return this._riders.asObservable();
   }
 
+  newRider(rider: Rider): void {
+    this.dataStore.riders.unshift(rider);
+    this._riders.next(Object.assign({}, this.dataStore).riders);
+  }
+
   loadRiders(): void {
     this.dataStore.riders = [];
     this._loadRiders(this.endpoint);

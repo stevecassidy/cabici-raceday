@@ -1,0 +1,90 @@
+<h1 mat-dialog-title>Add New Rider</h1>
+
+<form [formGroup]="riderForm" (keydown.enter)="addRider()">
+
+<mat-grid-list cols="2" rowHeight="4em">
+  <mat-grid-tile role="listitem">
+    <mat-form-field>
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="first_name" cdkFocusInitial>
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile role="listitem">
+    <mat-form-field>
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="last_name">
+    </mat-form-field>
+  </mat-grid-tile>
+
+  <mat-grid-tile role="listitem">
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email">
+    </mat-form-field>
+  </mat-grid-tile>
+
+  <mat-grid-tile role="listitem">
+    <mat-label>Gender&nbsp;</mat-label>
+      <mat-button-toggle-group #group="matButtonToggleGroup"  formControlName="gender">
+        <mat-button-toggle  value="M">M</mat-button-toggle>
+        <mat-button-toggle  value="F">F</mat-button-toggle>
+      </mat-button-toggle-group>
+  </mat-grid-tile>
+
+  <mat-grid-tile role="listitem">
+    <mat-form-field>
+      <input matInput formControlName="phone" placeholder="Phone">
+    </mat-form-field>
+  </mat-grid-tile>
+
+  <mat-grid-tile role="listitem">
+    <mat-form-field>
+      <mat-label>Club</mat-label>
+      <mat-select formControlName="clubslug">
+        <mat-option *ngFor="let aclub of clubService.clubSlugs()" [value]="aclub">{{aclub}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-grid-tile>
+
+  <mat-grid-tile role="listitem">
+    <mat-form-field>
+      <input matInput [matDatepicker]="dobDatepicker" formControlName="dob" placeholder="DOB">
+      <mat-datepicker #dobDatepicker></mat-datepicker>
+    </mat-form-field>
+  </mat-grid-tile>
+
+  <mat-grid-tile role="listitem">
+    <mat-form-field>
+      <mat-label>Licence</mat-label>
+      <input matInput formControlName="licenceno">
+    </mat-form-field>
+  </mat-grid-tile>
+
+  <mat-grid-tile role="listitem">
+    <mat-button-toggle-group formControlName="financial">
+      <mat-button-toggle value="y">Current Licence Checked</mat-button-toggle>
+    </mat-button-toggle-group>
+  </mat-grid-tile>
+
+  <mat-grid-tile role="listitem"></mat-grid-tile>
+
+  <mat-grid-tile role="listitem">
+    <mat-form-field>
+      <input matInput type="number" formControlName="number" placeholder="Race Number">
+    </mat-form-field>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <mat-button-toggle-group #group="matButtonToggleGroup"  formControlName="grade">
+      <mat-button-toggle *ngFor="let thegrade of racesService.selected.grading.split(',')" value="{{ thegrade }}" >{{ thegrade }}</mat-button-toggle>
+    </mat-button-toggle-group>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="addRider()">Add Rider</button>
+  <span *ngIf="riderForm.status === 'INVALID'" class="ng-invalid">Complete all required fields</span>
+</div>
+
+</form>

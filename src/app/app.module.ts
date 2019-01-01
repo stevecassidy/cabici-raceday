@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {Route, RouterModule} from '@angular/router';
@@ -20,7 +20,7 @@ import {
   MatToolbarModule,
   MatRippleModule,
   MatIconModule,
-  MatRadioModule, MatCardModule
+  MatRadioModule, MatCardModule, MatDatepickerModule, MatNativeDateModule
 } from '@angular/material';
 
 
@@ -37,6 +37,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { ResultsComponent } from './components/results/results.component';
 import { ApiHttpClient, apiHttpClientCreator} from './api-http-client';
 import {AuthService} from './services/auth.service';
+import { NewRiderDialogComponent } from './components/new-rider-dialog/new-rider-dialog.component';
 
 const ROUTES: Route[] = [
   {path: '', component: RaceEntryComponent, canActivate: [AuthGuard, RaceChosenGuard]},
@@ -51,11 +52,13 @@ const ROUTES: Route[] = [
   entryComponents: [
     AppComponent,
     RiderListComponent,
-    AddRiderDialogComponent
+    AddRiderDialogComponent,
+    NewRiderDialogComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatTableModule,
     MatListModule,
@@ -74,6 +77,8 @@ const ROUTES: Route[] = [
     MatIconModule,
     HttpClientModule,
     MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     RouterModule.forRoot(ROUTES)
   ],
   declarations: [
@@ -86,6 +91,7 @@ const ROUTES: Route[] = [
     RaceEntryComponent,
     LoginComponent,
     ResultsComponent,
+    NewRiderDialogComponent,
   ],
   providers: [
     RaceChosenGuard,

@@ -11,6 +11,7 @@ import { RidersService } from '../../services/riders.service';
 import {EntryService} from '../../services/entry.service';
 import {AddRiderDialogComponent} from '../add-rider-dialog/add-rider-dialog.component';
 import {ClubService} from '../../services/club.service';
+import {NewRiderDialogComponent} from '../new-rider-dialog/new-rider-dialog.component';
 
 @Component({
   selector: 'app-rider-list',
@@ -94,8 +95,14 @@ export class RiderListComponent implements OnInit {
 
     addRider(rider: Rider, grade: string, number: string): void {
         let entry = new Entry(rider, grade, number, 0);
-        this.entryService.storeEntry(entry);
-        this.filterTable.filter = '';
+        let result = this.entryService.storeEntry(entry);
+        console.log(result);
+        if (!result.success) {
+          alert(result.message);
+        } else {
+          // reset rider search filter
+          this.filterTable.filter = '';
+        }
     }
 
     openDialog(rider: Rider): void {
@@ -116,23 +123,11 @@ export class RiderListComponent implements OnInit {
 
   newRiderDialog(): void {
 
-    let dialogRef = this.dialog.open(AddRiderDialogComponent, {
-      width: '800px',
-      data: {
-        rider: new Rider(),
-        editable: true,
-        grades: [],
-      }
+    let dialogRef = this.dialog.open(NewRiderDialogComponent, {
+      width: '800px'
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== null) {
-        // TODO: fill out some rider details, eg. club
-        result.rider.club = this.clubService.clubFromSlug(result.rider.clubslug).name;
-        this.entryService.newRider(result.rider);
-        let entry: Entry = new Entry(result.rider, result.grade, result.number, 0);
-        this.entryService.storeEntry(entry);
-      }
+
     });
   }
 

@@ -14,10 +14,13 @@ export class Rider {
         public classification: string = 'unknown',
         public member_category?: string,
         public member_date: string = '',  /* really a date */
-        public grades?: object,
+        public grades: object = null,
         public gender?: string,
         public emergencyphone?: string,
-        public emergencyname?: string
+        public emergencyname?: string,
+        public dob: string = '',
+        public phone: string = '',
+        public email: string = ''
     ) { }
 
 }

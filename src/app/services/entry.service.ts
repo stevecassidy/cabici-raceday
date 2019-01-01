@@ -8,6 +8,7 @@ import {RacesService} from './races.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthService} from './auth.service';
 import {environment} from '../../environments/environment';
+import {RidersService} from './riders.service';
 
 // @ts-ignore
 @Injectable({
@@ -23,6 +24,7 @@ export class EntryService {
 
   constructor(private raceService: RacesService,
               private authService: AuthService,
+              private ridersService: RidersService,
               private http: HttpClient) {
     this._entries = <BehaviorSubject<Entry[]>>new BehaviorSubject([]);
     this.dataStore = {
@@ -61,9 +63,31 @@ export class EntryService {
     return [];
   }
 
-  storeEntry(entry: Entry): void {
-    this.dataStore.entries.unshift(entry);
-    this.saveEntries();
+  storeEntry(entry: Entry): {success: boolean, message: string} {
+    // check for duplicate number (in this grade) or rider (anywhere)
+    const result = {
+      success: true,
+      message: ''
+    };
+
+    for (let i=0; i<this.dataStore.entries.length; i++) {
+      const ref = this.dataStore.entries[i];
+      if (entry.number === ref.number && entry.grade === ref.grade) {
+        result.success = false;
+        result.message = 'Duplicate number ' + entry.number + ' in grade';
+      } else if (entry.rider.id === ref.rider.id) {
+        result.success = false;
+        result.message = 'Rider already entered';
+      }
+    }
+
+    if (result.success) {
+      this.dataStore.entries.unshift(entry);
+      this.saveEntries();
+      result.message = "Entry stored";
+    }
+    console.log(result);
+    return result;
   }
 
   newRider(rider: Rider): void {
@@ -73,9 +97,9 @@ export class EntryService {
     // generate an ID for the new rider
     rider.id = "ID" + Math.floor(Math.random()*10000000)
 
-    console.log("New Rider: ", rider);
     this.dataStore.newriders.unshift(rider);
     this.updateLocalStorage();
+    this.ridersService.newRider(rider);
   }
 
   saveEntries(): void {

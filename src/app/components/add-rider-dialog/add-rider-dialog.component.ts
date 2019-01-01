@@ -49,7 +49,9 @@ export class AddRiderDialogComponent implements OnInit, OnChanges {
     }
 
     if (!this.data.editable) {
-      this.grade = this.rider.grades[raceclub];
+      if (this.rider.grades) {
+        this.grade = this.rider.grades[raceclub];
+      }
       this.clubslug = this.rider.clubslug;
     } else {
       this.grade = '';
