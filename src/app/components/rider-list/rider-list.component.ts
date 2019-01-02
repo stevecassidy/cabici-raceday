@@ -93,18 +93,6 @@ export class RiderListComponent implements OnInit {
       this.filterTable.filter = term;
     }
 
-    addRider(rider: Rider, grade: string, number: string): void {
-        let entry = new Entry(rider, grade, number, 0);
-        let result = this.entryService.storeEntry(entry);
-        console.log(result);
-        if (!result.success) {
-          alert(result.message);
-        } else {
-          // reset rider search filter
-          this.filterTable.filter = '';
-        }
-    }
-
     openDialog(rider: Rider): void {
         let dialogRef = this.dialog.open(AddRiderDialogComponent, {
           width: '700px',
@@ -114,11 +102,7 @@ export class RiderListComponent implements OnInit {
             }
         });
 
-        dialogRef.afterClosed().subscribe(result => {
-            if (result !== null) {
-                this.addRider(result.rider, result.grade, result.number);
-            }
-        });
+
     }
 
   newRiderDialog(): void {
@@ -126,9 +110,7 @@ export class RiderListComponent implements OnInit {
     let dialogRef = this.dialog.open(NewRiderDialogComponent, {
       width: '800px'
     });
-    dialogRef.afterClosed().subscribe(result => {
 
-    });
   }
 
 }

@@ -62,7 +62,9 @@
 
   <mat-grid-tile role="listitem">
     <mat-button-toggle-group formControlName="financial">
-      <mat-button-toggle value="y">Current Licence Checked</mat-button-toggle>
+      <mat-button-toggle value="r">Race</mat-button-toggle>
+      <mat-button-toggle value="d">Day</mat-button-toggle>
+      <mat-button-toggle value="3">3 Race</mat-button-toggle>
     </mat-button-toggle-group>
   </mat-grid-tile>
 
@@ -82,8 +84,8 @@
 </mat-grid-list>
 
 <div mat-dialog-actions>
-  <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-button (click)="addRider()">Add Rider</button>
+  <button mat-raised-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color='primary' (click)="addRider()" [disabled]="!riderForm.valid">Add Rider</button>
   <span *ngIf="riderForm.status === 'INVALID'" class="ng-invalid">Complete all required fields</span>
 </div>
 

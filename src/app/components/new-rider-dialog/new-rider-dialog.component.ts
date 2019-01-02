@@ -12,7 +12,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
   templateUrl: './new-rider-dialog.component.html',
   styleUrls: ['./new-rider-dialog.component.css']
 })
-export class NewRiderDialogComponent implements OnInit, OnChanges {
+export class NewRiderDialogComponent implements OnInit {
 
   public entry: Entry;
 
@@ -39,14 +39,6 @@ export class NewRiderDialogComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-
-
-
-
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
   }
 
   onCancel(): void {
@@ -65,27 +57,38 @@ export class NewRiderDialogComponent implements OnInit, OnChanges {
       rider.dob = this.riderForm.get('dob').value;
       rider.gender = this.riderForm.get('gender').value;
 
-      if (this.riderForm.get('financial').value == 'y') {
-        rider.member_category = 'race';
-        // set date to end of this year
-        const now = new Date();
-        rider.member_date = now.getFullYear() + "-12-31";
+      const now = new Date();
+      switch (this.riderForm.get('financial').value) {
+        case 'r':
+          rider.member_category = 'race';
+          // set date to end of this year
+          rider.member_date = now.getFullYear() + "-12-31";
+          break;
+        case 'd':
+          rider.member_category = 'race';
+          rider.member_date = now.toISOString();
+          break;
+        case '3':
+          rider.member_category = 'race';
+          rider.member_date = now.toISOString();
       }
 
       rider.club = this.clubService.clubFromSlug(rider.clubslug).name;
 
       this.entryService.newRider(rider);
 
-      const entry = new Entry(rider,
-        this.riderForm.get('grade').value,
-        this.riderForm.get('number').value);
+      const entry = new Entry(
+            rider,
+            this.riderForm.get('grade').value,
+            this.riderForm.get('number').value
+      );
 
       const storeResult = this.entryService.storeEntry(entry);
-      // would be good not to close the dialog if this didn't work...
-      if (!storeResult.success) {
-        alert(storeResult.message);
-      } else {
+      // don't close the dialog if this didn't work...
+      if (storeResult.success) {
         this.dialogRef.close();
+      } else {
+        alert(storeResult.message);
       }
       return true;
     } else {

@@ -1,64 +1,82 @@
 <h1 mat-dialog-title>Add Rider</h1>
+
+<form [formGroup]="entryForm" (keydown.enter)="addEntry()">
+
 <mat-grid-list cols="2" rowHeight="4em">
   <mat-grid-tile role="listitem">
     <mat-form-field>
       <mat-label>First Name</mat-label>
-      <input matInput [(ngModel)]="rider.first_name">
+      <input matInput formControlName="first_name">
     </mat-form-field>
   </mat-grid-tile>
   <mat-grid-tile role="listitem">
     <mat-form-field>
       <mat-label>Last Name</mat-label>
-      <input  matInput [(ngModel)]="rider.last_name">
+      <input matInput formControlName="last_name">
     </mat-form-field>
   </mat-grid-tile>
+
   <mat-grid-tile role="listitem">
     <mat-form-field>
-      <input matInput [(ngModel)]="number" placeholder="Number" cdkFocusInitial>
+      <mat-label>Classification</mat-label>
+      <input matInput formControlName="classification">
     </mat-form-field>
   </mat-grid-tile>
+
   <mat-grid-tile role="listitem">
     <mat-form-field>
       <mat-label>Club</mat-label>
-      <mat-select [(ngModel)]="rider.clubslug">
+      <mat-select formControlName="clubslug">
         <mat-option *ngFor="let aclub of clubs" [value]="aclub">{{aclub}}</mat-option>
       </mat-select>
     </mat-form-field>
   </mat-grid-tile>
+
   <mat-grid-tile role="listitem">
     <mat-form-field>
-      <mat-label>Classification</mat-label>
-      <input disabled matInput [value]="rider.classification">
+      <input matInput type='number' formControlName="number" placeholder="Number" cdkFocusInitial>
     </mat-form-field>
   </mat-grid-tile>
+
   <mat-grid-tile role="listitem">
     <mat-form-field>
       <mat-label>Licence</mat-label>
-      <input matInput [(ngModel)]="rider.licenceno">
+      <input matInput formControlName="licenceno">
     </mat-form-field>
   </mat-grid-tile>
-  <mat-grid-tile role="listitem">
-    <mat-form-field>
-      <mat-label>Membership Date</mat-label>
-      <input matInput [(ngModel)]="rider.member_date">
-    </mat-form-field>
-  </mat-grid-tile>
-  <mat-grid-tile role="listitem">
-      <mat-radio-group class="rider-category-buttons" [(ngModel)]="rider.member_category">
-        <mat-radio-button class="rider-category-radio-button" value="race">Race</mat-radio-button>
-        <mat-radio-button class="rider-category-radio-button" value="ride">Ride</mat-radio-button>
-        <mat-radio-button class="rider-category-radio-button" value="day">Day</mat-radio-button>
-      </mat-radio-group>
-  </mat-grid-tile>
+
   <mat-grid-tile>
-    <mat-button-toggle-group #group="matButtonToggleGroup"  [value]="grade" (change)="this.grade=$event.source.value">
+    <mat-button-toggle-group #group="matButtonToggleGroup"  formControlName="grade">
       <mat-button-toggle *ngFor="let thegrade of grading" value="{{ thegrade }}" >{{ thegrade }}</mat-button-toggle>
     </mat-button-toggle-group>
   </mat-grid-tile>
+
+  <mat-grid-tile role="listitem">
+    <mat-button-toggle-group formControlName="financial">
+      <mat-button-toggle value="n">None</mat-button-toggle>
+      <mat-button-toggle value="r">Race</mat-button-toggle>
+      <mat-button-toggle value="d">Day</mat-button-toggle>
+      <mat-button-toggle value="3">3 Race</mat-button-toggle>
+    </mat-button-toggle-group>
+  </mat-grid-tile>
+
+  <mat-grid-tile *ngIf="usual_grade != entryForm.value.grade">
+    <mat-label>Permanent Grade Change?&nbsp;</mat-label>
+    <mat-button-toggle-group formControlName="grade_change">
+      <mat-button-toggle value="y">Yes</mat-button-toggle>
+      <mat-button-toggle value="n">No</mat-button-toggle>
+    </mat-button-toggle-group>
+  </mat-grid-tile>
+
+
+  <mat-grid-tile></mat-grid-tile>
+
 </mat-grid-list>
 
 <div mat-dialog-actions>
-  <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-button [mat-dialog-close]="{ rider: rider, grade: grade, number: number}">Add Rider</button>
+  <button mat-raised-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color='primary' (click)="addEntry()" [disabled]="!entryForm.valid">Add Rider</button>
+  <span *ngIf="entryForm.status === 'INVALID'" class="ng-invalid">Complete all required fields</span>
 </div>
 
+</form>

@@ -23,4 +23,11 @@ export class Rider {
         public email: string = ''
     ) { }
 
+    static isFinancial(r: Rider): boolean {
+      const mdate = Date.parse(r.member_date);
+      const now = new Date().getDate();
+      return mdate >= now;
+    }
 }
+
+

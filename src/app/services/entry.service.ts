@@ -94,12 +94,17 @@ export class EntryService {
     if (!this.dataStore.newriders) {
       this.dataStore.newriders = [];
     }
-    // generate an ID for the new rider
-    rider.id = "ID" + Math.floor(Math.random()*10000000)
+    if (!rider.id) {
+      // generate an ID for the new rider and remember them
+      rider.id = "ID" + Math.floor(Math.random() * 10000000)
+      this.ridersService.newRider(rider);
+    }
 
+    // queue new or modified rider for upload
     this.dataStore.newriders.unshift(rider);
     this.updateLocalStorage();
-    this.ridersService.newRider(rider);
+    // update riders storage too so we remember the updated rider
+    this.ridersService.updateLocalStorage();
   }
 
   saveEntries(): void {
