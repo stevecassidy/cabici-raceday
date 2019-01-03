@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>Add Rider</h1>
+
+<form [formGroup]="entryForm" (keydown.enter)="updateEntry()">
+
+  <mat-grid-list cols="2" rowHeight="4em">
+
+    <mat-grid-tile>
+      <mat-button-toggle-group #group="matButtonToggleGroup"  formControlName="grade">
+        <mat-button-toggle *ngFor="let thegrade of grading" value="{{ thegrade }}" >{{ thegrade }}</mat-button-toggle>
+      </mat-button-toggle-group>
+    </mat-grid-tile>
+
+    <mat-grid-tile role="listitem">
+      <mat-form-field>
+        <input matInput type='number' formControlName="number" placeholder="Number" cdkFocusInitial>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile *ngIf="usual_grade != entryForm.value.grade">
+      <mat-label>Permanent Grade Change?&nbsp;</mat-label>
+      <mat-button-toggle-group formControlName="grade_change">
+        <mat-button-toggle value="y">Yes</mat-button-toggle>
+        <mat-button-toggle value="n">No</mat-button-toggle>
+      </mat-button-toggle-group>
+    </mat-grid-tile>
+
+  </mat-grid-list>
+
+  <div mat-dialog-actions>
+    <button mat-raised-button (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color='primary' (click)="updateEntry()">Update Entry</button>
+    <button mat-raised-button color='warn' (click)="deleteEntry()">Delete Entry</button>
+  </div>
+
+</form>

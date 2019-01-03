@@ -38,6 +38,7 @@ import { ResultsComponent } from './components/results/results.component';
 import { ApiHttpClient, apiHttpClientCreator} from './api-http-client';
 import {AuthService} from './services/auth.service';
 import { NewRiderDialogComponent } from './components/new-rider-dialog/new-rider-dialog.component';
+import { UpdateEntryComponent } from './components/update-entry/update-entry.component';
 
 const ROUTES: Route[] = [
   {path: '', component: RaceEntryComponent, canActivate: [AuthGuard, RaceChosenGuard]},
@@ -53,7 +54,8 @@ const ROUTES: Route[] = [
     AppComponent,
     RiderListComponent,
     AddRiderDialogComponent,
-    NewRiderDialogComponent
+    NewRiderDialogComponent,
+    UpdateEntryComponent
   ],
   imports: [
     BrowserModule,
@@ -92,6 +94,7 @@ const ROUTES: Route[] = [
     LoginComponent,
     ResultsComponent,
     NewRiderDialogComponent,
+    UpdateEntryComponent,
   ],
   providers: [
     RaceChosenGuard,

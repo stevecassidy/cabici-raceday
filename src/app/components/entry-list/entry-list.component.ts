@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { EntryService } from '../../services/entry.service';
-import { MatTableDataSource } from '@angular/material';
+import {MatDialog, MatTableDataSource} from '@angular/material';
 import { Entry } from '../../classes/entry';
 import {RacesService} from '../../services/races.service';
+import {UpdateEntryComponent} from '../update-entry/update-entry.component';
 
 
 @Component({
@@ -20,7 +21,8 @@ export class EntryListComponent implements OnInit {
 
   constructor(
     private entryService: EntryService,
-    private racesService: RacesService
+    private racesService: RacesService,
+    private dialog: MatDialog
   ) {
 
   }
@@ -63,6 +65,15 @@ export class EntryListComponent implements OnInit {
   resetEntries() {
     this.entryService.resetEntries();
     this.updateEntries();
+  }
+
+  updateEntry(entry: Entry): void {
+    let dialogRef = this.dialog.open(UpdateEntryComponent, {
+      width: '800px',
+      data: {
+        entry: entry
+      }
+    });
   }
 
   setTab(index: number): void {

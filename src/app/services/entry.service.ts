@@ -102,7 +102,7 @@ export class EntryService {
 
     // queue new or modified rider for upload
     this.dataStore.newriders.unshift(rider);
-    this.updateLocalStorage();
+    this.saveEntries();
     // update riders storage too so we remember the updated rider
     this.ridersService.updateLocalStorage();
   }
@@ -115,8 +115,16 @@ export class EntryService {
   resetEntries() {
     this.dataStore.entries = [];
     this.dataStore.newriders = [];
-    this.updateLocalStorage();
-    this._entries.next(Object.assign({}, this.dataStore).entries);
+    this.saveEntries();
+  }
+
+  deleteEntry(entry: Entry): void {
+    // remove this entry if we have it
+    const idx = this.dataStore.entries.indexOf(entry);
+    if (idx >= 0) {
+      this.dataStore.entries.splice(idx, 1);
+    }
+    this.saveEntries();
   }
 
   loadFromLocalStorage(): void {
