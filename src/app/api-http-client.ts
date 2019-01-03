@@ -1,6 +1,6 @@
 // https://medium.com/@admin_87321/extending-angular-httpclient-6b33a7a1a4d0
 
-import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {AuthService} from './services/auth.service';
@@ -30,18 +30,19 @@ export class ApiHttpClient {
   public constructor(public http: HttpClient,
                      public authService: AuthService) {
 
-    const user = this.authService.currentUser();
-
     this.apiUrl = environment.apiURL;
+  }
 
+  options(): IRequestOptions {
+    const user = this.authService.currentUser();
     if (user) {
-      this.httpOptions = {
+      return <IRequestOptions>{
         headers: new HttpHeaders({
           'Authorization': 'Token ' + user.token
         })
       };
     } else {
-      this.httpOptions = null;
+      return <IRequestOptions>{};
     }
   }
 
@@ -51,7 +52,8 @@ export class ApiHttpClient {
    * @returns {Observable<T>}
    */
   public get<T>(endPoint: string): Observable<T> {
-    return this.http.get<T>(this.apiUrl + endPoint, this.httpOptions);
+
+    return this.http.get<T>(this.apiUrl + endPoint, this.options());
   }
 
   /**
@@ -61,7 +63,7 @@ export class ApiHttpClient {
    * @returns {Observable<T>}
    */
   public post<T>(endPoint: string, params: Object): Observable<T> {
-    return this.http.post<T>(this.apiUrl + endPoint, params, this.httpOptions);
+    return this.http.post<T>(this.apiUrl + endPoint, params, this.options());
   }
 
   /**
@@ -71,7 +73,7 @@ export class ApiHttpClient {
    * @returns {Observable<T>}
    */
   public put<T>(endPoint: string, params: Object): Observable<T> {
-    return this.http.put<T>(this.apiUrl + endPoint, params,  this.httpOptions);
+    return this.http.put<T>(this.apiUrl + endPoint, params,  this.options());
   }
 
   /**
@@ -80,6 +82,6 @@ export class ApiHttpClient {
    * @returns {Observable<T>}
    */
   public delete<T>(endPoint: string): Observable<T> {
-    return this.http.delete<T>(this.apiUrl + endPoint,  this.httpOptions);
+    return this.http.delete<T>(this.apiUrl + endPoint,  this.options());
   }
 }

@@ -9,15 +9,15 @@ import {BehaviorSubject, Observable} from 'rxjs';
 })
 export class AuthService {
 
-  private _status: BehaviorSubject<User>;
+  private _status: BehaviorSubject<string>;
   private loggedin: boolean;
   private user: User;
   private readonly apiUrl: string;
 
   constructor(private http: HttpClient) {
-    this.apiUrl = environment.apiURL + "/api/token-auth/";
+    this.apiUrl = environment.apiURL + '/api/token-auth/';
     this.loggedin = false;
-    this._status = <BehaviorSubject<User>>new BehaviorSubject(null);
+    this._status = <BehaviorSubject<string>>new BehaviorSubject('');
     this.loadFromLocalStorage();
    }
 
@@ -29,24 +29,26 @@ export class AuthService {
     }
   }
 
-  login(email: string, password: string): Observable<User> {
+  login(email: string, password: string): Observable<string> {
 
     const body = new HttpParams()
       .set('email', email)
       .set('password', password);
 
-    let response = this.http.post(this.apiUrl, body.toString(),{
+    this.http.post(this.apiUrl, body.toString(),{
       headers: new HttpHeaders()
                    .set('Content-Type', 'application/x-www-form-urlencoded')
+      }).subscribe(
+      httpResp => {
+          this.user = <User>httpResp;
+          this.loggedin = true;
+          this.updateLocalStorage();
+          this._status.next('loggedin');},
+      error => {
+          this._status.next('invalid');
       });
 
-    response.subscribe(httpResp => {
-      this.user = <User>httpResp;
-      this.loggedin = true;
-      this.updateLocalStorage();
-      this._status.next(this.user);
-    });
-
+    this._status.next('pending');
     return this._status.asObservable();
   }
 

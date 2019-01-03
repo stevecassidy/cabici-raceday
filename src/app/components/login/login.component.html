@@ -10,7 +10,7 @@
         <tr>
           <td>
             <mat-form-field class="example-full-width">
-              <input matInput placeholder="Email" [(ngModel)]="email" name="email" required>
+              <input type="email" matInput placeholder="Email" [(ngModel)]="email" name="email" required>
             </mat-form-field>
           </td>
         </tr>
@@ -20,10 +20,10 @@
           </mat-form-field></td>
         </tr></table>
     </form>
+    <p>{{ message }}</p>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button (click)="login()" color="primary">Login</button>
-    <button mat-raised-button (click)="cancel()" color="secondary">Cancel</button>
   </mat-card-actions>
 </mat-card>
 </div>
