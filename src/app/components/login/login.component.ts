@@ -10,9 +10,9 @@ import {RacesService} from '../../services/races.service';
 })
 export class LoginComponent implements OnInit {
 
-  private email: string;
-  private password: string;
-  private message: string;
+  public email: string;
+  public password: string;
+  public message: string;
 
   constructor(private authService: AuthService,
               private racesService: RacesService,

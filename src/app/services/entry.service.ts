@@ -41,7 +41,7 @@ export class EntryService {
   getEntry(grade: string, number: string): Entry {
     for(let i=0; i<this.dataStore.entries.length; i++) {
       const e = this.dataStore.entries[i];
-      if (e.grade === grade && e.number === number) {
+      if (e.grade == grade && e.number == number) {
         return e;
       }
     }
@@ -86,7 +86,6 @@ export class EntryService {
       this.saveEntries();
       result.message = "Entry stored";
     }
-    console.log(result);
     return result;
   }
 
@@ -180,7 +179,6 @@ export class EntryService {
       payload.riders.unshift(r);
     }
 
-    console.log(payload);
     return payload;
   }
 
@@ -188,8 +186,6 @@ export class EntryService {
 
     const url = environment.apiURL + "/api/raceresults/";
     const payload = this._buildUploadPayload();
-
-    console.log(payload);
 
     // can't upload if not logged in
     if (!this.authService.currentUser()) {

@@ -16,7 +16,7 @@ export class NewRiderDialogComponent implements OnInit {
 
   public entry: Entry;
 
-  private riderForm = new FormGroup({
+  public riderForm = new FormGroup({
     first_name: new FormControl('', Validators.required),
     last_name: new FormControl('', Validators.required),
     email: new FormControl('', Validators.email),

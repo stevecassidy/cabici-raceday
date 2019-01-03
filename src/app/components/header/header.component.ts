@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit {
   currentRace(): any {
     // return the display name of the selected race if available
     if (this.racesService.selected) {
-      return this.racesService.selected.title;
+      return this.racesService.selected.title + '|' + this.racesService.selected.date;
     } else {
       return "Select Race";
     }
@@ -48,24 +48,6 @@ export class HeaderComponent implements OnInit {
   apiLoad(): void {
     this.racesService.loadRaces();
     this.ridersService.loadRiders();
-  }
-
-  csvDownload(download: any) {
-
-    console.log(download);
-
-    let csvData = this.entryService.toCSV();
-    console.log(csvData);
-
-    let blob = new Blob([csvData], { type: 'text/csv' });
-
-    let url = window.URL.createObjectURL(blob);
-
-    download.href = url;
-    download.target = '_blank';
-
-    // target filename
-    download.download = 'entries.csv';
   }
 
 }

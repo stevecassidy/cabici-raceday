@@ -16,11 +16,11 @@ import {Rider} from '../../classes/rider';
 
 export class AddRiderDialogComponent implements OnInit {
 
-  private race: Race;
-  private clubs: string[];
-  private usual_grade: string;
-  private grading: string[];
-  private entryForm = new FormGroup({
+  public race: Race;
+  public clubs: string[];
+  public usual_grade: string;
+  public grading: string[];
+  public entryForm = new FormGroup({
     first_name: new FormControl('', Validators.required),
     last_name: new FormControl('', Validators.required),
     clubslug: new FormControl(''),
@@ -34,8 +34,8 @@ export class AddRiderDialogComponent implements OnInit {
 
 
   constructor(public racesService: RacesService,
-              private clubService: ClubService,
-              private entryService: EntryService,
+              public clubService: ClubService,
+              public entryService: EntryService,
               public dialogRef: MatDialogRef<AddRiderDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
 

@@ -28,7 +28,7 @@ export class ResultsComponent implements OnInit {
       // make an array of five entries
       let results: Result[] = [];
       for(let place = 1; place <= 5; place++) {
-        let number = '-';
+        let number = '';
         let rider = 'Rider Name';
         const entry = this.entryService.getPlacedEntry(this.grades[i], place);
         if (entry) {

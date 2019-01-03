@@ -102,7 +102,9 @@ export class RiderListComponent implements OnInit {
             }
         });
 
-
+        dialogRef.afterClosed().subscribe(result => {
+            this.filterTable.filter = '';
+        });
     }
 
   newRiderDialog(): void {

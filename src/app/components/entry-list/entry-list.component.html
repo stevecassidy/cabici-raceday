@@ -1,4 +1,9 @@
-<button (click)="resetEntries()">Reset</button>
+
+<div class="button-row">
+  <button mat-raised-button color='warn' (click)="resetEntries()">Reset Entries</button>
+  <span><a #download href="#" (click)="csvDownload(download)">Download CSV</a></span>
+</div>
+
 <div class="rider-table container">
   <mat-tab-group dynamicHeight [selectedIndex]="selectedTab">
     <mat-tab *ngFor="let gradeTable of gradeTables">

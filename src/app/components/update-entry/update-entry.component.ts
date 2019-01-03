@@ -12,13 +12,13 @@ import {RacesService} from '../../services/races.service';
 })
 export class UpdateEntryComponent implements OnInit {
 
-  private entryForm = new FormGroup({
+  public entryForm = new FormGroup({
     grade: new FormControl(''),
     grade_change: new FormControl(''),
     number: new FormControl('')
   });
-  private grading: string[];
-  private usual_grade: string;
+  public grading: string[];
+  public usual_grade: string;
 
   constructor(private entryService: EntryService,
               private racesService: RacesService,
@@ -40,7 +40,7 @@ export class UpdateEntryComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  updateEntry(entry: Entry) {
+  updateEntry() {
     const newGrade = this.entryForm.get('grade').value;
     const newGradeChange = this.entryForm.get('grade_change').value;
     const newNumber = this.entryForm.get('number').value;

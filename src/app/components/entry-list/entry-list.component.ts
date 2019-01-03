@@ -76,6 +76,20 @@ export class EntryListComponent implements OnInit {
     });
   }
 
+  csvDownload(download: any) {
+
+    const csvData = this.entryService.toCSV();
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+
+    download.href = url;
+    download.target = '_blank';
+
+    // target filename
+    download.download = 'entries.csv';
+  }
+
+
   setTab(index: number): void {
     this.selectedTab = index;
   }
