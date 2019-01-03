@@ -30,9 +30,9 @@ export class HeaderComponent implements OnInit {
   currentUser(): string {
     let user = this.authService.currentUser();
     if (user) {
-      return "Logged in as " + user.first_name + " " + user.last_name;
+      return 'Logged in as ' + user.first_name + ' ' + user.last_name;
     } else {
-      return "Not Logged In";
+      return 'Not Logged In';
     }
   }
 
@@ -48,6 +48,24 @@ export class HeaderComponent implements OnInit {
   apiLoad(): void {
     this.racesService.loadRaces();
     this.ridersService.loadRiders();
+  }
+
+  csvDownload(download: any) {
+
+    console.log(download);
+
+    let csvData = this.entryService.toCSV();
+    console.log(csvData);
+
+    let blob = new Blob([csvData], { type: 'text/csv' });
+
+    let url = window.URL.createObjectURL(blob);
+
+    download.href = url;
+    download.target = '_blank';
+
+    // target filename
+    download.download = 'entries.csv';
   }
 
 }

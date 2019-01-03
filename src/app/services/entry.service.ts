@@ -209,4 +209,30 @@ export class EntryService {
     });
   }
 
+  toCSV(): string {
+    // return all entries in a CSV format
+
+    let result = '';
+    // headers
+    result += 'LastName,FirstName,Regd,Grade,ShirtNo,Place,LicenceNo,Club,Email,Id\n';
+
+    for(let i=0; i<this.dataStore.entries.length; i++) {
+      let row = '';
+      let entry = this.dataStore.entries[i];
+
+      row += entry.rider.first_name + ',';
+      row += entry.rider.last_name + ',';
+      row += Rider.isFinancial(entry.rider) + ',';
+      row += entry.grade + ',';
+      row += entry.number + ',';
+      row += entry.place + ',';
+      row += entry.rider.licenceno + ',';
+      row += entry.rider.clubslug + ',';
+      row += entry.rider.email + ',';
+      row += entry.rider.id + '\n';
+
+      result += row;
+    }
+    return result;
+  }
 }
