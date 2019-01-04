@@ -66,11 +66,11 @@ export class NewRiderDialogComponent implements OnInit {
           break;
         case 'd':
           rider.member_category = 'race';
-          rider.member_date = now.toISOString();
+          rider.member_date = now.toISOString().substring(0,10);
           break;
         case '3':
           rider.member_category = 'race';
-          rider.member_date = now.toISOString();
+          rider.member_date = now.toISOString().substring(0,10);
       }
 
       rider.club = this.clubService.clubFromSlug(rider.clubslug).name;

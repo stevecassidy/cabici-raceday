@@ -187,6 +187,8 @@ export class EntryService {
     const url = environment.apiURL + "/api/raceresults/";
     const payload = this._buildUploadPayload();
 
+    console.log(payload);
+
     // can't upload if not logged in
     if (!this.authService.currentUser()) {
       return;

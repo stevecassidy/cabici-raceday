@@ -1,4 +1,4 @@
-import {Component, ViewChild, OnInit, SimpleChanges, OnChanges} from '@angular/core';
+import {Component, ViewChild, OnInit, SimpleChanges, OnChanges, ElementRef} from '@angular/core';
 import {
         MatPaginator,
         MatTableDataSource,
@@ -6,7 +6,6 @@ import {
     } from '@angular/material'
 
 import { Rider } from '../../classes/rider';
-import { Entry } from '../../classes/entry';
 import { RidersService } from '../../services/riders.service';
 import {EntryService} from '../../services/entry.service';
 import {AddRiderDialogComponent} from '../add-rider-dialog/add-rider-dialog.component';
@@ -25,6 +24,7 @@ export class RiderListComponent implements OnInit {
     public filterTable: MatTableDataSource<Rider>;
     public filterDisplayedColumns = ['rider', 'club', 'number'];
     @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild('filter') filterField: ElementRef;
 
     constructor(private ridersService: RidersService,
                 private entryService: EntryService,
@@ -104,6 +104,8 @@ export class RiderListComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             this.filterTable.filter = '';
+            // focus on the filter field
+            this.filterField.nativeElement.focus();
         });
     }
 

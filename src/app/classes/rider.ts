@@ -25,7 +25,7 @@ export class Rider {
 
     static isFinancial(r: Rider): boolean {
       const mdate = Date.parse(r.member_date);
-      const now = new Date().getDate();
+      const now = new Date().valueOf();
       return mdate >= now;
     }
 }

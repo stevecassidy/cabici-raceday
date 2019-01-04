@@ -1,6 +1,6 @@
 {
-  "name": "cabici-race-manager",
-  "short_name": "cabici-race-manager",
+  "name": "Cabici Race Manager",
+  "short_name": "cabici RM",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",

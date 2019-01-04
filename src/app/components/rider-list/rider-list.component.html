@@ -1,6 +1,6 @@
 <div class="filter-table container">
     <mat-form-field class="filter-field">
-        <input matInput (keyup)="applyFilter($event.target.value)" [value]='filterTable.filter' placeholder="Filter Riders">
+        <input #filter matInput (keyup)="applyFilter($event.target.value)" [value]='filterTable.filter' placeholder="Filter Riders">
     </mat-form-field>
     <button color="primary" mat-raised-button id="add-rider-button" (click)="newRiderDialog()">New Rider</button>
 

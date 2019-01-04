@@ -110,12 +110,12 @@ export class AddRiderDialogComponent implements OnInit {
           modified = true;
           break;
         case 'd':
-          rider.member_date = now.toISOString();
+          rider.member_date = now.toISOString().substring(0,10)
           rider.member_category = 'race';
           modified = true;
           break;
         case '3':
-          rider.member_date = now.toISOString();
+          rider.member_date = now.toISOString().substring(0,10);
           rider.member_category = 'race';
           modified = true;
       }
