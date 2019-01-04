@@ -39,6 +39,8 @@ import { ApiHttpClient, apiHttpClientCreator} from './api-http-client';
 import {AuthService} from './services/auth.service';
 import { NewRiderDialogComponent } from './components/new-rider-dialog/new-rider-dialog.component';
 import { UpdateEntryComponent } from './components/update-entry/update-entry.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 const ROUTES: Route[] = [
   {path: '', component: RaceEntryComponent, canActivate: [AuthGuard, RaceChosenGuard]},
@@ -81,7 +83,8 @@ const ROUTES: Route[] = [
     MatRadioModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    RouterModule.forRoot(ROUTES)
+    RouterModule.forRoot(ROUTES),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   declarations: [
     AppComponent,
