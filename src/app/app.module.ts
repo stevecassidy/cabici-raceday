@@ -20,7 +20,7 @@ import {
   MatToolbarModule,
   MatRippleModule,
   MatIconModule,
-  MatRadioModule, MatCardModule, MatDatepickerModule, MatNativeDateModule, MatSnackBarModule
+  MatRadioModule, MatCardModule, MatDatepickerModule, MatNativeDateModule, MatSnackBarModule, MatProgressBarModule
 } from '@angular/material';
 
 
@@ -41,6 +41,7 @@ import { NewRiderDialogComponent } from './components/new-rider-dialog/new-rider
 import { UpdateEntryComponent } from './components/update-entry/update-entry.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { BusydialogComponent } from './components/busydialog/busydialog.component';
 
 const ROUTES: Route[] = [
   {path: '', component: RaceEntryComponent, canActivate: [AuthGuard, RaceChosenGuard]},
@@ -57,7 +58,8 @@ const ROUTES: Route[] = [
     RiderListComponent,
     AddRiderDialogComponent,
     NewRiderDialogComponent,
-    UpdateEntryComponent
+    UpdateEntryComponent,
+    BusydialogComponent
   ],
   imports: [
     BrowserModule,
@@ -84,6 +86,7 @@ const ROUTES: Route[] = [
     MatDatepickerModule,
     MatNativeDateModule,
     MatSnackBarModule,
+    MatProgressBarModule,
     RouterModule.forRoot(ROUTES),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
@@ -99,6 +102,7 @@ const ROUTES: Route[] = [
     ResultsComponent,
     NewRiderDialogComponent,
     UpdateEntryComponent,
+    BusydialogComponent,
   ],
   providers: [
     RaceChosenGuard,

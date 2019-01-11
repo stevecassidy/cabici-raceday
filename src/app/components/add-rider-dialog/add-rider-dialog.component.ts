@@ -84,8 +84,12 @@ export class AddRiderDialogComponent implements OnInit {
     );
   }
 
-  addEntry(): void {
+  addEntry(): boolean {
     // copy over any rider changes
+
+    if (this.entryForm.invalid) {
+      return false;
+    }
 
     let modified = false;
     const rider = this.data.rider;
@@ -120,11 +124,9 @@ export class AddRiderDialogComponent implements OnInit {
           modified = true;
       }
     }
-
-    const entry = new Entry(rider,
-      this.entryForm.get('grade').value,
-      this.entryForm.get('number').value
-    );
+    const grade = this.entryForm.get('grade').value;
+    const number = this.entryForm.get('number').value;
+    const entry = new Entry(rider, grade, number);
 
     // grade change
     if (!(this.entryForm.get('grade').value === this.usual_grade)) {
@@ -145,5 +147,6 @@ export class AddRiderDialogComponent implements OnInit {
     } else {
       this.dialogRef.close();
     }
+    return true;
   }
 }

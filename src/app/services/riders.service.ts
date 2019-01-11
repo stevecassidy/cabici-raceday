@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Rider } from '../classes/rider';
-import {BehaviorSubject, Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import { AuthService } from './auth.service';
-import { environment } from '../../environments/environment';
 import {ApiHttpClient} from '../api-http-client';
+import {BusydialogComponent} from '../components/busydialog/busydialog.component';
+import {MatDialog, MatDialogRef} from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,10 @@ export class RidersService {
     riders: Rider[]
   };
   private readonly endpoint: string;
+  private busyDialogRef: MatDialogRef<BusydialogComponent>;
 
   constructor(private http: ApiHttpClient,
+              private dialog: MatDialog,
               private authService: AuthService) {
 
     this.endpoint = '/api/riders/';
@@ -39,6 +42,11 @@ export class RidersService {
 
   loadRiders(): void {
     this.dataStore.riders = [];
+    this.busyDialogRef = this.dialog.open(BusydialogComponent,
+      {
+        disableClose: true,
+        data: {message: 'Loading Riders...'}
+      });
     this._loadRiders(this.endpoint);
   }
 
@@ -46,6 +54,7 @@ export class RidersService {
 
     // can't load if not logged in
     if (!this.authService.currentUser()) {
+      this.busyDialogRef.close();
       return;
     }
 
@@ -59,6 +68,8 @@ export class RidersService {
       if (httpResp['next']) {
         const u = new URL(httpResp['next']);
         this._loadRiders(u.pathname + u.search);
+      } else {
+        this.busyDialogRef.close();
       }
     });
   }

@@ -9,7 +9,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthService} from './auth.service';
 import {environment} from '../../environments/environment';
 import {RidersService} from './riders.service';
-import {MatSnackBar} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
+import {BusydialogComponent} from '../components/busydialog/busydialog.component';
 
 // @ts-ignore
 @Injectable({
@@ -18,15 +19,17 @@ import {MatSnackBar} from '@angular/material';
 export class EntryService {
   // https://coryrylan.com/blog/angular-observable-data-services
   private _entries: BehaviorSubject<Entry[]>;
-  private dataStore: {
+  private readonly dataStore: {
     entries: Entry[],
     newriders: Rider[]
   };
+  private _uploading: boolean = false;
 
   constructor(private raceService: RacesService,
               private authService: AuthService,
               private ridersService: RidersService,
               private snackBar: MatSnackBar,
+              private dialog: MatDialog,
               private http: HttpClient) {
     this._entries = <BehaviorSubject<Entry[]>>new BehaviorSubject([]);
     this.dataStore = {
@@ -88,12 +91,6 @@ export class EntryService {
     return {entry: entry, message: message};
   }
 
-
-  gradeEntries(grade: string): Entry[] {
-   // return this._entries.filter(entry => entry.grade === grade);
-    return [];
-  }
-
   storeEntry(entry: Entry): {success: boolean, message: string} {
     // check for duplicate number (in this grade) or rider (anywhere)
     const result = {
@@ -115,7 +112,7 @@ export class EntryService {
     if (result.success) {
       this.dataStore.entries.unshift(entry);
       this.saveEntries();
-      result.message = "Entry stored";
+      result.message = 'Entry stored';
     }
     return result;
   }
@@ -183,6 +180,10 @@ export class EntryService {
     // copy over entries
     for (let i=0; i<this.dataStore.entries.length; i++) {
       const entry: Entry = this.dataStore.entries[i];
+      if (!entry.grade || !entry.number) {
+        console.log("invalid entry", entry);
+        continue;
+      }
       const e = {
           rider: entry.rider.id,
           grade: entry.grade,
@@ -215,11 +216,21 @@ export class EntryService {
 
   uploadResults(): void {
 
+    if (this._uploading) {
+      return;
+    }
+
+    this._uploading = true;
+    let dialogRef = this.dialog.open(BusydialogComponent,
+      {
+        disableClose: true,
+        data: {message: 'Uploading Results...'}
+      });
+
     const url = environment.apiURL + "/api/raceresults/";
     const payload = this._buildUploadPayload();
 
     console.log(payload);
-
     // can't upload if not logged in
     if (!this.authService.currentUser()) {
       return;
@@ -234,9 +245,15 @@ export class EntryService {
     const response = this.http.post(url, payload, httpOptions);
 
     response.subscribe(httpResp => {
-      console.log(httpResp);
       let snackBarRef = this.snackBar.open(httpResp['message'], "Ok");
-    });
+      this._uploading = false;
+      dialogRef.close();
+    },
+      error => {
+      console.log(error);
+      this._uploading = false;
+      dialogRef.close();
+      });
   }
 
   toCSV(): string {
