@@ -20,7 +20,7 @@ import {
   MatToolbarModule,
   MatRippleModule,
   MatIconModule,
-  MatRadioModule, MatCardModule, MatDatepickerModule, MatNativeDateModule
+  MatRadioModule, MatCardModule, MatDatepickerModule, MatNativeDateModule, MatSnackBarModule
 } from '@angular/material';
 
 
@@ -83,6 +83,7 @@ const ROUTES: Route[] = [
     MatRadioModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatSnackBarModule,
     RouterModule.forRoot(ROUTES),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],

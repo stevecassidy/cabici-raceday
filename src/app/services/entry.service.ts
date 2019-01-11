@@ -9,6 +9,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthService} from './auth.service';
 import {environment} from '../../environments/environment';
 import {RidersService} from './riders.service';
+import {MatSnackBar} from '@angular/material';
 
 // @ts-ignore
 @Injectable({
@@ -25,6 +26,7 @@ export class EntryService {
   constructor(private raceService: RacesService,
               private authService: AuthService,
               private ridersService: RidersService,
+              private snackBar: MatSnackBar,
               private http: HttpClient) {
     this._entries = <BehaviorSubject<Entry[]>>new BehaviorSubject([]);
     this.dataStore = {
@@ -57,6 +59,35 @@ export class EntryService {
     }
     return null;
   }
+
+  addPlace(number: string, place: number, grade: string): {entry: Entry, message: string} {
+
+    let entry = this.getEntry(grade, number);
+    let message = '';
+
+    if (!entry) {
+      return {entry: null, message: 'Number not found in grade'};
+    }
+    // check for duplicates
+    for(let i=0; i<this.dataStore.entries.length; i++) {
+      const e = this.dataStore.entries[i];
+      if (e.grade === grade && e.place === place) {
+        // we should overwrite this place
+        e.place = 0;
+      } else if (e.number === number && e.grade === grade && e.grade !== '') {
+        message = 'Place already assigned for number in grade';
+      }
+    }
+    if (message === '') {
+      entry.place = place;
+      this.saveEntries();
+      message = 'Place added';
+    } else {
+      entry = null;
+    }
+    return {entry: entry, message: message};
+  }
+
 
   gradeEntries(grade: string): Entry[] {
    // return this._entries.filter(entry => entry.grade === grade);
@@ -203,7 +234,8 @@ export class EntryService {
     const response = this.http.post(url, payload, httpOptions);
 
     response.subscribe(httpResp => {
-       console.log(httpResp);
+      console.log(httpResp);
+      let snackBarRef = this.snackBar.open(httpResp['message'], "Ok");
     });
   }
 

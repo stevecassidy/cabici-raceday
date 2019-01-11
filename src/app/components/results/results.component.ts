@@ -22,7 +22,10 @@ export class ResultsComponent implements OnInit {
     this.grades = this.racesService.selected.grading.split(',');
     this.resultTables = Array<{ grade: string, table: MatTableDataSource<Result> }>(this.grades.length);
     this.displayedColumns = ['place', 'number', 'rider'];
+    this.populateTables();
+  }
 
+  populateTables(): void {
     // give data to grade tables
     for (let i = 0; i < this.grades.length; i++) {
       // make an array of five entries
@@ -44,6 +47,27 @@ export class ResultsComponent implements OnInit {
     }
   }
 
+  updateTables(): void {
+
+    for (let i = 0; i < this.grades.length; i++) {
+      const results = this.resultTables[i].table.data;
+      for (let p = 0; p < results.length; p++) {
+          const result = results[p];
+          const entry = this.entryService.getPlacedEntry(this.grades[i], p+1);
+          if (entry) {
+            result.number = entry.number;
+            result.rider = entry.rider.first_name + ' ' + entry.rider.last_name;
+          } else {
+            result.number = '';
+            result.rider = 'Rider Name';
+          }
+        }
+      }
+  }
+
+
+
+
   updateResult(number: string, place: number, grade: string): void {
     // get the result row
     let result = null;
@@ -58,14 +82,17 @@ export class ResultsComponent implements OnInit {
     }
 
     // get the relevant entry
-    let entry = this.entryService.getEntry(grade, number);
-    if (!entry) {
-      alert('No entry with this number in ' + grade);
+    const emsg = this.entryService.addPlace(number, place, grade);
+
+    if (!emsg.entry) {
+      alert(emsg.message);
+      // clear the entry
+      result.number = '';
+      result.rider = '';
       return;
     } else {
-      entry.place = place;
-      this.entryService.saveEntries();
-      result.rider = entry.rider.first_name + ' ' + entry.rider.last_name;
+      result.rider = emsg.entry.rider.first_name + ' ' + emsg.entry.rider.last_name;
     }
+    this.updateTables();
   }
 }

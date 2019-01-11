@@ -23,7 +23,6 @@ export function apiHttpClientCreator(http: HttpClient, authService: AuthService)
 @Injectable()
 export class ApiHttpClient {
 
-  private readonly httpOptions: IRequestOptions;
   private readonly apiUrl: string;
 
   // Extending the HttpClient through the Angular DI.
