@@ -63,7 +63,7 @@ export class AddRiderDialogComponent implements OnInit {
       grade = this.data.rider.grades[raceclub];
     }
 
-    this.usual_grade = grade;
+    this.usual_grade = Rider.usualGrade(this.data.rider, this.race.club.slug);
 
     let financial = 'r';
     if (!Rider.isFinancial(this.data.rider)) {
@@ -131,8 +131,8 @@ export class AddRiderDialogComponent implements OnInit {
     // grade change
     if (!(this.entryForm.get('grade').value === this.usual_grade)) {
       entry.grade_change = this.entryForm.get('grade_change').value;
-      rider.grades[this.race.club.slug] = this.entryForm.get('grade').value;
-      modified = true;
+      //rider.grades[this.race.club.slug] = this.entryForm.get('grade').value;
+      //modified = true;
     }
 
     // if the rider was modified, queue it for upload

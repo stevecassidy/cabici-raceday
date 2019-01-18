@@ -39,8 +39,6 @@ export class RacesService {
     return of(this.races);
   }
 
-
-
   loadRaces(): void {
     if (!this.authService.currentUser()) {
       return;

@@ -4,6 +4,7 @@ import {EntryService} from '../../services/entry.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Entry} from '../../classes/entry';
 import {RacesService} from '../../services/races.service';
+import {Rider} from '../../classes/rider';
 
 @Component({
   selector: 'app-update-entry',
@@ -26,9 +27,8 @@ export class UpdateEntryComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
-
     this.grading = this.racesService.selected.grading.split(',');
-    this.usual_grade = this.data.entry.rider.grades[this.racesService.selected.club.slug];
+    this.usual_grade = Rider.usualGrade(this.data.entry.rider, this.racesService.selected.club.slug);
     this.entryForm.patchValue({
       grade: this.data.entry.grade,
       grade_change: this.data.entry.grade_change,
