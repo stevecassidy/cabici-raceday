@@ -35,6 +35,15 @@ export class RidersService {
     return this._riders.asObservable();
   }
 
+  getRider(id: string): Rider {
+    for(let i=0; i<this.dataStore.riders.length; i++) {
+      if (this.dataStore.riders[i].id === id) {
+        return this.dataStore.riders[i];
+      }
+    }
+    return null;
+  }
+
   newRider(rider: Rider): void {
     this.dataStore.riders.unshift(rider);
     this._riders.next(Object.assign({}, this.dataStore).riders);

@@ -31,9 +31,13 @@ export class Rider {
 
     // find the usual grade for a rider with a club, '' if not present
     static usualGrade(rider: Rider, clubslug: string): string {
-      const grade = rider.grades[clubslug];
-      if (grade) {
-        return grade;
+      if (rider.grades) {
+        const grade = rider.grades[clubslug];
+        if (grade) {
+          return grade;
+        } else {
+          return '';
+        }
       } else {
         return '';
       }

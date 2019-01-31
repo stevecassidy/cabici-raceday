@@ -1,6 +1,7 @@
 
 <div class="button-row">
   <button mat-raised-button color='warn' (click)="resetEntries()">Reset Entries</button>
+  <button mat-raised-button color='default' (click)="entryService.downloadEntries(false)">Download Entries</button>
   <span><a #download href="#" (click)="csvDownload(download)">Download CSV</a></span>
 </div>
 

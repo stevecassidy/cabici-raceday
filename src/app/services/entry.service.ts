@@ -9,7 +9,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthService} from './auth.service';
 import {environment} from '../../environments/environment';
 import {RidersService} from './riders.service';
-import {MatDialog, MatSnackBar} from '@angular/material';
+import {MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
 import {BusydialogComponent} from '../components/busydialog/busydialog.component';
 
 // @ts-ignore
@@ -24,6 +24,7 @@ export class EntryService {
     newriders: Rider[]
   };
   private _uploading: boolean = false;
+  private busyDialogRef: MatDialogRef<BusydialogComponent>;
 
   constructor(private raceService: RacesService,
               private authService: AuthService,
@@ -165,6 +166,45 @@ export class EntryService {
     }
   }
 
+  downloadEntries(reset: boolean): void {
+    // download existing entries/results for this race from cabici
+
+    const url = environment.apiURL + '/api/raceresults/?race=' + this.raceService.selected.id;
+
+    // can't load if not logged in
+    if (!this.authService.currentUser()) {
+      return;
+    }
+
+    this.busyDialogRef = this.dialog.open(BusydialogComponent,
+      {
+        disableClose: true,
+        data: {message: 'Loading Entries...'}
+      });
+
+    const response = this.http.get(url);
+
+    response.subscribe(httpResp => {
+      if (reset) {
+        this.resetEntries();
+      }
+
+      for (let i=0; i<httpResp.length; i++) {
+        const e = httpResp[i];
+        const rider = this.ridersService.getRider(e.riderid);
+        if (rider) {
+          const entry: Entry = new Entry(rider, e.grade, e.number, e.place, e.dnf, e.grade_change);
+          this.storeEntry(entry);
+        } else {
+          // unknown rider
+          alert('Unknown rider: ' + e.rider);
+        }
+      }
+
+      this.busyDialogRef.close();
+    });
+  }
+
   updateLocalStorage(): void {
     window.localStorage.setItem('entries', JSON.stringify(this.dataStore));
   }
@@ -181,7 +221,7 @@ export class EntryService {
     for (let i=0; i<this.dataStore.entries.length; i++) {
       const entry: Entry = this.dataStore.entries[i];
       if (!entry.grade || !entry.number) {
-        console.log("invalid entry", entry);
+        console.log('invalid entry', entry);
         continue;
       }
       const e = {
@@ -203,10 +243,13 @@ export class EntryService {
         id: rider.id,
         first_name: rider.first_name,
         last_name: rider.last_name,
-        email: '',
+        email: rider.email,
         clubslug: rider.clubslug,
         licenceno: rider.licenceno,
-        member_date: rider.member_date
+        member_date: rider.member_date,
+        dob: rider.dob,
+        gender: rider.gender,
+        phone: rider.phone
       };
       payload.riders.unshift(r);
     }
@@ -221,7 +264,7 @@ export class EntryService {
     }
 
     this._uploading = true;
-    let dialogRef = this.dialog.open(BusydialogComponent,
+    const dialogRef = this.dialog.open(BusydialogComponent,
       {
         disableClose: true,
         data: {message: 'Uploading Results...'}
@@ -244,7 +287,21 @@ export class EntryService {
     const response = this.http.post(url, payload, httpOptions);
 
     response.subscribe(httpResp => {
-      let snackBarRef = this.snackBar.open(httpResp['message'], "Ok");
+      console.log(httpResp);
+      const ridermap = httpResp['ridermap'];
+      if (ridermap) {
+        for (const riderid in ridermap) {
+          // update rider id
+          const rider = this.ridersService.getRider(riderid);
+          if (rider) {
+            rider.id = ridermap[riderid];
+          }
+        }
+        // update local storage to reflect the new object ids
+        this.ridersService.updateLocalStorage();
+        this.updateLocalStorage();
+      }
+      const snackBarRef = this.snackBar.open(httpResp['message'], "Ok");
       this._uploading = false;
       dialogRef.close();
     },

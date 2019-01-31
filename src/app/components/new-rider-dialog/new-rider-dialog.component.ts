@@ -54,7 +54,7 @@ export class NewRiderDialogComponent implements OnInit {
       rider.phone = this.riderForm.get('phone').value;
       rider.clubslug = this.riderForm.get('clubslug').value;
       rider.licenceno = this.riderForm.get('licenceno').value;
-      rider.dob = this.riderForm.get('dob').value;
+      rider.dob = this.riderForm.get('dob').value.toISOString().substring(0, 10);
       rider.gender = this.riderForm.get('gender').value;
 
       const now = new Date();
