@@ -73,7 +73,12 @@ export class NewRiderDialogComponent implements OnInit {
           rider.member_date = now.toISOString().substring(0,10);
       }
 
-      rider.club = this.clubService.clubFromSlug(rider.clubslug).name;
+      const club = this.clubService.clubFromSlug(rider.clubslug);
+      if (club) {
+        rider.club = club.name;
+      } else {
+        rider.club = 'Unknown';
+      }
 
       this.entryService.newRider(rider);
 

@@ -20,8 +20,8 @@ export class EntryListComponent implements OnInit {
   selectedTab: number;
 
   constructor(
-    private entryService: EntryService,
-    private racesService: RacesService,
+    public entryService: EntryService,
+    public racesService: RacesService,
     private dialog: MatDialog
   ) {
 

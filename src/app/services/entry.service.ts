@@ -11,6 +11,7 @@ import {environment} from '../../environments/environment';
 import {RidersService} from './riders.service';
 import {MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
 import {BusydialogComponent} from '../components/busydialog/busydialog.component';
+import * as Sentry from "@sentry/browser";
 
 // @ts-ignore
 @Injectable({
@@ -184,12 +185,12 @@ export class EntryService {
 
     const response = this.http.get(url);
 
-    response.subscribe(httpResp => {
+    response.subscribe((httpResp: Array<any>) => {
       if (reset) {
         this.resetEntries();
       }
 
-      for (let i=0; i<httpResp.length; i++) {
+      for (let i = 0; i < httpResp.length; i++) {
         const e = httpResp[i];
         const rider = this.ridersService.getRider(e.riderid);
         if (rider) {
@@ -222,6 +223,7 @@ export class EntryService {
       const entry: Entry = this.dataStore.entries[i];
       if (!entry.grade || !entry.number) {
         console.log('invalid entry', entry);
+        Sentry.captureException('invalid entry: ' + JSON.stringify(entry));
         continue;
       }
       const e = {
@@ -259,6 +261,7 @@ export class EntryService {
 
   uploadResults(): void {
 
+
     if (this._uploading) {
       return;
     }
@@ -287,7 +290,6 @@ export class EntryService {
     const response = this.http.post(url, payload, httpOptions);
 
     response.subscribe(httpResp => {
-      console.log(httpResp);
       const ridermap = httpResp['ridermap'];
       if (ridermap) {
         for (const riderid in ridermap) {
@@ -306,8 +308,10 @@ export class EntryService {
       dialogRef.close();
     },
       error => {
-      console.log(error);
-      this._uploading = false;
+        console.log(error);
+        Sentry.captureException('Error response in result upload: ' + JSON.stringify(error));
+
+        this._uploading = false;
       dialogRef.close();
       });
   }

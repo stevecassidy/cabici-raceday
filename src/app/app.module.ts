@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {ErrorHandler, Injectable, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
@@ -36,12 +36,26 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { ResultsComponent } from './components/results/results.component';
 import { ApiHttpClient, apiHttpClientCreator} from './api-http-client';
-import {AuthService} from './services/auth.service';
+import { AuthService } from './services/auth.service';
 import { NewRiderDialogComponent } from './components/new-rider-dialog/new-rider-dialog.component';
 import { UpdateEntryComponent } from './components/update-entry/update-entry.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { BusydialogComponent } from './components/busydialog/busydialog.component';
+import * as Sentry from "@sentry/browser";
+
+Sentry.init({
+  dsn: "https://87aa44c7f5814a72a693e2a128a1823f@sentry.io/1385448"
+});
+
+@Injectable()
+export class SentryErrorHandler implements ErrorHandler {
+  constructor() {}
+  handleError(error) {
+    Sentry.captureException(error.originalError || error);
+    throw error;
+  }
+}
 
 const ROUTES: Route[] = [
   {path: '', component: RaceEntryComponent, canActivate: [AuthGuard, RaceChosenGuard]},
@@ -112,6 +126,10 @@ const ROUTES: Route[] = [
       useFactory: apiHttpClientCreator,
       deps: [HttpClient, AuthService]
     },
+    {
+      provide: ErrorHandler,
+      useClass: SentryErrorHandler
+    }
   ],
   bootstrap: [ AppComponent ]
 })
