@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AddRiderDialogComponent } from './add-rider-dialog.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatButtonToggleModule, MatGridListModule, MatInputModule, MatOptionModule, MatSelectModule} from '@angular/material';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('AddRiderDialogComponent', () => {
   let component: AddRiderDialogComponent;
@@ -8,7 +10,19 @@ describe('AddRiderDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddRiderDialogComponent ]
+      declarations: [
+        AddRiderDialogComponent
+      ],
+      imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatGridListModule,
+        MatOptionModule,
+        MatSelectModule,
+        MatButtonToggleModule,
+        HttpClientModule
+      ]
     })
     .compileComponents();
   }));

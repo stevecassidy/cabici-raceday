@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {UpdateService} from '../../services/update.service';
 
 @Component({
   selector: 'cabici',
@@ -10,4 +11,6 @@ export class AppComponent {
     {path: 'entries', label: 'Entries'},
     {path: 'results', label: 'Results'}
   ];
+
+  constructor(private update: UpdateService) {}
 }

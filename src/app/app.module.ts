@@ -43,9 +43,10 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { BusydialogComponent } from './components/busydialog/busydialog.component';
 import * as Sentry from "@sentry/browser";
+import {UpdateService} from './services/update.service';
 
 Sentry.init({
-  dsn: "https://87aa44c7f5814a72a693e2a128a1823f@sentry.io/1385448"
+  dsn: "https://1086202f18174f34993f5ef117a52071@sentry.io/1398351"
 });
 
 @Injectable()
@@ -121,6 +122,7 @@ const ROUTES: Route[] = [
   providers: [
     RaceChosenGuard,
     AuthGuard,
+    UpdateService,
     {
       provide: ApiHttpClient,
       useFactory: apiHttpClientCreator,

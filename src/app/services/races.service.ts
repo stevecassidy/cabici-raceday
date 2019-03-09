@@ -21,7 +21,12 @@ export class RacesService {
               public dialog: MatDialog,
               public http: ApiHttpClient) {
 
-    this.endpoint = '/api/races/?select=future&club=';
+    /* use recent races rather than future, both include today but
+      we're most likely to want to enter results for past races
+      than future ones
+     */
+    /* this.endpoint = '/api/races/?select=future&club='; */
+    this.endpoint = '/api/races/?select=recent&club=';
 
     this._races = <BehaviorSubject<Race[]>>new BehaviorSubject([]);
     this.loadFromLocalStorage();

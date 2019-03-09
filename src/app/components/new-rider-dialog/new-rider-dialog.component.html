@@ -49,6 +49,7 @@
   <mat-grid-tile role="listitem">
     <mat-form-field>
       <input matInput [matDatepicker]="dobDatepicker" formControlName="dob" placeholder="DOB">
+      <mat-datepicker-toggle matSuffix [for]="dobDatepicker"></mat-datepicker-toggle>
       <mat-datepicker #dobDatepicker></mat-datepicker>
     </mat-form-field>
   </mat-grid-tile>

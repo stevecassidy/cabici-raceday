@@ -125,7 +125,7 @@ export class EntryService {
     }
     if (!rider.id) {
       // generate an ID for the new rider and remember them
-      rider.id = "ID" + Math.floor(Math.random() * 10000000)
+      rider.id = "ID" + Math.floor(Math.random() * 10000000);
       this.ridersService.newRider(rider);
     }
 
@@ -158,7 +158,7 @@ export class EntryService {
 
   loadFromLocalStorage(): void {
     // load entries from local storage
-    let local = JSON.parse(window.localStorage.getItem('entries'));
+    const local = JSON.parse(window.localStorage.getItem('entries'));
 
     if (local) {
       this.dataStore.entries = <Entry[]>local.entries;
@@ -213,7 +213,7 @@ export class EntryService {
   _buildUploadPayload(): any {
 
     // construct the data structure
-    let payload = {
+    const payload = {
       race: this.raceService.selected.id,
       entries: [],
       riders: []
@@ -341,5 +341,18 @@ export class EntryService {
       result += row;
     }
     return result;
+  }
+
+  toJSON(): string {
+    return JSON.stringify(this.dataStore);
+  }
+
+  fromJSON(json: string): void {
+    const datastore = JSON.parse(json);
+    if (datastore) {
+      this.dataStore.entries = datastore.entries;
+      this.dataStore.newriders = datastore.newriders;
+      this.updateLocalStorage();
+    }
   }
 }

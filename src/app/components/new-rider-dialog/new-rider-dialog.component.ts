@@ -1,4 +1,4 @@
-import {Component, Inject, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RacesService} from '../../services/races.service';
 import {ClubService} from '../../services/club.service';
 import {Entry} from '../../classes/entry';
@@ -54,7 +54,12 @@ export class NewRiderDialogComponent implements OnInit {
       rider.phone = this.riderForm.get('phone').value;
       rider.clubslug = this.riderForm.get('clubslug').value;
       rider.licenceno = this.riderForm.get('licenceno').value;
-      rider.dob = this.riderForm.get('dob').value.toISOString().substring(0, 10);
+
+      if (this.riderForm.get('dob').value) {
+        rider.dob = this.riderForm.get('dob').value.toISOString().substring(0, 10);
+      } else {
+        rider.dob = '1970-01-01';
+      }
       rider.gender = this.riderForm.get('gender').value;
 
       const now = new Date();
@@ -62,15 +67,15 @@ export class NewRiderDialogComponent implements OnInit {
         case 'r':
           rider.member_category = 'race';
           // set date to end of this year
-          rider.member_date = now.getFullYear() + "-12-31";
+          rider.member_date = now.getFullYear() + '-12-31';
           break;
         case 'd':
           rider.member_category = 'race';
-          rider.member_date = now.toISOString().substring(0,10);
+          rider.member_date = now.toISOString().substring(0, 10);
           break;
         case '3':
           rider.member_category = 'race';
-          rider.member_date = now.toISOString().substring(0,10);
+          rider.member_date = now.toISOString().substring(0, 10);
       }
 
       const club = this.clubService.clubFromSlug(rider.clubslug);

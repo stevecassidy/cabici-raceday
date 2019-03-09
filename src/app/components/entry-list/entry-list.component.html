@@ -3,6 +3,10 @@
   <button mat-raised-button color='warn' (click)="resetEntries()">Reset Entries</button>
   <button mat-raised-button color='default' (click)="entryService.downloadEntries(false)">Download Entries</button>
   <span><a #download href="#" (click)="csvDownload(download)">Download CSV</a></span>
+  <!--
+  <span><a #json href="#" (click)="jsonDownload(json)">Dump (debug)</a></span>
+  <input type="file" id="jsonFile" (change)="loadJSONFile($event)">
+  -->
 </div>
 
 <div class="rider-table container">

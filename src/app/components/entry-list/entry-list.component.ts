@@ -89,6 +89,30 @@ export class EntryListComponent implements OnInit {
     download.download = 'entries.csv';
   }
 
+  jsonDownload(download: any) {
+    const jsonData = this.entryService.toJSON();
+    const blob = new Blob([jsonData], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+
+    download.href = url;
+    download.target = '_blank';
+
+    // target filename
+    download.download = 'entries-dump.txt';
+  }
+
+  loadJSONFile(fileInput: any): void {
+
+    if (fileInput.target.files && fileInput.target.files[0]) {
+      const reader = new FileReader();
+      const self = this;
+      reader.onload = function (e : any) {
+        self.entryService.fromJSON(e.target.result);
+      };
+
+      reader.readAsText(fileInput.target.files[0]);
+    }
+  }
 
   setTab(index: number): void {
     this.selectedTab = index;

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {ApiHttpClient} from '../api-http-client';
 import {Club} from '../classes/club';
 import {BehaviorSubject, Observable, of} from 'rxjs';
-import {Race} from '../classes/race';
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +25,10 @@ export class ClubService {
 
   clubSlugs(): string[] {
     const result: string[] = [];
-    for(let i=0; i<this.clubs.length; i++) {
-      result.push(this.clubs[i].slug);
+    if (this.clubs) {
+      for (let i = 0; i < this.clubs.length; i++) {
+        result.push(this.clubs[i].slug);
+      }
     }
     return result;
   }
