@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {Race} from '../classes/race';
 import {AuthService} from './auth.service';
 import {ApiHttpClient} from '../api-http-client';
@@ -13,7 +13,9 @@ import {MatDialog} from '@angular/material';
 export class RacesService {
 
   private readonly endpoint: string;
-  private races: Race[];
+  private readonly dataStore: {
+    races: Race[]
+  };
   private _races: BehaviorSubject<Race[]>;
   private _selected: Race;
 
@@ -21,13 +23,11 @@ export class RacesService {
               public dialog: MatDialog,
               public http: ApiHttpClient) {
 
-    /* use recent races rather than future, both include today but
-      we're most likely to want to enter results for past races
-      than future ones
-     */
-    /* this.endpoint = '/api/races/?select=future&club='; */
-    this.endpoint = '/api/races/?select=recent&club=';
+    this.endpoint = '/api/races/?select=raceday&club=';
 
+    this.dataStore = {
+      races: <Race[]> []
+    };
     this._races = <BehaviorSubject<Race[]>>new BehaviorSubject([]);
     this.loadFromLocalStorage();
   }
@@ -41,7 +41,8 @@ export class RacesService {
   }
 
   getRaces(): Observable<Race[]> {
-    return of(this.races);
+    return this._races.asObservable();
+    // return of(this.races);
   }
 
   loadRaces(): void {
@@ -50,20 +51,22 @@ export class RacesService {
     }
     const user = this.authService.currentUser();
 
-    let url = this.endpoint + user.club;
+    const url = this.endpoint + user.club;
 
-    let dialogRef = this.dialog.open(BusydialogComponent,
+    const dialogRef = this.dialog.open(BusydialogComponent,
       {
         disableClose: true,
         data: {message: 'Loading Races...'}
       });
 
-    let response = this.http.get(url);
+    const response = this.http.get(url);
 
     response.subscribe(httpResp => {
-      this.races = <Race[]>httpResp;
+      this.dataStore.races = <Race[]>httpResp;
       this.updateLocalStorage();
-      this._races.next(Object.assign({}, this.races));
+      this._races.next(Object.assign({}, this.dataStore).races);
+      dialogRef.close();
+    }, error1 => {
       dialogRef.close();
     });
   }
@@ -73,15 +76,15 @@ export class RacesService {
     // load riders from local storage
     const local = JSON.parse(window.localStorage.getItem('races'));
     if (local !== null) {
-      this.races = <Race[]>local;
+      this.dataStore.races = <Race[]>local;
     } else {
       // force load from cabici API
       this.loadRaces();
     }
-    this._races.next(Object.assign({}, this.races));
+    this._races.next(Object.assign({}, this.dataStore).races);
   }
 
   updateLocalStorage(): void {
-    window.localStorage.setItem('races', JSON.stringify(this.races));
+    window.localStorage.setItem('races', JSON.stringify(this.dataStore.races));
   }
 }

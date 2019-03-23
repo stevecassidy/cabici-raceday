@@ -24,11 +24,12 @@ export class HeaderComponent implements OnInit {
   }
 
   selectRace(): void {
+    this.racesService.loadRaces();
     this.router.navigate(['/races']);
   }
 
   currentUser(): string {
-    let user = this.authService.currentUser();
+    const user = this.authService.currentUser();
     if (user) {
       return 'Logged in as ' + user.first_name + ' ' + user.last_name;
     } else {
@@ -41,7 +42,7 @@ export class HeaderComponent implements OnInit {
     if (this.racesService.selected) {
       return this.racesService.selected.title + '|' + this.racesService.selected.date;
     } else {
-      return "Select Race";
+      return 'Select Race';
     }
   }
 

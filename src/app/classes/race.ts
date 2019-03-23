@@ -19,5 +19,5 @@ export class Race {
     public category: { key: string, display: string },
     public licencereq: { key: string, display: string },
     public grading: string
-  ) { }
+  ) {}
 }

@@ -68,7 +68,7 @@ export class EntryListComponent implements OnInit {
   }
 
   updateEntry(entry: Entry): void {
-    let dialogRef = this.dialog.open(UpdateEntryComponent, {
+    this.dialog.open(UpdateEntryComponent, {
       width: '800px',
       data: {
         entry: entry
@@ -80,9 +80,8 @@ export class EntryListComponent implements OnInit {
 
     const csvData = this.entryService.toCSV();
     const blob = new Blob([csvData], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
 
-    download.href = url;
+    download.href = window.URL.createObjectURL(blob);
     download.target = '_blank';
 
     // target filename
@@ -92,9 +91,8 @@ export class EntryListComponent implements OnInit {
   jsonDownload(download: any) {
     const jsonData = this.entryService.toJSON();
     const blob = new Blob([jsonData], { type: 'text/plain' });
-    const url = window.URL.createObjectURL(blob);
 
-    download.href = url;
+    download.href = window.URL.createObjectURL(blob);
     download.target = '_blank';
 
     // target filename
@@ -106,7 +104,7 @@ export class EntryListComponent implements OnInit {
     if (fileInput.target.files && fileInput.target.files[0]) {
       const reader = new FileReader();
       const self = this;
-      reader.onload = function (e : any) {
+      reader.onload = function (e: any) {
         self.entryService.fromJSON(e.target.result);
       };
 
@@ -117,4 +115,5 @@ export class EntryListComponent implements OnInit {
   setTab(index: number): void {
     this.selectedTab = index;
   }
+
 }
