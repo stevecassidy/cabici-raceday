@@ -25,6 +25,9 @@ export class ClubService {
 
   clubSlugs(): string[] {
     const result: string[] = [];
+    if (!this.clubs) {
+      this.loadFromLocalStorage();
+    }
     if (this.clubs) {
       for (let i = 0; i < this.clubs.length; i++) {
         result.push(this.clubs[i].slug);
@@ -34,9 +37,15 @@ export class ClubService {
   }
 
   clubFromSlug(slug: string): Club {
-    for(let i=0; i<this.clubs.length; i++) {
-      if (this.clubs[i].slug === slug) {
-        return this.clubs[i];
+    if (!this.clubs) {
+      this.loadFromLocalStorage();
+    }
+    /* belt and braces...  */
+    if (this.clubs) {
+      for (let i = 0; i < this.clubs.length; i++) {
+        if (this.clubs[i].slug === slug) {
+          return this.clubs[i];
+        }
       }
     }
     return null;
@@ -53,6 +62,10 @@ export class ClubService {
   }
 
   loadFromLocalStorage(): void {
+    /* default club list to empty if it is undefined */
+    if (!this.clubs) {
+      this.clubs = [];
+    }
     const local = JSON.parse(window.localStorage.getItem('clubs'));
     if (local != null) {
       this.clubs = <Club[]>local;

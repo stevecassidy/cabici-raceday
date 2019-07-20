@@ -5,6 +5,7 @@ import {RidersService} from '../../services/riders.service';
 import {MatDialog} from '@angular/material';
 import {EntryService} from '../../services/entry.service';
 import {AuthService} from '../../services/auth.service';
+import {ClubService} from '../../services/club.service';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +16,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(public racesService: RacesService,
               public ridersService: RidersService,
+              public clubService: ClubService,
               public entryService: EntryService,
               public authService: AuthService,
               public dialog: MatDialog,
@@ -49,6 +51,7 @@ export class HeaderComponent implements OnInit {
   apiLoad(): void {
     this.racesService.loadRaces();
     this.ridersService.loadRiders();
+    this.clubService.loadClubs();
   }
 
 }
