@@ -21,8 +21,8 @@ export class RiderListComponent implements OnInit {
     private riders: Rider[];
     public filterTable: MatTableDataSource<Rider>;
     public filterDisplayedColumns = ['rider', 'club', 'number'];
-    @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-    @ViewChild('filter', {static: false}) filterField: ElementRef;
+    @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+    @ViewChild('filter', {static: true}) filterField: ElementRef;
 
     constructor(private ridersService: RidersService,
                 private entryService: EntryService,
