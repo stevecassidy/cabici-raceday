@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {RacesService} from '../../services/races.service';
 import {Race} from '../../classes/race';
-import {MatTableDataSource} from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import {Router} from '@angular/router';
 
 @Component({
@@ -39,5 +39,15 @@ export class RaceChooserComponent implements OnInit {
   setSelected(race: Race): void {
     this.racesService.selected = race;
     this.router.navigate(['/']);
+  }
+
+  isToday(race: Race): string {
+    const today = new Date();
+    const racedate = new Date(race.date);
+    if (racedate.getDate() === today.getDate()) {
+      return 'selected';
+    } else {
+      return '';
+    }
   }
 }

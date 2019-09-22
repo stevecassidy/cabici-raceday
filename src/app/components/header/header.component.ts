@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {RacesService} from '../../services/races.service';
 import {RidersService} from '../../services/riders.service';
-import {MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import {EntryService} from '../../services/entry.service';
 import {AuthService} from '../../services/auth.service';
 import {ClubService} from '../../services/club.service';

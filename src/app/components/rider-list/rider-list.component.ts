@@ -1,9 +1,7 @@
 import {Component, ViewChild, OnInit, SimpleChanges, OnChanges, ElementRef} from '@angular/core';
-import {
-        MatPaginator,
-        MatTableDataSource,
-        MatDialog
-    } from '@angular/material'
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { Rider } from '../../classes/rider';
 import { RidersService } from '../../services/riders.service';
@@ -23,8 +21,8 @@ export class RiderListComponent implements OnInit {
     private riders: Rider[];
     public filterTable: MatTableDataSource<Rider>;
     public filterDisplayedColumns = ['rider', 'club', 'number'];
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-    @ViewChild('filter') filterField: ElementRef;
+    @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+    @ViewChild('filter', {static: false}) filterField: ElementRef;
 
     constructor(private ridersService: RidersService,
                 private entryService: EntryService,

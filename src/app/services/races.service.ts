@@ -4,7 +4,7 @@ import {Race} from '../classes/race';
 import {AuthService} from './auth.service';
 import {ApiHttpClient} from '../api-http-client';
 import {BusydialogComponent} from '../components/busydialog/busydialog.component';
-import {MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root'

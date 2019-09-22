@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {EntryService} from '../../services/entry.service';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {Entry} from '../../classes/entry';
 import {RacesService} from '../../services/races.service';
 import {Rider} from '../../classes/rider';

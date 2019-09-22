@@ -5,23 +5,25 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {Route, RouterModule} from '@angular/router';
 
-import {
-  MatTableModule,
-  MatListModule,
-  MatGridListModule,
-  MatPaginatorModule,
-  MatTabsModule,
-  MatButtonModule,
-  MatButtonToggleModule,
-  MatFormFieldModule,
-  MatSelectModule,
-  MatInputModule,
-  MatDialogModule,
-  MatToolbarModule,
-  MatRippleModule,
-  MatIconModule,
-  MatRadioModule, MatCardModule, MatDatepickerModule, MatNativeDateModule, MatSnackBarModule, MatProgressBarModule
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule, MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 import { RiderListComponent } from './components/rider-list/rider-list.component';

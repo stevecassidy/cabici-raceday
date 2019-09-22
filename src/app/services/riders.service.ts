@@ -4,7 +4,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import { AuthService } from './auth.service';
 import {ApiHttpClient} from '../api-http-client';
 import {BusydialogComponent} from '../components/busydialog/busydialog.component';
-import {MatDialog, MatDialogRef} from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root'

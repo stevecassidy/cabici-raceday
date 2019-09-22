@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {EntryService} from '../../services/entry.service';
 import {RacesService} from '../../services/races.service';
-import {MatTableDataSource} from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import {Result} from '../../classes/result';
 
 @Component({

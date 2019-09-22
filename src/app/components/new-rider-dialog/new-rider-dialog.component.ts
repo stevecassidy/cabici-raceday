@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {RacesService} from '../../services/races.service';
 import {ClubService} from '../../services/club.service';
 import {Entry} from '../../classes/entry';
-import {MatDialogRef} from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import {Rider} from '../../classes/rider';
 import {EntryService} from '../../services/entry.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';

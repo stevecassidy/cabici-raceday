@@ -9,7 +9,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthService} from './auth.service';
 import {environment} from '../../environments/environment';
 import {RidersService} from './riders.service';
-import {MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {BusydialogComponent} from '../components/busydialog/busydialog.component';
 import * as Sentry from "@sentry/browser";
 

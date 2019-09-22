@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EntryService } from '../../services/entry.service';
-import {MatDialog, MatTableDataSource} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { Entry } from '../../classes/entry';
 import {RacesService} from '../../services/races.service';
 import {UpdateEntryComponent} from '../update-entry/update-entry.component';
