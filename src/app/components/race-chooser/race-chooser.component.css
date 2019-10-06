@@ -1,3 +1,38 @@
-mat-row.selected {
-  background-color: #dddddd;
+.vertical-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.race-radio-button {
+  margin: 5px;
+}
+
+#race-selector-component {
+  display: flex;
+  flex-direction: row;
+  margin: 5%;
+}
+
+#race-selector-block {
+  width: 50%;
+  display: inline-block;
+}
+
+#race-detail-block {
+  width: 50%;
+  display: inline-block;
+}
+
+#race-selector-block mat-row.selected {
+  background-color: #aaaaaa;
+}
+
+#race-chooser-buttons {
+  padding: 20px;
+}
+
+#race-chooser-buttons {
+  margin: auto;
+  float: right;
 }

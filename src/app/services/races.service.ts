@@ -40,6 +40,33 @@ export class RacesService {
     this._selected = value;
   }
 
+  /* 
+   * return the next race from today
+   */
+  nextRace(): Race {
+    const today = new Date();
+    let future = new Array();
+    const races = this.dataStore.races;
+    for (let index = 0; index < races.length; index++) {
+      const race = races[index];
+      const raceDate = new Date(race.date);
+      if (raceDate.getDate() >= today.getDate()) {
+        future.push(race);
+      }
+    }
+    return future[0];
+  }
+
+  isToday(race: Race): string {
+    const today = new Date();
+    const racedate = new Date(race.date);
+    if (racedate.getDate() === today.getDate()) {
+      return 'selected';
+    } else {
+      return '';
+    }
+  }
+
   getRaces(): Observable<Race[]> {
     return this._races.asObservable();
     // return of(this.races);

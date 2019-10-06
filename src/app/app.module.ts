@@ -24,6 +24,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 import { RiderListComponent } from './components/rider-list/rider-list.component';
@@ -104,6 +105,7 @@ const ROUTES: Route[] = [
     MatNativeDateModule,
     MatSnackBarModule,
     MatProgressBarModule,
+    MatCheckboxModule,
     RouterModule.forRoot(ROUTES),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],

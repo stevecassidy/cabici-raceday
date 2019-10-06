@@ -1,21 +1,82 @@
-<h2 class="subheader mat-elevation-z2">Select Race</h2>
 
-<mat-table #table class="filter-table" [dataSource]="raceTable">
-  <ng-container matColumnDef="date">
-    <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
-    <mat-cell *matCellDef="let race">{{ race.date }}</mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="location">
-    <mat-header-cell *matHeaderCellDef>Location</mat-header-cell>
-    <mat-cell *matCellDef="let race">{{ race.location.name }}</mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="title">
-    <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
-    <mat-cell *matCellDef="let race">{{ race.title }}</mat-cell>
-  </ng-container>
+<div id="race-selector-component">
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"
-           [ngClass]="{ 'selected': isToday(row)}"
-           (click)="setSelected(row)"></mat-row>
-</mat-table>
+  <div id="race-selector-block">
+
+    <mat-radio-group class='vertical-radio-group' [(ngModel)]="selectedRaceOption" (change)="onChange($event)">
+      <mat-radio-button class='race-radio-button' value='next'>Select Next Race: <strong>{{nextRace()}}</strong></mat-radio-button>
+      <mat-radio-button class='race-radio-button' value='other'>Select Other Race:</mat-radio-button>
+    </mat-radio-group>
+
+
+      <mat-form-field class="filter-field">
+        <input #filter matInput (keyup)="applyFilter($event.target.value)" 
+              [value]='raceTable.filter' 
+              placeholder="Filter Races">
+      </mat-form-field>
+
+      <mat-table #raceChooserTable class="filter-table" [dataSource]="raceTable">
+        <ng-container matColumnDef="date">
+          <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
+          <mat-cell *matCellDef="let race">{{ race.date }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="location">
+          <mat-header-cell *matHeaderCellDef>Location</mat-header-cell>
+          <mat-cell *matCellDef="let race">{{ race.location.name }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="title">
+          <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
+          <mat-cell *matCellDef="let race">{{ race.title }}</mat-cell>
+        </ng-container>
+      
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"
+                [ngClass]="{ 'selected': isSelected(row)}"
+                (click)="setSelected(row)"></mat-row>
+      </mat-table>
+  </div>
+  <div id="race-detail-block" *ngIf="selectedRace">
+    <form>
+      <mat-grid-list cols=2 rowHeight='4em'>
+        <mat-grid-tile colspan="2"><h2>Race Details</h2></mat-grid-tile>
+
+        <mat-grid-tile role="listitem">Title</mat-grid-tile>
+        <mat-grid-tile role="listitem">
+          <mat-form-field>
+              <mat-label>Title</mat-label>
+              <input disabled matInput value="{{selectedRace.title}}">
+            </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile role="listitem">Date</mat-grid-tile>
+        <mat-grid-tile role="listitem">
+          <mat-form-field>
+            <mat-label>Date</mat-label>
+            <input disabled matInput value="{{selectedRace.date}}">
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile role="listitem">Location</mat-grid-tile>
+        <mat-grid-tile role="listitem">
+          <mat-form-field>
+            <mat-label>Location</mat-label>
+            <input matInput disabled value="{{selectedRace.location.name}}">
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile role="listitem">Grades</mat-grid-tile>
+        <mat-grid-tile role="listitem" rowspan=2>
+            <mat-radio-group class='vertical-radio-group' [(ngModel)]="selectedRace.grading" name="grading">
+              <mat-radio-button class='grading-radio-button' value='A,B,C,D,E,F'>A,B,C,D,E,F</mat-radio-button>
+              <mat-radio-button class='grading-radio-button' value='A,A2,B,C,D,E,F'>A,A2,B,C,D,E,F</mat-radio-button>
+              <mat-radio-button class='grading-radio-button' value='M12,M34,M56,M78,M9+'>M12,M34,M56,M78,M9+</mat-radio-button>
+            </mat-radio-group>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+      <div id="race-chooser-buttons">
+        <button mat-raised-button color="primary" (click)="confirmSelected()">Confirm Race Selection</button>
+      </div>
+    </form>
+  </div>
+</div>
