@@ -14,7 +14,8 @@ export class RidersService {
 
   private _riders: BehaviorSubject<Rider[]>;
   private readonly dataStore: {
-    riders: Rider[]
+    riders: Rider[],
+    timestamp: Number
   };
   private readonly endpoint: string;
   private busyDialogRef: MatDialogRef<BusydialogComponent>;
@@ -27,6 +28,7 @@ export class RidersService {
     this._riders = <BehaviorSubject<Rider[]>>new BehaviorSubject([]);
     this.dataStore = {
       riders: [],
+      timestamp: 0
     };
     this.loadFromLocalStorage();
   }
@@ -47,6 +49,58 @@ export class RidersService {
   newRider(rider: Rider): void {
     this.dataStore.riders.unshift(rider);
     this._riders.next(Object.assign({}, this.dataStore).riders);
+  }
+
+  /* load only changed riders from the API */
+
+
+  loadChangedRiders(): void {
+    this.busyDialogRef = this.dialog.open(BusydialogComponent,
+      {
+        disableClose: true,
+        data: {message: 'Loading Riders...'}
+      });
+
+    const lasttimestamp = this.dataStore.timestamp;
+    this._loadChangedRiders(this.endpoint+'?changed='+lasttimestamp);
+  }
+
+  _loadChangedRiders(url: string): void {
+    
+    // can't load if not logged in
+    if (!this.authService.currentUser()) {
+      this.busyDialogRef.close();
+      return;
+    }
+
+    const response = this.http.get(url);
+
+    response.subscribe(httpResp => {
+      const riders = <Rider[]>httpResp['results'];
+      this.dataStore.timestamp = Math.round(Date.now()/1000);
+      /* update riders from the downloaded data */
+      for (let rider of riders) {
+        let existing = this.getRider(rider.id);
+        if (existing) {
+          /* copy properties across */
+          for (let key in rider) {
+            existing[key] = rider[key];
+          }
+        } else {
+          this.dataStore.riders.unshift(rider);
+        }
+      }
+      this._riders.next(Object.assign({}, this.dataStore).riders);
+      this.updateLocalStorage();
+
+      /* follow any next link to get next page */
+      if (httpResp['next']) {
+        const u = new URL(httpResp['next']);
+        this._loadChangedRiders(u.pathname + u.search);
+      } else {
+        this.busyDialogRef.close();
+      }
+    });
   }
 
   loadRiders(): void {
@@ -71,6 +125,7 @@ export class RidersService {
 
     response.subscribe(httpResp => {
       const riders = <Rider[]>httpResp['results'];
+      this.dataStore.timestamp = Math.round(Date.now()/1000);
       this.dataStore.riders = this.dataStore.riders.concat(riders);
       this.updateLocalStorage();
       this._riders.next(Object.assign({}, this.dataStore).riders);
@@ -89,6 +144,7 @@ export class RidersService {
     const local = JSON.parse(window.localStorage.getItem('riders'));
     if (local !== null) {
       this.dataStore.riders = <Rider[]>local.riders;
+      this.dataStore.timestamp = <Number>local.timestamp;
     } else {
       // force load from cabici API
       this.loadRiders();

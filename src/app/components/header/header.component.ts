@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
   currentRace(): any {
     // return the display name of the selected race if available
     if (this.racesService.selected) {
-      return this.racesService.selected.title + '|' + this.racesService.selected.date;
+      return this.racesService.selected.title + ' | ' + this.racesService.selected.location.name + ' | ' + this.racesService.selected.date;
     } else {
       return 'Select Race';
     }
@@ -50,7 +50,7 @@ export class HeaderComponent implements OnInit {
 
   apiLoad(): void {
     this.racesService.loadRaces();
-    this.ridersService.loadRiders();
+    this.ridersService.loadChangedRiders();
     this.clubService.loadClubs();
   }
 
