@@ -26,7 +26,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
-
 import { RiderListComponent } from './components/rider-list/rider-list.component';
 import { AppComponent } from './components/app/app.component';
 import { AddRiderDialogComponent } from './components/add-rider-dialog/add-rider-dialog.component';
@@ -47,6 +46,7 @@ import { environment } from '../environments/environment';
 import { BusydialogComponent } from './components/busydialog/busydialog.component';
 import * as Sentry from "@sentry/browser";
 import {UpdateService} from './services/update.service';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 Sentry.init({
   dsn: "https://1086202f18174f34993f5ef117a52071@sentry.io/1398351"
@@ -106,6 +106,8 @@ const ROUTES: Route[] = [
     MatSnackBarModule,
     MatProgressBarModule,
     MatCheckboxModule,
+    MatSidenavModule,
+    MatIconModule,
     RouterModule.forRoot(ROUTES),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],

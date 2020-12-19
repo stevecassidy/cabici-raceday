@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {Router} from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSidenav } from '@angular/material';
+
 import {RacesService} from '../../services/races.service';
 import {RidersService} from '../../services/riders.service';
-import { MatDialog } from '@angular/material/dialog';
 import {EntryService} from '../../services/entry.service';
 import {AuthService} from '../../services/auth.service';
 import {ClubService} from '../../services/club.service';
@@ -13,6 +15,7 @@ import {ClubService} from '../../services/club.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  @Input() inputSideNav: MatSidenav;
 
   constructor(public racesService: RacesService,
               public ridersService: RidersService,
@@ -28,6 +31,15 @@ export class HeaderComponent implements OnInit {
   selectRace(): void {
     this.racesService.loadRaces();
     this.router.navigate(['/races']);
+  }
+
+  loggedIn(): boolean {
+    return this.authService.loggedIn();
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
   currentUser(): string {
@@ -46,12 +58,6 @@ export class HeaderComponent implements OnInit {
     } else {
       return 'Select Race';
     }
-  }
-
-  apiLoad(): void {
-    this.racesService.loadRaces();
-    this.ridersService.loadChangedRiders();
-    this.clubService.loadClubs();
   }
 
 }

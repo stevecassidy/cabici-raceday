@@ -25,7 +25,6 @@ export class RaceChooserComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.racesService.selected);
     this.getRaces();
     if (this.racesService.selected) {
       this.selectedRace = this.racesService.selected;
@@ -56,7 +55,11 @@ export class RaceChooserComponent implements OnInit {
 
   nextRace(): string {
     const nextRace = this.racesService.nextRace();
-    return nextRace.title + ' | ' + nextRace.location.name + ' | ' + nextRace.date;
+    if (nextRace) {
+      return nextRace.title + ' | ' + nextRace.location.name + ' | ' + nextRace.date;
+    } else {
+      return "No Race Loaded"
+    }
   }
 
   onChange(event: MatRadioChange): void {

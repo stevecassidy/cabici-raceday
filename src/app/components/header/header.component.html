@@ -1,11 +1,15 @@
 
   <mat-toolbar class="mat-elevation-z6 mat-headline" color="primary">
+    <button type="button" mat-icon-button (click)="inputSideNav.toggle()">
+      <mat-icon aria-hidden="false" aria-label="Toggle Sidebar">menu</mat-icon>
+    </button>
+
     <span>Cabici Race Manager</span>&nbsp;|&nbsp;
-    <span>{{currentUser()}}</span>
+    <span>{{currentUser()}}
+      <button mat-raised-button *ngIf="loggedIn()" (click)="logout()">Logout</button>
+    </span>
     <span class="toolbar-spacer"></span>
     <div id="button-row">
-      <button mat-raised-button id="load-riders-button" (click)="apiLoad()">Load Data</button>
-      <button mat-raised-button id="load-riders-button" (click)="entryService.uploadResults()">Upload Results</button>
-      <button mat-button id="race-select-button" (click)="selectRace()">Race: {{currentRace()}}</button>
+      <button mat-raised-button id="race-select-button" (click)="selectRace()">Race: {{currentRace()}}</button>
     </div>
   </mat-toolbar>

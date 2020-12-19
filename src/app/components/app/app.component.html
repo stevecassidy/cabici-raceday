@@ -1,11 +1,62 @@
-  <app-header></app-header>
-  <nav mat-tab-nav-bar mat-align-tabs="center">
-    <a mat-tab-link
-       *ngFor="let link of navLinks"
-       [routerLink]="link.path"
-       routerLinkActive #rla="routerLinkActive"
-       [active]="rla.isActive">
-      {{link.label}}
-    </a>
-  </nav>
-  <router-outlet></router-outlet>
+
+<app-header [inputSideNav]="sidenav"></app-header>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav class="sidenav" mode="open">
+
+      <mat-action-list>
+        <mat-list-item (click)="apiLoad()">
+          <p matLine>Load Rider Data</p>
+          <button mat-icon-button>
+            <mat-icon>assignment_returned</mat-icon>
+          </button>
+        </mat-list-item>
+
+        <mat-list-item (click)="entryService.uploadResults()">
+          <p matLine>Upload Results</p>
+          <button mat-icon-button>
+            <mat-icon>backup</mat-icon>
+          </button>
+        </mat-list-item>
+
+
+        <mat-list-item class="warning" (click)="resetEntries()">
+          <p matLine>Reset Entries</p>
+          <button mat-icon-button>
+            <mat-icon>warning</mat-icon>
+          </button>
+        </mat-list-item>
+
+        <mat-list-item  (click)="entryService.downloadEntries(false)">
+          <p matLine>Get Existing Entries</p>
+          <button>
+            <mat-icon>cloud_download</mat-icon>
+          </button>
+        </mat-list-item>
+
+        <mat-list-item>
+          <a matLine #download href="#" (click)="csvDownload(download)">Download Entries CSV</a>
+        </mat-list-item>
+
+        <mat-list-item>
+          <a matLine #json href="#" (click)="jsonDownload(json)">Dump Debug Data</a>
+        </mat-list-item>
+
+      </mat-action-list>
+
+      <p>Load a JSON dump file (debugging/recovery only)</p>
+      <input type="file" id="jsonFile" (change)="loadJSONFile($event)">
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <nav mat-tab-nav-bar mat-align-tabs="center">
+      <a mat-tab-link
+          *ngFor="let link of navLinks"
+          [routerLink]="link.path"
+          routerLinkActive #rla="routerLinkActive"
+          [active]="rla.isActive">
+        {{link.label}}
+      </a>
+    </nav>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

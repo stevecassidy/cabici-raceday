@@ -29,6 +29,10 @@ export class AuthService {
     }
   }
 
+  loggedIn(): boolean {
+    return this.loggedin;
+  }
+
   login(email: string, password: string): Observable<string> {
 
     const body = new HttpParams()
@@ -55,6 +59,7 @@ export class AuthService {
   loadFromLocalStorage(): void {
     // load user from local storage
     const local = JSON.parse(window.localStorage.getItem('user'));
+    console.log(local);
     if (local !== null) {
       this.user = <User>local;
       this.loggedin = true;
@@ -63,5 +68,12 @@ export class AuthService {
 
   updateLocalStorage(): void {
     window.localStorage.setItem('user', JSON.stringify(this.user));
+  }
+
+
+  logout(): void {
+    this.user = null;
+    this.loggedin = false;
+    this.updateLocalStorage();
   }
 }
