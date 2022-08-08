@@ -55,19 +55,29 @@
     <mat-button-toggle-group formControlName="financial">
       <mat-button-toggle value="n">None</mat-button-toggle>
       <mat-button-toggle value="r">Race</mat-button-toggle>
-      <mat-button-toggle value="d">Day</mat-button-toggle>
-      <mat-button-toggle value="3">3 Race</mat-button-toggle>
+      <mat-button-toggle value="t">Trial</mat-button-toggle>
     </mat-button-toggle-group>
   </mat-grid-tile>
 
-  <mat-grid-tile *ngIf="usual_grade != entryForm.value.grade">
+
+  <mat-grid-tile *ngIf="usual_grade != entryForm.value.grade; else nogradechange">
     <mat-label>Permanent Grade Change?&nbsp;</mat-label>
     <mat-button-toggle-group formControlName="grade_change">
       <mat-button-toggle value="y">Yes</mat-button-toggle>
       <mat-button-toggle value="n">No</mat-button-toggle>
     </mat-button-toggle-group>
   </mat-grid-tile>
+  <ng-template #nogradechange>
+    <mat-grid-tile></mat-grid-tile>
+  </ng-template>
+  
 
+  <mat-grid-tile *ngIf="entryForm.value.financial =='n'; else isfinancial">
+    <p>Rider must be licenced to race.</p>
+  </mat-grid-tile>
+  <ng-template #isfinancial>
+    <mat-grid-tile></mat-grid-tile>
+  </ng-template>
 
   <mat-grid-tile></mat-grid-tile>
 

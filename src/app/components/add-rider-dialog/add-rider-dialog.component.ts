@@ -26,7 +26,7 @@ export class AddRiderDialogComponent implements OnInit {
     clubslug: new FormControl(''),
     licenceno: new FormControl(''),
     classification: new FormControl({value: '', disabled: true}),
-    financial: new FormControl('', Validators.required),
+    financial: new FormControl('', Validators.pattern(/(r|t)/)),
     grade: new FormControl('', Validators.required),
     grade_change: new FormControl(''),
     number: new FormControl('', Validators.required)
@@ -113,14 +113,9 @@ export class AddRiderDialogComponent implements OnInit {
           rider.member_category = 'race';
           modified = true;
           break;
-        case 'd':
+        case 't':
           rider.member_date = now.toISOString().substring(0,10)
-          rider.member_category = 'race';
-          modified = true;
-          break;
-        case '3':
-          rider.member_date = now.toISOString().substring(0,10);
-          rider.member_category = 'race';
+          rider.member_category = 'trial';
           modified = true;
       }
     }
