@@ -1,5 +1,4 @@
 export const environment = {
   production: true,
-  apiURL: 'https://cabici.net'
-
+  apiURL: "https://www.cabici.net",
 };
